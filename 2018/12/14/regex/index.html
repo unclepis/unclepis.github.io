@@ -1,0 +1,1818 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="Je7AOEjKqN2ygLA5weMsdXFgWp2T5fb26na9fxZyq9o">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="kRmNQSgNqg">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ioc?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="正则表达式,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.正则表达式是什么？​    它是使用单个字符串来描述、匹配一系列某个语法规则的字符串。它经常可以被用来检索、替换那些某个匹配模式的文本。通俗的说就是按照某种规则去匹配符合条件的字符串。 举个栗子  ​    2018-12-11 08:59:00 江伟哥发现我师傅还没有到公司，昨天说好的让我师傅早到给帮忙打个卡但都59分了自己都还没到。可更大的问题来了，江伟哥不知道我师傅把他的卡放在哪了。08">
+<meta name="keywords" content="正则表达式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式">
+<meta property="og:url" content="http://unclepis.coding.me/2018/12/14/regex/index.html">
+<meta property="og:site_name" content="屁事蜀黍">
+<meta property="og:description" content="1.正则表达式是什么？​    它是使用单个字符串来描述、匹配一系列某个语法规则的字符串。它经常可以被用来检索、替换那些某个匹配模式的文本。通俗的说就是按照某种规则去匹配符合条件的字符串。 举个栗子  ​    2018-12-11 08:59:00 江伟哥发现我师傅还没有到公司，昨天说好的让我师傅早到给帮忙打个卡但都59分了自己都还没到。可更大的问题来了，江伟哥不知道我师傅把他的卡放在哪了。08">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/非全局匹配.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/全局匹配.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/大小写敏感匹配.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/忽略大小写匹配.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/多行匹配.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/非多行匹配.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/匹配单词边界.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/匹配非单词边界.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/懒惰匹配.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/贪婪匹配.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/分支匹配.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/非分组举例.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/分组举例.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/分组匹配.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/分组命名.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/分组匹配2.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/正则表达式工作机制.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/零宽度非互斥.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/占有字符互斥.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/控制权和传动.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/同名分组.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/弹出栈.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/regexper.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/在线正则工具.jpg">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/regex_tester.png">
+<meta property="og:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/RegexBuddy.jpg">
+<meta property="og:updated_time" content="2019-12-26T05:56:23.883Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则表达式">
+<meta name="twitter:description" content="1.正则表达式是什么？​    它是使用单个字符串来描述、匹配一系列某个语法规则的字符串。它经常可以被用来检索、替换那些某个匹配模式的文本。通俗的说就是按照某种规则去匹配符合条件的字符串。 举个栗子  ​    2018-12-11 08:59:00 江伟哥发现我师傅还没有到公司，昨天说好的让我师傅早到给帮忙打个卡但都59分了自己都还没到。可更大的问题来了，江伟哥不知道我师傅把他的卡放在哪了。08">
+<meta name="twitter:image" content="http://www.forkbteam.com/usr/uploads/2018/regex/非全局匹配.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://unclepis.coding.me/2018/12/14/regex/">
+
+
+
+
+
+  <title>正则表达式 | 屁事蜀黍</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">屁事蜀黍</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Stay Hungry, Stay Foolish(求知若饥，虚心若愚)</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://unclepis.coding.me/2018/12/14/regex/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="unclepis">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="屁事蜀黍">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">正则表达式</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-14T10:25:57+08:00">
+                2018-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/正则表达式/" itemprop="url" rel="index">
+                    <span itemprop="name">正则表达式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/12/14/regex/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/12/14/regex/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/12/14/regex/" class="leancloud_visitors" data-flag-title="正则表达式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+             <span>℃</span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  20
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-正则表达式是什么？"><a href="#1-正则表达式是什么？" class="headerlink" title="1.正则表达式是什么？"></a>1.正则表达式是什么？</h2><p>​    它是使用单个字符串来描述、匹配一系列某个语法规则的字符串。它经常可以被用来检索、替换那些某个匹配模式的文本。<u><strong>通俗的说就是按照某种规则去匹配符合条件的字符串</strong></u>。</p>
+<p><strong>举个栗子</strong></p>
+<blockquote>
+<p>​    2018-12-11 08:59:00 江伟哥发现我师傅还没有到公司，昨天说好的让我师傅早到给帮忙打个卡但都59分了自己都还没到。可更大的问题来了，江伟哥不知道我师傅把他的卡放在哪了。08:59:15，江伟哥慌忙之中拨通了第一个电话但却是空号，定睛一看号码1885646465，原来是慌乱中少输了一位号码。08:59:30，江伟哥拨通了第二个电话，电话那头传来一个女声：“你好，这里是和利时。”诧异之中江伟哥再次确认了一遍号码，029-96544856，原来刚才一个不小心通讯录里点到了和利时前台的电话，江伟哥气的拍起了大腿。08:59:50，再次拨通前，江伟哥一位一位的确认了号码，18856464655，没错了，赶紧拨通！随着电话那头我师傅带着倦意的一句“喂，哪位”，卡机上的时间跳到了09:00:00。2018-12-12，收到迟到罚款通知的江伟哥开始自闭。</p>
+</blockquote>
+<ul>
+<li><p>匹配这段文字中符合规范的手机号：<code>1[34578]\d{9}</code></p>
+</li>
+<li><p>匹配这段文字中所有的日期：<code>\d{4}[/-]\d{2}[/-]\d{2}</code></p>
+</li>
+<li><p>对这段文字中匹配到的所有日期进行年月日的分组：<code>(\d{4})[/-](\d{2})[/-](\d{2})</code></p>
+</li>
+</ul>
+<a id="more"></a>
+<h2 id="2-正则表达式中的一些语法"><a href="#2-正则表达式中的一些语法" class="headerlink" title="2.正则表达式中的一些语法"></a>2.正则表达式中的一些语法</h2><h3 id="2-1-修饰符（g-i-m）"><a href="#2-1-修饰符（g-i-m）" class="headerlink" title="2.1.修饰符（g i m）"></a>2.1.修饰符（g i m）</h3><p>​    修饰符比较特殊，它放在表达式的最后，在构造函数声明的时候作为第二的参数被传进去的。整个表达式可以理解为匹配规则字符串+修饰符，修饰符有三个g、i、m，他们可以一起用。</p>
+<ul>
+<li>g（global）：执行全局匹配</li>
+<li>i（ignore case）：执行一个不区分大小写的匹配</li>
+<li>m（multiple lines）：执行多行匹配</li>
+</ul>
+<p><code>注：此处仅介绍了常用的三个，修饰符还包含s、U、X、A、D、e</code></p>
+<h4 id="2-1-1-全局匹配"><a href="#2-1-1-全局匹配" class="headerlink" title="2.1.1.全局匹配"></a>2.1.1.全局匹配</h4><p>还是上面那段文字，如果在匹配日期的时候我使用全局匹配和不使用全局匹配的结果区别：</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/非全局匹配.jpg" alt="非全局匹配"></p>
+<hr>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/全局匹配.jpg" alt="全局匹配"></p>
+<h4 id="2-1-2-不区分大小写匹配"><a href="#2-1-2-不区分大小写匹配" class="headerlink" title="2.1.2.不区分大小写匹配"></a>2.1.2.不区分大小写匹配</h4><p>​    正如名字，就是在匹配的时候是否大小写敏感：</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/大小写敏感匹配.jpg" alt=""></p>
+<hr>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/忽略大小写匹配.jpg" alt="忽略大小写匹配"></p>
+<h4 id="2-1-3-多行匹配"><a href="#2-1-3-多行匹配" class="headerlink" title="2.1.3.多行匹配"></a>2.1.3.多行匹配</h4><p>​    当使用多行匹配的时候，那么边界匹配符<code>^</code>和<code>$</code>将匹配行的开始和结束，反之则匹配整个字符串的开始和结束。如果将上面那段文字分为两段，每段使用一个<code>&lt;p&gt;</code>标签，那么我们尝试在多行模式开启以及不开启的时候匹配段落标签中的内容：</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/多行匹配.jpg" alt=""></p>
+<hr>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/非多行匹配.jpg" alt="非多行匹配"></p>
+<h3 id="2-2-正则表达式字符的组成"><a href="#2-2-正则表达式字符的组成" class="headerlink" title="2.2.正则表达式字符的组成"></a>2.2.正则表达式字符的组成</h3><p>​    正则表达式中由几种基本字符组成：</p>
+<ul>
+<li>原义字符</li>
+<li>非打印字符</li>
+<li>元字符</li>
+</ul>
+<h3 id="2-3-原义字符"><a href="#2-3-原义字符" class="headerlink" title="2.3.原义字符"></a>2.3.原义字符</h3><p>​    拿多行匹配的那个栗子来说，正则表达式中<code>&lt;p&gt;</code>就是原义字符，这个字符代表的就是它本身的意思。那么如果需要标记一个字符为特殊字符、或一个原义字符，那么就可以使用<code>\</code>符号将下一个字符标记转义。比如<code>n</code>将匹配一个字符<code>n</code>，而<code>\n</code>将匹配一个换行符。再比如<code>^</code>将作为起始边界的匹配标记，而<code>\^</code>将匹配<code>^</code>字符。</p>
+<h3 id="2-4-非打印字符"><a href="#2-4-非打印字符" class="headerlink" title="2.4.非打印字符"></a>2.4.非打印字符</h3><p>​    比如回车符、换行符、换页符等都属于非打印字符，它经常被用在文本文件的处理上：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字符</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">\v</td>
+<td style="text-align:center">匹配一个垂直制表符，等价于 \x0b 和 \cK</td>
+</tr>
+<tr>
+<td style="text-align:center">\f</td>
+<td style="text-align:center">匹配一个换页符，等价于 \x0c 和 \cL</td>
+</tr>
+<tr>
+<td style="text-align:center">\n</td>
+<td style="text-align:center">匹配一个换行符，等价于 \x0a 和 \cJ</td>
+</tr>
+<tr>
+<td style="text-align:center">\r</td>
+<td style="text-align:center">匹配一个回车符，等价于 \x0d 和 \cM</td>
+</tr>
+<tr>
+<td style="text-align:center">\s</td>
+<td style="text-align:center">匹配任何空白字符，包括空格、制表符、换页符等等，等价于 [ \f\n\r\t\v]</td>
+</tr>
+<tr>
+<td style="text-align:center">\S</td>
+<td style="text-align:center">匹配任何非空白字符，等价于 [^ \f\n\r\t\v]</td>
+</tr>
+<tr>
+<td style="text-align:center">\t</td>
+<td style="text-align:center">匹配一个制表符，等价于 \x09 和 \cI</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-5-元字符"><a href="#2-5-元字符" class="headerlink" title="2.5.元字符"></a>2.5.元字符</h3><h4 id="2-5-1-字符类（-）"><a href="#2-5-1-字符类（-）" class="headerlink" title="2.5.1.字符类（ [ ] ）"></a>2.5.1.字符类（ [ ] ）</h4><p>​    比如在第一节我们匹配手机号所用的正则表达式中<code>1[34578]\d{9}</code>手机号的第二位可能是3、4、5、7、8中的任意一位，那<code>[34578]</code>就表示这些字符的一个集合。</p>
+<h4 id="2-5-2-字符类取反（-）"><a href="#2-5-2-字符类取反（-）" class="headerlink" title="2.5.2.字符类取反（ [ ^ ] ）"></a>2.5.2.字符类取反（ [ ^ ] ）</h4><p>​    就是字符类的一个相反情况，表示不包含这些字符。</p>
+<h4 id="2-5-3-范围类（-）"><a href="#2-5-3-范围类（-）" class="headerlink" title="2.5.3.范围类（ [-] ）"></a>2.5.3.范围类（ [-] ）</h4><p>​    正则表达式支持一定的范围规则，比如<code>[a-z]</code>表示字母a到z，<code>[0-9]</code>表示数字0到9。多种范围类可以写到一个字符类中，比如匹配字母a到z和数字0到9，那么就可以写成<code>[a-z0-9]</code>。</p>
+<h4 id="2-5-4-预定义类"><a href="#2-5-4-预定义类" class="headerlink" title="2.5.4.预定义类"></a>2.5.4.预定义类</h4><p>​    有了这些预定义类，会简化正则表达式能够比较方便的书写。比如第一节举的栗子中匹配日期所使用的正则表达式<code>\d{4}[/-]\d{2}[/-]\d{2}</code>，<code>\d</code>就表示了数字字符，如果不适用预定义类，那么这个正则表达式会变得比较复杂<code>[0-9]{4}[/-][0-9]{2}[/-][0-9]{2}</code>：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字符</th>
+<th style="text-align:center">等价于</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">.</td>
+<td style="text-align:center">[^\n\r]</td>
+<td style="text-align:center">除了回车符和换行符之外的所有字符</td>
+</tr>
+<tr>
+<td style="text-align:center">\d</td>
+<td style="text-align:center">[0-9]</td>
+<td style="text-align:center">数字字符</td>
+</tr>
+<tr>
+<td style="text-align:center">\D</td>
+<td style="text-align:center">[^0-9]</td>
+<td style="text-align:center">非数字字符</td>
+</tr>
+<tr>
+<td style="text-align:center">\s</td>
+<td style="text-align:center">[\t\n\x0B\f\r]</td>
+<td style="text-align:center">空白符</td>
+</tr>
+<tr>
+<td style="text-align:center">\S</td>
+<td style="text-align:center">[^\t\n\x0B\f\r]</td>
+<td style="text-align:center">非空白符</td>
+</tr>
+<tr>
+<td style="text-align:center">\w</td>
+<td style="text-align:center">[a-zA-Z_0-9]</td>
+<td style="text-align:center">单词字符（数字字母下划线）</td>
+</tr>
+<tr>
+<td style="text-align:center">\W</td>
+<td style="text-align:center">[^a-zA-Z_0-9]</td>
+<td style="text-align:center">非单词字符</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2-5-5-边界"><a href="#2-5-5-边界" class="headerlink" title="2.5.5.边界"></a>2.5.5.边界</h4><p>​    正如它的字面意思，边界就是定义匹配的边界条件。比如在<code>2.1.3</code>节中匹配<code>&lt;p&gt;</code>标签中段落所使用的<code>^(&lt;p&gt;)</code>就代表以<code>&lt;p&gt;</code>原义字符作为字符串的开始，<code>(&lt;/p&gt;)$</code>就代表以<code>&lt;/p&gt;</code>原义字符作为字符串的结尾。边界字符一共有四种：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字符</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">^</td>
+<td style="text-align:center">以xxx开头</td>
+</tr>
+<tr>
+<td style="text-align:center">$</td>
+<td style="text-align:center">以xxx结尾</td>
+</tr>
+<tr>
+<td style="text-align:center">\b</td>
+<td style="text-align:center">单词边界，指[a-zA-Z_0-9]之外的字符</td>
+</tr>
+<tr>
+<td style="text-align:center">\B</td>
+<td style="text-align:center">非单词边界</td>
+</tr>
+</tbody>
+</table>
+<p>​    <code>\b</code>和<code>\B</code>可能会稍微难理解一些，因为之前的元字符是匹配一个<strong>字符</strong>，而它俩匹配的是一个<strong>位置</strong>，这个位置就是<strong>单词边界</strong>位置（<u>它的前一个字符和后一个字符不全是(一个是,一个不是或不存在) 单词字符</u>），括号内的内容可以先不理解，继续向下看。</p>
+<p>​    首先<strong>单词边界</strong>简单的来说就是单词（\w）和符号(\W)之间的位置，举一个栗子来更具体的说明：在<code>@Hello,hollysys!</code>这个字符串中<strong>单词边界</strong>的位置添加一个<code>*</code>号，那么结果就是<code>@*Hello*,*hollysys*!</code>。观察一下特征，我们再来理解上一段中下划线内容。单词边界前后相邻的两边一定一边是单词字符而另一边是非单词字符或者没有字符，如果符合这个规则，那么这个位置就是单词边界。<code>\b</code>匹配的就是这个位置，那么正则表达式<code>\bHello</code>就可以理解为：匹配处于<strong>单词边界</strong>位置的<code>Hello</code>，<code>\B</code>与之相反。</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/匹配单词边界.jpg" alt=""></p>
+<hr>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/匹配非单词边界.jpg" alt="匹配非单词边界"></p>
+<h4 id="2-5-6-量词-重复-限定符"><a href="#2-5-6-量词-重复-限定符" class="headerlink" title="2.5.6.量词/重复/限定符"></a>2.5.6.量词/重复/限定符</h4><p>​    在<code>2.5.4</code>节中我们知道，匹配一个数字字符可以不使用范围类<code>[0-9]</code>而使用一个元字符<code>\d</code>。那如果匹配一个10位的数字需要<code>\d\d\d\d\d\d\d\d\d\d</code>吗？当然不用，量词简化了这种情况的书写方式：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字符</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">?</td>
+<td style="text-align:center">出现零次或一次</td>
+</tr>
+<tr>
+<td style="text-align:center">*</td>
+<td style="text-align:center">出现零次或多次(任意次)</td>
+</tr>
+<tr>
+<td style="text-align:center">+</td>
+<td style="text-align:center">出现一次或多次（至少一次）</td>
+</tr>
+<tr>
+<td style="text-align:center">{n}</td>
+<td style="text-align:center">对应零次或者n次</td>
+</tr>
+<tr>
+<td style="text-align:center">{n,m}</td>
+<td style="text-align:center">至少出现n次但不超过m次</td>
+</tr>
+<tr>
+<td style="text-align:center">{n,}</td>
+<td style="text-align:center">至少出现</td>
+</tr>
+</tbody>
+</table>
+<p>​    在第一节栗子中匹配手机号所用的表达式<code>1[34578]\d{9}</code>最后的<code>{9}</code>就是一个量词，代表匹配9个数字字符。</p>
+<h4 id="2-5-7-贪婪与懒惰（-）"><a href="#2-5-7-贪婪与懒惰（-）" class="headerlink" title="2.5.7.贪婪与懒惰（ ? ）"></a>2.5.7.贪婪与懒惰（ ? ）</h4><p>​    贪婪和懒惰是描述正则表达式的两种匹配方式，正如其名贪婪就是匹配尽可能多的结果，懒惰则与之相反。默认情况下正则表达式会采用贪婪模式进行匹配，而在量词后加<code>?</code>则会使用懒惰匹配。在量词描述下匹配单词字符时，贪婪模式会采取上限去匹配，而懒惰模式会采取下限模式匹配。这里我们结合上一小节量词的内容举例说明：使用正则表达式<code>\w{3,6}</code>对字符串<code>Hollysys</code>进行贪婪和懒惰匹配，观察结果。</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/懒惰匹配.jpg" alt=""></p>
+<hr>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/贪婪匹配.jpg" alt="贪婪匹配"></p>
+<h4 id="2-5-8-分支条件（-）"><a href="#2-5-8-分支条件（-）" class="headerlink" title="2.5.8.分支条件（ | ）"></a>2.5.8.分支条件（ | ）</h4><p>​    正则表达式中的分支条件就是几种规则，在表达式中使用<code>|</code>将不同的规则分开，在匹配时会对每个分支进行匹配，举个栗子：</p>
+<p>​    我们还是那开头那个栗子，我现在需要匹配全文中所有的<code>江伟</code>和<code>师傅</code>，那正则表达式就可以写成</p>
+<p><code>江伟|师傅</code>，提供了两种规则就可以将所有的结果匹配出来。</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/分支匹配.jpg" alt=""></p>
+<h4 id="2-5-9-分组与反向引用"><a href="#2-5-9-分组与反向引用" class="headerlink" title="2.5.9.分组与反向引用"></a>2.5.9.分组与反向引用</h4><table>
+<thead>
+<tr>
+<th style="text-align:center">字符</th>
+<th style="text-align:center">含义</th>
+<th style="text-align:center">分类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">(exp)</td>
+<td style="text-align:center">匹配exp，并将结果自动命名分组</td>
+<td style="text-align:center">捕获</td>
+</tr>
+<tr>
+<td style="text-align:center">(?\<name>exp)</name></td>
+<td style="text-align:center">匹配exp，并将结果按指定名称命名分组</td>
+<td style="text-align:center">捕获</td>
+</tr>
+<tr>
+<td style="text-align:center">(?:exp)</td>
+<td style="text-align:center">匹配exp，但是不捕获结果也不对结果进行分组</td>
+<td style="text-align:center">捕获</td>
+</tr>
+<tr>
+<td style="text-align:center">(?=exp)</td>
+<td style="text-align:center">匹配exp前面的<strong>位置</strong></td>
+<td style="text-align:center">断言</td>
+</tr>
+<tr>
+<td style="text-align:center">(?&lt;=exp)</td>
+<td style="text-align:center">匹配exp后面的<strong>位置</strong></td>
+<td style="text-align:center">断言</td>
+</tr>
+<tr>
+<td style="text-align:center">(?!exp)</td>
+<td style="text-align:center">匹配后面不是exp的<strong>位置</strong></td>
+<td style="text-align:center">断言</td>
+</tr>
+<tr>
+<td style="text-align:center">(?&lt;!exp)</td>
+<td style="text-align:center">匹配前面不是exp的<strong>位置</strong></td>
+<td style="text-align:center">断言</td>
+</tr>
+<tr>
+<td style="text-align:center">(?#comment)</td>
+<td style="text-align:center">注释，不参与正则运算</td>
+<td style="text-align:center">注释</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>分组</strong></li>
+</ul>
+<p>​    分组又称为子表达式，干嘛用的？我又要举栗子了，首先我们看一种情况：如果我们需要将一个字符串中所有多个连续的<code>abc</code>替换为<code>*</code>号，那么我们结合<code>2.5.6</code>中所说的量词使用正则<code>abc{2,}</code>进行匹配，发现结果并不是所预期的，量词只作用到了<code>c</code>上而不是<code>abc</code>上。</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/非分组举例.jpg" alt=""></p>
+<p>​    这里为了使量词作用到<code>abc</code>上，就用到了分组的概念。正如本节开头所述，分组称为子表达式，<code>abc</code>就是一个只含有原义字符的表达式，使用圆括号将表达式括起来作为子表达式将子表达式匹配的结果做进一步处理，此时后面的量词就会作用在这个子表达式上。</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/分组举例.jpg" alt=""></p>
+<ul>
+<li><strong>反向引用</strong></li>
+</ul>
+<p>​    反向引用往往和分组一起使用，当一个表达式被分组之后，该表达式所匹配到的内容会被自动赋予一个组号。默认情况下从左到右以分组的左括号作为标志，按先后出现顺序编号1、2、3···(0对应整个正则表达式)通过组号可以获得对应表达式所匹配到的结果。如本文开头举栗中对匹配到的所有日期进行年月日的分组使用的正则表达式<code>(\d{4})[/-](\d{2})[/-](\d{2})</code>，我们来看下匹配的结果：</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/分组匹配.jpg" alt=""></p>
+<p>​    当然除了默认的组号，还可以自己定义每一组的名称，我们对这个例子进一步改造，只需要在分组的子表达式前面添加<code>?&lt;name&gt;</code>使其这个分组有一个固定的名称。</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/分组命名.jpg" alt=""></p>
+<p><code>注意：实际上组号分配过程是要从左向右扫描两遍的：第一遍只给未命名的组分配，第二遍只给命名的组分配，因此所有命名组的组号都大于未命名的组号。</code></p>
+<p>​    这里我们再提出一个场景，需要使用正则表达式匹配并取到下面域名列表中所有域名的名称：</p>
+<blockquote>
+<p><a href="https://www.baidu.com" target="_blank" rel="noopener">https://www.baidu.com</a><br><a href="http://www.hollysys.com" target="_blank" rel="noopener">http://www.hollysys.com</a><br><a href="https://www.qq.com" target="_blank" rel="noopener">https://www.qq.com</a><br>mysql://<a href="http://www.aliyun.com:3306/device_db" target="_blank" rel="noopener">www.aliyun.com:3306/device_db</a><br><a href="http://www.forkbteam.com" target="_blank" rel="noopener">http://www.forkbteam.com</a><br><a href="https://163.com" target="_blank" rel="noopener">https://163.com</a><br><a href="http://google.cn" target="_blank" rel="noopener">http://google.cn</a><br>tcp://127.0.0.1</p>
+</blockquote>
+<p>​    那么我们可以使用正则表达式<code>(?:http|https)://w*\.?(.*)\.(?:com|cn)</code>进行匹配，当在子表达式最前面添加<code>?:</code>则不会捕获该组的结果，匹配结果如下图所示：</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/分组匹配2.jpg" alt=""></p>
+<p><code>注：2.5节中省略了平衡组、零宽断言和负零宽断言的介绍。</code></p>
+<h2 id="3-正则表达式是如何匹配的？"><a href="#3-正则表达式是如何匹配的？" class="headerlink" title="3.正则表达式是如何匹配的？"></a>3.正则表达式是如何匹配的？</h2><p>​    那么正则表达式是怎么匹配的？它的工作机制是什么？这也是需要有些了解的，因为这对于写一个好的正则表达式非常有帮助，能有效提高匹配文本所需消耗的性能与时间。</p>
+<h3 id="3-1-正则表达式的工作机制"><a href="#3-1-正则表达式的工作机制" class="headerlink" title="3.1.正则表达式的工作机制"></a>3.1.正则表达式的工作机制</h3><h4 id="3-1-1-匹配引擎眼里的字符串"><a href="#3-1-1-匹配引擎眼里的字符串" class="headerlink" title="3.1.1.匹配引擎眼里的字符串"></a>3.1.1.匹配引擎眼里的字符串</h4><p>​    在说到边界时，我们知道边界匹配的是一个位置，而预定义类等匹配的是一个字符。所以被匹配的一串字符<code>Hollysys</code>在正则匹配引擎眼里是含有位置占位符的<code>0H1o2l3l4s5y6s7</code>。</p>
+<h4 id="3-1-2-匹配流程"><a href="#3-1-2-匹配流程" class="headerlink" title="3.1.2.匹配流程"></a>3.1.2.匹配流程</h4><p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/正则表达式工作机制.jpg" alt=""></p>
+<p>​    正则表达式在编译之后会从头字符开始匹配，如果匹配成功，会查找是否还有其他的路径没有匹配到，如果有的话，会回退到上一次成功匹配的位置然后重复第二步操作，不过此时开始匹配的位置是上次成功位置加1。这整个匹配过程的基础环节就是回溯，回溯是驱动正则匹配的一个基本动力，也是影响匹配性能的一个关键。</p>
+<h4 id="3-1-3-占有字符和零宽度"><a href="#3-1-3-占有字符和零宽度" class="headerlink" title="3.1.3.占有字符和零宽度"></a>3.1.3.占有字符和零宽度</h4><p>​    如果一个子表达式在匹配过程中匹配到了结果，而且这个结果不是一个位置而是一个字符，那么它所匹配到的结果会被它占有并保存到匹配结果中，这种称为占有字符。而如果匹配到的是一个位置，那么这个位置是不会被它占有更不会保存到匹配结果中去，这种称为零宽度。</p>
+<p>​    占有字符是互斥的，零宽度是非互斥的，也就是说一个字符同一时间只能被一个表达式匹配，而一个位置在同一时间可以被多个零宽度表达式匹配。对，我要举栗子了：</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/零宽度非互斥.jpg" alt=""></p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/占有字符互斥.jpg" alt=""></p>
+<p>​    第一张图可以看到两个子表达式都在匹配同一个位置，结果中可以看到这个表达式执行成功。第二张图两个子表达式都在匹配字符f，但是无法匹配成功。因为当第一个子表达式将f占有后，第二个子表达式无法再找到符合条件的匹配而使得整个表达式匹配失败。</p>
+<h4 id="3-1-4-控制权和传动"><a href="#3-1-4-控制权和传动" class="headerlink" title="3.1.4.控制权和传动"></a>3.1.4.控制权和传动</h4><p>​    正则表达式在由左向右依次匹配时，会有一个表达式先取得控制权，从某个位置开始匹配。当这个子表达式匹配结束后，会将控制权传动给下一个子表达式。下一个子表达式会从上一个表达式匹配成功之后的位置开始匹配，但如果上一个子表达式是零宽度，那么匹配的位置还是上一个子表达式匹配的位置。</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/控制权和传动.jpg" alt=""></p>
+<h3 id="3-2-运算优先级"><a href="#3-2-运算优先级" class="headerlink" title="3.2.运算优先级"></a>3.2.运算优先级</h3><p>​    正则表达式从左到右进行计算，并遵循优先级顺序。相同优先级的从左到右进行运算，不同优先级的运算先高后低。下表从由高到最低对元字符的优先级进行了排序：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">元字符</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">\</td>
+<td style="text-align:center">转义符</td>
+</tr>
+<tr>
+<td style="text-align:center">()，(?:)，(?=),[]</td>
+<td style="text-align:center">圆括号和方括号</td>
+</tr>
+<tr>
+<td style="text-align:center">*，+，?，{n}，{n,}，{n,m}</td>
+<td style="text-align:center">量词</td>
+</tr>
+<tr>
+<td style="text-align:center">^，$，\任何元字符、任何字符</td>
+<td style="text-align:center">位置和顺序</td>
+</tr>
+<tr>
+<td style="text-align:center">\</td>
+<td style="text-align:center"></td>
+<td>或</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-3-回溯"><a href="#3-3-回溯" class="headerlink" title="3.3.回溯"></a>3.3.回溯</h3><p>​    正则表达式中分支和量词出现的次数是比较多的，量词就如<code>2.5.6</code>小节所述，正则表达式需要决定何时去尝试匹配更多的字符。而分支如<code>2.5.8</code>小节最后的栗子一样，在匹配时我需要<code>http</code>和<code>https</code>两种情况开头的URL，那么<code>（http|https）</code>就提供了两个分支供正则选择。对于这种模糊条件匹配，最好的办法就是穷举，将所有可能的结果匹配一遍，<strong>一旦匹配成功立即返回结果</strong>。那么这里我们就这两种情况结合回溯分析正则表达式是如何匹配的。</p>
+<h4 id="3-3-1-分支-amp-回溯"><a href="#3-3-1-分支-amp-回溯" class="headerlink" title="3.3.1.分支&amp;回溯"></a>3.3.1.分支&amp;回溯</h4><p>​    在<code>2.5.8</code>小节中说到了分支，分支是提供多个规则给正则表达式进行匹配，为了去匹配这些规则就需要进行回溯。这里通过描述正则表达式<code>H(ollysys|ere)&lt;/p&gt;</code>对<code>Here is &lt;p&gt;Hollysys&lt;/p&gt; company</code>的匹配过程来展示分支的回溯过程。</p>
+<table>
+<thead>
+<tr>
+<th>匹配结果</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>H</td>
+<td>在位置0匹配到了字符<code>H</code></td>
+</tr>
+<tr>
+<td>H</td>
+<td>选择<code>ollsys</code>分支进行匹配</td>
+</tr>
+<tr>
+<td>He</td>
+<td>位置1不是字符<code>o</code>，回溯</td>
+</tr>
+<tr>
+<td>H</td>
+<td>选择<code>ere</code>分支进行匹配</td>
+</tr>
+<tr>
+<td>He</td>
+<td>位置1上成功匹配字符<code>e</code></td>
+</tr>
+<tr>
+<td>Here</td>
+<td>位置2、3上成功匹配字符<code>re</code>，该分支匹配成功</td>
+</tr>
+<tr>
+<td>Here</td>
+<td>位置4不是字符<code>&lt;</code>，该路径匹配失败</td>
+</tr>
+<tr>
+<td>Null</td>
+<td>位置2不是字符<code>H</code>，匹配失败</td>
+</tr>
+<tr>
+<td>···</td>
+<td>···</td>
+</tr>
+<tr>
+<td>H</td>
+<td>位置11匹配到字符<code>H</code></td>
+</tr>
+<tr>
+<td>H</td>
+<td>选择<code>ollsys</code>分支进行匹配</td>
+</tr>
+<tr>
+<td>Hollysys</td>
+<td>匹配到了<code>ollysys</code>，该分支匹配成功</td>
+</tr>
+<tr>
+<td>Hollysys&lt;</td>
+<td>在位置9匹配到了字符<code>&lt;</code></td>
+</tr>
+<tr>
+<td>Hollysys\<p></p></td>
+<td>在位置10、11、12上匹配到了<code>/p&gt;</code></td>
+</tr>
+<tr>
+<td>Hollysys\<p></p></td>
+<td>该路径匹配成功</td>
+</tr>
+</tbody>
+</table>
+<p><code>注：正则表达式是从左到右依次匹配，如果满足了某个分支的话它就不会再管其他分支了</code></p>
+<h4 id="3-3-1-量词-amp-回溯"><a href="#3-3-1-量词-amp-回溯" class="headerlink" title="3.3.1.量词&amp;回溯"></a>3.3.1.量词&amp;回溯</h4><p>​    如<code>2.5.7</code>小节所述，在使用量词匹配时有贪婪和懒惰两种匹配模式，该小节中我们使用正则表达式<code>&lt;.*&gt;</code>和<code>&lt;.*?&gt;</code>对字符串<code>Here is &lt;p&gt;Hollysys&lt;/p&gt; company</code>进行匹配。那么是如何匹配的呢？</p>
+<ul>
+<li>`&lt;.*&gt;</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>匹配结果</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;</td>
+<td>先匹配<code>&lt;</code>字符，在位置8匹配成功</td>
+</tr>
+<tr>
+<td>\<p>Hollysys\</p> company</td>
+<td>默认贪婪匹配，量词取上限<code>.*</code>一下吞噬后面的所有字符</td>
+</tr>
+<tr>
+<td>\<p>Hollysys\</p> company</td>
+<td>后面没有字符供<code>&gt;</code>匹配，回溯，要求<code>.*</code>吐一个字符出来</td>
+</tr>
+<tr>
+<td>\<p>Hollysys\</p> compan</td>
+<td>吐得字符不是<code>&gt;</code>，回溯，再给我吐一个</td>
+</tr>
+<tr>
+<td>\<p>Hollysys\</p> compa</td>
+<td>吐得字符不是<code>&gt;</code>，回溯，再给我吐一个</td>
+</tr>
+<tr>
+<td>\<p>Hollysys\</p> comp</td>
+<td>吐得字符不是<code>&gt;</code>，回溯，再给我吐一个</td>
+</tr>
+<tr>
+<td>\<p>Hollysys\</p> com</td>
+<td>吐得字符不是<code>&gt;</code>，回溯，再给我吐一个</td>
+</tr>
+<tr>
+<td>\<p>Hollysys\</p> co</td>
+<td>吐得字符不是<code>&gt;</code>，回溯，再给我吐一个</td>
+</tr>
+<tr>
+<td>\<p>Hollysys\</p> c</td>
+<td>吐得字符不是<code>&gt;</code>，回溯，再给我吐一个</td>
+</tr>
+<tr>
+<td>\<p>Hollysys\</p></td>
+<td>吐得字符不是<code>&gt;</code>，回溯，再给我吐一个</td>
+</tr>
+<tr>
+<td>\<p>Hollysys\</p></td>
+<td>是<code>&gt;</code>，完成匹配</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>&lt;.*?&gt;</code></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>匹配结果</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;</td>
+<td>先匹配<code>&lt;</code>字符，在位置8匹配成功</td>
+</tr>
+<tr>
+<td>\&lt;</td>
+<td>懒惰匹配，量词取下限0，<code>.*</code>被忽略</td>
+</tr>
+<tr>
+<td>\&lt;p</td>
+<td>不是<code>&gt;</code>，回溯</td>
+</tr>
+<tr>
+<td>\&lt;p</td>
+<td><code>.*</code>匹配1个字符</td>
+</tr>
+<tr>
+<td>\<p></p></td>
+<td>是<code>&gt;</code>，完成匹配</td>
+</tr>
+<tr>
+<td>\<p>、\</p></td>
+<td>全局匹配，未到尾部继续按上述步骤向前匹配又找到<code>&lt;/p&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-4-分组"><a href="#3-4-分组" class="headerlink" title="3.4.分组"></a>3.4.分组</h3><p>​    在2.5.9中我们说到了分组捕获以及对组的命名，那么我们来看一种情况：</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/同名分组.jpg" alt=""></p>
+<p>​    当对两个组使用相同的名称时，最终的结果只会显示最后一个，是被覆盖了么？其实每一个组都是一个堆栈，当正则从左向右匹配分组内的子表达式时，会将匹配结果捕获出来压入指定名称的栈中。而组获取的文本是栈顶的数据，所以最终取到的结果是<code>sys</code>。但我只想要上一个结果怎么办？那就可以使用<code>(?&#39;-one&#39;)</code>将顶部的栈弹出：</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/弹出栈.jpg" alt=""></p>
+<h3 id="3-5-正则表达式优化的一些小技巧"><a href="#3-5-正则表达式优化的一些小技巧" class="headerlink" title="3.5.正则表达式优化的一些小技巧"></a>3.5.正则表达式优化的一些小技巧</h3><ol>
+<li>避免重新编译，编译正则表达式的次数尽可能的少；</li>
+<li>如果不需要括号内的子表达式匹配结果，最好使用非捕获符号<code>?:</code>；</li>
+<li>不要滥用括号和字符组；</li>
+<li>从量词中提取出来必须的元素；</li>
+<li>提取分支条件开头或结尾必须的元素；</li>
+<li>使用正确的边界符限定搜索区域；</li>
+<li>尽量不适用通配符，使用具体的元字符；</li>
+<li>使用正确的量词，并尽可能限定长度；</li>
+</ol>
+<h2 id="4-一些正则调试辅助工具"><a href="#4-一些正则调试辅助工具" class="headerlink" title="4.一些正则调试辅助工具"></a>4.一些正则调试辅助工具</h2><h3 id="4-1-Regexper"><a href="#4-1-Regexper" class="headerlink" title="4.1.Regexper"></a>4.1.Regexper</h3><p>​    Regexper是一款JavaScript可视化正则调试工具，它可以解析正则表达式并将匹配方式可视的显示出来，这比直接读正则表达式方便了很多，也编译找出自己写的表达式中存在哪些逻辑或者语法上的错误。</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/regexper.jpg" alt=""></p>
+<p>工具地址：<a href="https://regexper.com" target="_blank" rel="noopener">Regexper</a></p>
+<h3 id="4-2-在线正则表达式测试"><a href="#4-2-在线正则表达式测试" class="headerlink" title="4.2.在线正则表达式测试"></a>4.2.在线正则表达式测试</h3><p>​    这个是比较简单的轻量级在线调试工具，并提供了一些常用的表达式。</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/在线正则工具.jpg" alt=""></p>
+<p>工具地址：<a href="http://tool.oschina.net/regex/" target="_blank" rel="noopener">在线正则表达测试</a></p>
+<h3 id="4-3-正则表达式测试器"><a href="#4-3-正则表达式测试器" class="headerlink" title="4.3.正则表达式测试器"></a>4.3.正则表达式测试器</h3><p>​    也是一个轻量级桌面版正则表达式测试工具，展示比上面那个在线版要友好很多，支持匹配数据的导出。</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/regex_tester.png" alt=""></p>
+<p>下载地址：<a href="http://deerchao.net/tools/regex_tester/index.htm" target="_blank" rel="noopener">正则表达测试器</a></p>
+<h3 id="4-4-RegexBuddy"><a href="#4-4-RegexBuddy" class="headerlink" title="4.4.RegexBuddy"></a>4.4.RegexBuddy</h3><p>​    这个工具是一款功能强大的正则表达式编辑工具，使用能够帮助用户快速自动生成正则表达式，支持自动检查和修改生成的正则表达式，可在样本字符串和文件上快速测试任何正则表达式，防止实际数据出错。通过逐步完成实际的匹配过程来进行无猜测调试。最主要的，它可以对正则表达式进行Debug，他会以树状列表显示正则匹配的每一个过程和匹配最终的步长，这对性能优化有着非常大的帮助。</p>
+<p><img src="http://www.forkbteam.com/usr/uploads/2018/regex/RegexBuddy.jpg" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>初到贵宝地，有钱的给个钱场,没钱的挤一挤给个钱场</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://raw.githubusercontent.com/unclepis/git_introduction/master/wechat.jpg" alt="unclepis 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://raw.githubusercontent.com/unclepis/git_introduction/master/alipay.jpg" alt="unclepis 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/正则表达式/" <i="" class="fa fa-tag"> 正则表达式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/21/this/" rel="next" title="javascript - 常见的五种this指向">
+                <i class="fa fa-chevron-left"></i> javascript - 常见的五种this指向
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/10/08/vue_1/" rel="prev" title="vue 朝花夕拾系列（1）- vue内置指令和修饰符基础">
+                vue 朝花夕拾系列（1）- vue内置指令和修饰符基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">unclepis</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/unclepis" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:59869158@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          <div>
+            
+              <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="320" height="430" src="https://music.163.com/outchain/player?type=0&id=2394580803&auto=1&height=430"></iframe>
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-正则表达式是什么？"><span class="nav-number">1.</span> <span class="nav-text">1.正则表达式是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-正则表达式中的一些语法"><span class="nav-number">2.</span> <span class="nav-text">2.正则表达式中的一些语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-修饰符（g-i-m）"><span class="nav-number">2.1.</span> <span class="nav-text">2.1.修饰符（g i m）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-全局匹配"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1.全局匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-不区分大小写匹配"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2.不区分大小写匹配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-3-多行匹配"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3.多行匹配</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-正则表达式字符的组成"><span class="nav-number">2.2.</span> <span class="nav-text">2.2.正则表达式字符的组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-原义字符"><span class="nav-number">2.3.</span> <span class="nav-text">2.3.原义字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-非打印字符"><span class="nav-number">2.4.</span> <span class="nav-text">2.4.非打印字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-元字符"><span class="nav-number">2.5.</span> <span class="nav-text">2.5.元字符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-1-字符类（-）"><span class="nav-number">2.5.1.</span> <span class="nav-text">2.5.1.字符类（ [ ] ）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-2-字符类取反（-）"><span class="nav-number">2.5.2.</span> <span class="nav-text">2.5.2.字符类取反（ [ ^ ] ）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-3-范围类（-）"><span class="nav-number">2.5.3.</span> <span class="nav-text">2.5.3.范围类（ [-] ）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-4-预定义类"><span class="nav-number">2.5.4.</span> <span class="nav-text">2.5.4.预定义类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-5-边界"><span class="nav-number">2.5.5.</span> <span class="nav-text">2.5.5.边界</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-6-量词-重复-限定符"><span class="nav-number">2.5.6.</span> <span class="nav-text">2.5.6.量词/重复/限定符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-7-贪婪与懒惰（-）"><span class="nav-number">2.5.7.</span> <span class="nav-text">2.5.7.贪婪与懒惰（ ? ）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-8-分支条件（-）"><span class="nav-number">2.5.8.</span> <span class="nav-text">2.5.8.分支条件（ | ）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-9-分组与反向引用"><span class="nav-number">2.5.9.</span> <span class="nav-text">2.5.9.分组与反向引用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-正则表达式是如何匹配的？"><span class="nav-number">3.</span> <span class="nav-text">3.正则表达式是如何匹配的？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-正则表达式的工作机制"><span class="nav-number">3.1.</span> <span class="nav-text">3.1.正则表达式的工作机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-匹配引擎眼里的字符串"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1.匹配引擎眼里的字符串</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-匹配流程"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2.匹配流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-3-占有字符和零宽度"><span class="nav-number">3.1.3.</span> <span class="nav-text">3.1.3.占有字符和零宽度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-4-控制权和传动"><span class="nav-number">3.1.4.</span> <span class="nav-text">3.1.4.控制权和传动</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-运算优先级"><span class="nav-number">3.2.</span> <span class="nav-text">3.2.运算优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-回溯"><span class="nav-number">3.3.</span> <span class="nav-text">3.3.回溯</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-分支-amp-回溯"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.3.1.分支&amp;回溯</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-量词-amp-回溯"><span class="nav-number">3.3.2.</span> <span class="nav-text">3.3.1.量词&amp;回溯</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-分组"><span class="nav-number">3.4.</span> <span class="nav-text">3.4.分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-正则表达式优化的一些小技巧"><span class="nav-number">3.5.</span> <span class="nav-text">3.5.正则表达式优化的一些小技巧</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-一些正则调试辅助工具"><span class="nav-number">4.</span> <span class="nav-text">4.一些正则调试辅助工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Regexper"><span class="nav-number">4.1.</span> <span class="nav-text">4.1.Regexper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-在线正则表达式测试"><span class="nav-number">4.2.</span> <span class="nav-text">4.2.在线正则表达式测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-正则表达式测试器"><span class="nav-number">4.3.</span> <span class="nav-text">4.3.正则表达式测试器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-RegexBuddy"><span class="nav-number">4.4.</span> <span class="nav-text">4.4.RegexBuddy</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">unclepis</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共50.4k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      本站总访问人数 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+  
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      本站总访问量 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'DBnzsB5Bwg1DG3BqNP8vSwH2-gzGzoHsz',
+        appKey: 'G3DDmOX3BPYmH9km2wXYdsX5',
+        placeholder: 'talk is cheap, say something useful...',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input&&input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input&&input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

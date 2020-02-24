@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="Je7AOEjKqN2ygLA5weMsdXFgWp2T5fb26na9fxZyq9o">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="kRmNQSgNqg">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ioc?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mvc,mvvm,module,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Front-end evolution简单介绍一下我理解的前端技术演进…">
+<meta name="keywords" content="mvc,mvvm,module">
+<meta property="og:type" content="article">
+<meta property="og:title" content="currentFrontEnd">
+<meta property="og:url" content="http://unclepis.coding.me/2018/11/19/currentFrontEnd/index.html">
+<meta property="og:site_name" content="屁事蜀黍">
+<meta property="og:description" content="Front-end evolution简单介绍一下我理解的前端技术演进…">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://unclepis.coding.me/2018/11/19/currentFrontEnd/mvc.png">
+<meta property="og:image" content="http://unclepis.coding.me/2018/11/19/currentFrontEnd/mvc2.png">
+<meta property="og:image" content="http://unclepis.coding.me/2018/11/19/currentFrontEnd/mvvm.png">
+<meta property="og:image" content="http://unclepis.coding.me/2018/11/19/currentFrontEnd/subjectObserver.png">
+<meta property="og:image" content="http://unclepis.coding.me/2018/11/19/currentFrontEnd/subscribe.png">
+<meta property="og:image" content="http://unclepis.coding.me/2018/11/19/currentFrontEnd/diff.png">
+<meta property="og:updated_time" content="2019-12-26T05:56:23.819Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="currentFrontEnd">
+<meta name="twitter:description" content="Front-end evolution简单介绍一下我理解的前端技术演进…">
+<meta name="twitter:image" content="http://unclepis.coding.me/2018/11/19/currentFrontEnd/mvc.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://unclepis.coding.me/2018/11/19/currentFrontEnd/">
+
+
+
+
+
+  <title>currentFrontEnd | 屁事蜀黍</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">屁事蜀黍</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Stay Hungry, Stay Foolish(求知若饥，虚心若愚)</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://unclepis.coding.me/2018/11/19/currentFrontEnd/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="unclepis">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="屁事蜀黍">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">currentFrontEnd</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-19T19:35:51+08:00">
+                2018-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/11/19/currentFrontEnd/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/19/currentFrontEnd/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/11/19/currentFrontEnd/" class="leancloud_visitors" data-flag-title="currentFrontEnd">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+             <span>℃</span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Front-end-evolution"><a href="#Front-end-evolution" class="headerlink" title="Front-end evolution"></a>Front-end evolution</h1><p>简单介绍一下我理解的前端技术演进…</p>
+<a id="more"></a>
+<h1 id="第一阶段：刀耕火种"><a href="#第一阶段：刀耕火种" class="headerlink" title="第一阶段：刀耕火种"></a>第一阶段：刀耕火种</h1><h2 id="基本的事件响应机制"><a href="#基本的事件响应机制" class="headerlink" title="基本的事件响应机制"></a>基本的事件响应机制</h2><ul>
+<li>获取view上的dom</li>
+<li>对dom进行事件绑定</li>
+<li>根据事件响应改变视图</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">label</span>&gt;</span>用户输入<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"userInput"</span>&gt;</span><span class="tag">&lt;/<span class="name">label</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"userInput"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">id</span>=<span class="string">"submitButton"</span>&gt;</span>提交<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"userComment"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="comment">// 页面dom加载完毕</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> userInput = bindDom(<span class="string">'userInput'</span>);</span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> submitButton = bindDom(<span class="string">'submitButton'</span>);</span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> userComment = bindDom(<span class="string">'userComment'</span>);</span></span><br><span class="line"><span class="javascript">            submitButton.addEventListener(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="undefined">                userComment.innerHTML = userInput.value;</span></span><br><span class="line"><span class="undefined">            &#125;);</span></span><br><span class="line"><span class="undefined">        &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="comment">// bind dom</span></span></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">bindDom</span>(<span class="params">domID</span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">return</span> <span class="built_in">document</span>.getElementById(domID)</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><a href="http://172.21.46.8:8080/demo1.html" target="_blank" rel="noopener">demo1</a></p>
+<p>频繁的操作dom，性能差，视图view和业务逻辑的js文件揉在一起，维护性差，可读性差，无法复用</p>
+<h1 id="第二阶段：前端模块化"><a href="#第二阶段：前端模块化" class="headerlink" title="第二阶段：前端模块化"></a>第二阶段：前端模块化</h1><ul>
+<li>什么问题导致我们需要前端页面进行组件化？</li>
+<li>组件化究竟时要解决什么问题？<br>答：为了解决结构服用，避免产生重复冗余的代码</li>
+</ul>
+<h2 id="模块化第一阶段：原始的组建化写法-在全局对象上定义模块的属性和方法"><a href="#模块化第一阶段：原始的组建化写法-在全局对象上定义模块的属性和方法" class="headerlink" title="模块化第一阶段：原始的组建化写法(在全局对象上定义模块的属性和方法)"></a>模块化第一阶段：原始的组建化写法(在全局对象上定义模块的属性和方法)</h2><p>模块就是实现特定功能的一组方法－所以把不同的函数和变量简单的放在一起就算是一个模块</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'pis'</span>;</span><br><span class="line"><span class="keyword">var</span> age = <span class="number">18</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getName</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getAge</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.age</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>getName getAge方法组成了一个模块，使用的时候直接调用就可以了。</p>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点:"></a>缺点:</h3><blockquote>
+<p>污染了全局变量<br>不能保证在引入其他模块的时候不会发生变量名冲突和方法被overwrite<br>模块成员之间看不出直接关系</p>
+</blockquote>
+<h2 id="模块化第二阶段：对象的写法"><a href="#模块化第二阶段：对象的写法" class="headerlink" title="模块化第二阶段：对象的写法"></a>模块化第二阶段：对象的写法</h2><p>为了解决上面的问题，可以把模块的方法放到一个对象里面，这样就解决了上面的问题</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> <span class="built_in">module</span> = &#123;</span><br><span class="line">    name:<span class="string">'unclepis'</span>,</span><br><span class="line">    age:<span class="number">18</span>,</span><br><span class="line">    getName:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name</span><br><span class="line">    &#125;,</span><br><span class="line">    getAge:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.age</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样所有的模块方法都封装在了对象里面，使用的时候就是调用这个对象的方法就可以了</p>
+<p>module.getName() // unclepis</p>
+<h3 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h3><blockquote>
+<p>暴漏了所有的模块成员<br>内部的状态可以被外部改写 module.name = ‘eric’</p>
+</blockquote>
+<h2 id="模块化第三阶段：自执行函数"><a href="#模块化第三阶段：自执行函数" class="headerlink" title="模块化第三阶段：自执行函数"></a>模块化第三阶段：自执行函数</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> <span class="built_in">module</span> = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> name = <span class="string">'cindy'</span>;</span><br><span class="line">    <span class="keyword">var</span> age = <span class="number">18</span>;</span><br><span class="line">    <span class="keyword">var</span> getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> getAge = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> age;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">        getName:getName,</span><br><span class="line">        getAge:getAge</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<p>这样的写法使得外部不能获取内部变量，又对外暴漏了模块的接口，所以这就是在es6模块化之前比较主流的模块化写法</p>
+<h3 id="自执行函数模块化扩展1：放大模式＋自执行函数"><a href="#自执行函数模块化扩展1：放大模式＋自执行函数" class="headerlink" title="自执行函数模块化扩展1：放大模式＋自执行函数"></a>自执行函数模块化扩展1：放大模式＋自执行函数</h3><p>如果一个模块很大或者一个模块需要依赖另一个模块，这时候就需要使用放大模式</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> getMoreInfo = (<span class="function"><span class="keyword">function</span>(<span class="params">mod</span>)</span>&#123;</span><br><span class="line">  mod.getJobInfo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="comment">// 引入前面封装好的module，已经有了getName和getAge的方法，又引入了新的方法getjobinfo</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> mod;<span class="comment">// 返回新的模块</span></span><br><span class="line">&#125;)(<span class="built_in">module</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="自执行函数模块化扩展2："><a href="#自执行函数模块化扩展2：" class="headerlink" title="自执行函数模块化扩展2："></a>自执行函数模块化扩展2：</h3><p>由于浏览器环境中，模块的各个部分通常都是从网上获取的。无法控制资源的加载顺序(requirejs这种amd的方式先不考虑)，所以上面引入的module可能在执行的时候还是一个空对象</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> getMoreInfo = (<span class="function"><span class="keyword">function</span>(<span class="params">mod</span>)</span>&#123;</span><br><span class="line">  mod.getJobInfo = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="comment">// 引入前面封装好的module，已经有了getName和getAge的方法，又引入了新的方法getjobinfo</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> mod;<span class="comment">// 返回新的模块</span></span><br><span class="line">&#125;)(<span class="built_in">module</span>||&#123;&#125;); <span class="comment">// 所以需要给模块设置默认的空对象</span></span><br></pre></td></tr></table></figure>
+<h1 id="第三阶段：模块化规范"><a href="#第三阶段：模块化规范" class="headerlink" title="第三阶段：模块化规范"></a>第三阶段：模块化规范</h1><p>通过上面的介绍，我们大概知道了，如何使用自执行函数来封装一组方法集合的模块，这样在模块中对外暴漏了接口方法，但是又不污染全局变量，而且不能在外部随意更改模块的内部变量。<br>虽然这样我们有了模块，可以很方便的服用别人的代码，想要什么功能就加载什么功能，但是每个人的写法可能不一样，所以模块化的规范在社区中慢慢衍生出来…</p>
+<p>目前主流的js模块化规范主要包括三个:</p>
+<ul>
+<li>CMD(common module defination)通用模块化定义</li>
+<li>AMD(Asynchronous module defination) 异步模块化定义</li>
+</ul>
+<h2 id="CMD"><a href="#CMD" class="headerlink" title="CMD"></a>CMD</h2><ul>
+<li>09年nodejs项目使得js可以运行在服务器端。这也就标志着js模块化变成正式诞生</li>
+<li>浏览器环境下网页的复杂性有限，没有模块化问题不是很大，但是运行在服务器端，与操作系统和其他应用程序相互互动，模块化势在必行，否则没发编程</li>
+<li>nodejs的模块系统就是参考commonjs规范实现的，在commonjs中有一个全局性的方法require用于加载模块</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var jquery = require(&apos;./jquery.js&apos;);</span><br><span class="line">jquery.Ajax(); //这样就可以调用了</span><br></pre></td></tr></table></figure>
+<p>在服务器端运行的时候，所有的模块都存放在服务器本地的磁盘上，等待的事件也就是硬盘读取的时间<br>但是如果运行在浏览器上的化，网络的加载可能会使得模块的加载出现⌛️，也就是出现我们常说的页面假死…因此浏览器端不能使用commonjs这种同步加载的方法，<br>只能采用异步加载的方式，这也就诞生了AMD规范…</p>
+<h2 id="AMD"><a href="#AMD" class="headerlink" title="AMD"></a>AMD</h2><p>AMD是”Asynchronous Module Definition”的缩写，意思就是”异步模块定义”。<br>它采用异步方式加载模块，模块的加载不影响它后面语句的运行。<br>所有依赖这个模块的语句，都定义在一个回调函数中，等到加载完成之后，这个回调函数才会运行。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//AMD也采用require()语句加载模块，但是不同于CommonJS，它要求两个参数：</span></span><br><span class="line"><span class="built_in">require</span>([<span class="string">'math'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">math</span>)</span>&#123;</span><br><span class="line">    math.add(<span class="number">2</span>,<span class="number">3</span>);</span><br><span class="line">&#125;])</span><br></pre></td></tr></table></figure>
+<p>math.add()与math模块加载不是同步的，浏览器不会发生假死。所以很显然，AMD比较适合浏览器环境。</p>
+<h3 id="为什么引入amd"><a href="#为什么引入amd" class="headerlink" title="为什么引入amd?"></a>为什么引入amd?</h3><p>最早的时候，所有Javascript代码都写在一个文件里面，只要加载这一个文件就够了。后来，代码越来越多，一个文件不够了，必须分成多个文件，依次加载。下面的网页代码，相信很多人都见过。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"1.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">　　<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"2.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">　　<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"3.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">　　<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"4.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">　　<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"5.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">　　<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"6.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这段代码依次加载多个js文件。</p>
+<p>这样的写法有很大的缺点。</p>
+<ul>
+<li>首先，加载的时候，浏览器会停止网页渲染，加载文件越多，网页失去响应的时间就会越长；</li>
+<li>其次，由于js文件之间存在依赖关系，因此必须严格保证加载顺序（比如上例的1.js要在2.js的前面），依赖性最大的模块一定要放到最后加载，当依赖关系很复杂的时候，代码的编写和维护都会变得困难。</li>
+</ul>
+<p>所以amd的规范就是为了解决这个问题：<br>（1）实现js文件的异步加载，避免网页失去响应；<br>（2）管理模块之间的依赖性，便于代码的编写和维护。</p>
+<h1 id="第四阶段：前端mvc架构"><a href="#第四阶段：前端mvc架构" class="headerlink" title="第四阶段：前端mvc架构"></a>第四阶段：前端mvc架构</h1><h2 id="构架模式"><a href="#构架模式" class="headerlink" title="构架模式"></a>构架模式</h2><p>如何设计一个程序的结构，就是一个架构模式，属于编程的方法论…(演示需要将demo用http-server跑起来)</p>
+<h2 id="mvc构架模式"><a href="#mvc构架模式" class="headerlink" title="mvc构架模式"></a>mvc构架模式</h2><p>MVC就是一种常用的软件构架模式，这个模式任务，任何程序，无论简单与否，从结构上都分为三层：分别代表:<br><img src="/2018/11/19/currentFrontEnd/mvc.png" alt="mvc构架"></p>
+<ul>
+<li>Modal模型  (数据存储)</li>
+<li>view视图 (用户界面)</li>
+<li>controller控制 (业务逻辑)</li>
+</ul>
+<blockquote>
+<p>step1: View 传送指令到 Controller<br>step2: Controller 完成业务逻辑后，要求 Model 改变状态<br>step3: Model 将新的数据发送到 View，用户得到反馈</p>
+</blockquote>
+<ul>
+<li>基本的MVC构架模式，所有通信都是单项的</li>
+</ul>
+<h2 id="实际的业务构架"><a href="#实际的业务构架" class="headerlink" title="实际的业务构架"></a>实际的业务构架</h2><p><img src="/2018/11/19/currentFrontEnd/mvc2.png" alt="mvc实际构架"><br>基本上就可以覆盖我们常见的大多数场景</p>
+<blockquote>
+<p>视图层上的用户交互，通过控制器，对数据模型进行操作，然后数据模型的变化也会动态的更新到视图上…</p>
+</blockquote>
+<h2 id="mvp-mvvm构架模式-model-view-Presenter-model-view-viewModel"><a href="#mvp-mvvm构架模式-model-view-Presenter-model-view-viewModel" class="headerlink" title="mvp/mvvm构架模式(model view Presenter)/(model view viewModel)"></a>mvp/mvvm构架模式(model view Presenter)/(model view viewModel)</h2><p>在MVC的基础上，进而演进出了视图view和数据模型model的双向绑定<br><img src="/2018/11/19/currentFrontEnd/mvvm.png" alt="mvvm"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>用户输入<span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"userInput"</span>&gt;</span><span class="tag">&lt;/<span class="name">label</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">id</span>=<span class="string">"userInput"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">"userComment"</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// 页面dom加载完毕</span></span></span><br><span class="line"><span class="javascript">    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="comment">// view视图上dom元素</span></span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> userInput = bindDom(<span class="string">'userInput'</span>);</span></span><br><span class="line"><span class="javascript">        <span class="keyword">var</span> userComment = bindDom(<span class="string">'userComment'</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="comment">// model数据</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.data = &#123;</span></span><br><span class="line"><span class="javascript">            userInput: <span class="string">'uncle pis'</span></span></span><br><span class="line"><span class="undefined">        &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        userInput.value = data.userInput; <span class="comment">// 使用model的数据初始化视图的显示</span></span></span><br><span class="line"><span class="javascript">        userComment.innerHTML = data.userInput; <span class="comment">// 使用model的数据初始化视图的显示 </span></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="comment">// 数据双向绑定是通过Object.definePropery的get和set对数据进行劫持，监听数据的变化</span></span></span><br><span class="line"><span class="javascript">        <span class="built_in">Object</span>.defineProperty(<span class="built_in">window</span>.data,<span class="string">'userInput'</span>, &#123;</span></span><br><span class="line"><span class="javascript">            set: <span class="function"><span class="keyword">function</span> (<span class="params">val</span>) </span>&#123;</span></span><br><span class="line"><span class="undefined">                userComment.innerText = val;</span></span><br><span class="line"><span class="undefined">                userInput.value = val;</span></span><br><span class="line"><span class="undefined">             &#125;,</span></span><br><span class="line"><span class="javascript">            get: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123; </span></span><br><span class="line"><span class="javascript">                <span class="built_in">console</span>.log(<span class="string">'get User input '</span>);</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;)</span></span><br><span class="line"><span class="undefined">        </span></span><br><span class="line"><span class="javascript">        userInput.addEventListener(<span class="string">'keyup'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">e</span>) </span>&#123;</span></span><br><span class="line"><span class="undefined">            data.userInput = e.target.value;</span></span><br><span class="line"><span class="undefined">        &#125;);</span></span><br><span class="line"><span class="undefined">    &#125;;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="comment">// bind dom</span></span></span><br><span class="line"><span class="javascript">    <span class="function"><span class="keyword">function</span> <span class="title">bindDom</span>(<span class="params">domID</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">        <span class="keyword">return</span> <span class="built_in">document</span>.getElementById(domID)</span></span><br><span class="line"><span class="undefined">    &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><a href="http://172.21.46.8:8080/demo2.html" target="_blank" rel="noopener">demo2</a></p>
+<h1 id="观察者模式和发布订阅模式的有什么区别？"><a href="#观察者模式和发布订阅模式的有什么区别？" class="headerlink" title="观察者模式和发布订阅模式的有什么区别？"></a>观察者模式和发布订阅模式的有什么区别？</h1><p>在软件设计中是一个对象，维护一个依赖列表，当任何状态发生改变自动通知它们</p>
+<p><img src="/2018/11/19/currentFrontEnd/subjectObserver.png" alt="subjectObserver"><br>简单的说就好比找工作：<br>目标公司(Subject)<br>找工作的人 (Observers)<br>职位空缺(消息事件)<br>所以 当职位空缺的时候，目标公司就会通知找工作的人</p>
+<p>发布订阅<br>在发布-订阅模式，消息的发送方，叫做发布者（publishers），消息不会直接发送给特定的接收者（订阅者）。发布者和订阅者不知道对方的存在。需要一个第三方组件，叫做信息中介，它将订阅者和发布者串联起来，它过滤和分配所有输入的消息</p>
+<p><img src="/2018/11/19/currentFrontEnd/subscribe.png" alt="subscribe"></p>
+<p>简单的说就好比买卖房子<br>房主(publisher)就是发布者<br>房产中介(信息中介)<br>买房子的人(订阅者)</p>
+<p>房主和买房子的人不知道对方的存在，消息通过中介进行传输</p>
+<p>区别<br>在观察者模式中，观察者是知道Subject的，Subject一直保持对观察者进行记录。<br>然而，在发布订阅模式中，发布者和订阅者不知道对方的存在。它们只有通过消息代理进行通信。<br><img src="/2018/11/19/currentFrontEnd/diff.png" alt="diff"></p>
+<h2 id="数据劫持和观察者模式"><a href="#数据劫持和观察者模式" class="headerlink" title="数据劫持和观察者模式"></a>数据劫持和观察者模式</h2><p>上面的例子，我们通过object.definePropery方法，通过get和set方法对data数据进行了劫持；<br>然后在数据发生变化的时候，通知给视图上的观察者，来完成视图和数据的关联。</p>
+<h1 id="第五阶段：前后端分离＋Ajax-restful"><a href="#第五阶段：前后端分离＋Ajax-restful" class="headerlink" title="第五阶段：前后端分离＋Ajax+restful"></a>第五阶段：前后端分离＋Ajax+restful</h1><h2 id="标量－序列－映射"><a href="#标量－序列－映射" class="headerlink" title="标量－序列－映射"></a>标量－序列－映射</h2><p>从yaml文档中说，从结构上看，所有的数据data最终都可以分解成三种类型<br>1）第一种是标量（scalar），也就是一个单独的字符串string或者数组numbers<br>2）第二种是序列（sequence），也就是若干个有序的数据并列在一起，又叫做数组array或是列表list<br>3）第三种是映射（mapping），也就是一个健值对（key/value）,即数据又一个名字，还有一个对应的值，着又称作散列（hash）或是字典（dictionary）</p>
+<h2 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h2><p>而21世纪初期，就是一个叫做json的数据格式代替了xml在服务器间进行数据交换传输。什么格式的数据是json？</p>
+<ul>
+<li>并列数据的集合（数组）用方括号([])表示</li>
+<li>并列的数据之间用逗号（“，”）分开</li>
+<li>映射用冒号（“：”）表示</li>
+<li>映射的集合（对象）用话括号（｛｝）表示</li>
+</ul>
+<p>上面四条规则，就是Json格式的所有内容。<br>例如：宁波和利时应用开发部有20人，java开发15人，前端开发4人，测试1人就可以用json表示成</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    company:<span class="string">'宁波和利时'</span>，</span><br><span class="line">    total_people:<span class="number">20</span>,</span><br><span class="line">    department:<span class="string">'应用开发部门'</span>，</span><br><span class="line">    role:[&#123;</span><br><span class="line">        number:<span class="number">15</span>,</span><br><span class="line">        name:<span class="string">'java'</span></span><br><span class="line">    &#125;,&#123;</span><br><span class="line">        number:<span class="number">4</span>,</span><br><span class="line">        name:<span class="string">'js'</span></span><br><span class="line">    &#125;,&#123;</span><br><span class="line">        number:<span class="number">1</span>,</span><br><span class="line">        name:<span class="string">'测试'</span></span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注：js中数组和对象的区别<br>学习javascript的时候，我曾经一度搞不清楚”数组”(array)和”对象”(object)的根本区别在哪里，两者都可以用来表示数据的集合。</p>
+<p>比如有一个数组a=[1,2,3,4]，还有一个对象a={0:1,1:2,2:3,3:4}，然后你运行alert(a[1])，两种情况下的运行结果是相同的！这就是说，数据集合既可以用数组表示，也可以用对象表示，那么我到底该用哪一种呢？</p>
+<p>我后来才知道，数组表示有序数据的集合，而对象表示无序数据的集合。如果数据的顺序很重要，就用数组，否则就用对象。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>初到贵宝地，有钱的给个钱场,没钱的挤一挤给个钱场</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://raw.githubusercontent.com/unclepis/git_introduction/master/wechat.jpg" alt="unclepis 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://raw.githubusercontent.com/unclepis/git_introduction/master/alipay.jpg" alt="unclepis 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mvc/" <i="" class="fa fa-tag"> mvc</a>
+          
+            <a href="/tags/mvvm/" <i="" class="fa fa-tag"> mvvm</a>
+          
+            <a href="/tags/module/" <i="" class="fa fa-tag"> module</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/01/canvas/" rel="next" title="canvas">
+                <i class="fa fa-chevron-left"></i> canvas
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/21/this/" rel="prev" title="javascript - 常见的五种this指向">
+                javascript - 常见的五种this指向 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">unclepis</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/unclepis" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:59869158@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          <div>
+            
+              <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="320" height="430" src="https://music.163.com/outchain/player?type=0&id=2394580803&auto=1&height=430"></iframe>
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Front-end-evolution"><span class="nav-number">1.</span> <span class="nav-text">Front-end evolution</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一阶段：刀耕火种"><span class="nav-number">2.</span> <span class="nav-text">第一阶段：刀耕火种</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本的事件响应机制"><span class="nav-number">2.1.</span> <span class="nav-text">基本的事件响应机制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二阶段：前端模块化"><span class="nav-number">3.</span> <span class="nav-text">第二阶段：前端模块化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模块化第一阶段：原始的组建化写法-在全局对象上定义模块的属性和方法"><span class="nav-number">3.1.</span> <span class="nav-text">模块化第一阶段：原始的组建化写法(在全局对象上定义模块的属性和方法)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点"><span class="nav-number">3.1.1.</span> <span class="nav-text">缺点:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块化第二阶段：对象的写法"><span class="nav-number">3.2.</span> <span class="nav-text">模块化第二阶段：对象的写法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点："><span class="nav-number">3.2.1.</span> <span class="nav-text">缺点：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块化第三阶段：自执行函数"><span class="nav-number">3.3.</span> <span class="nav-text">模块化第三阶段：自执行函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自执行函数模块化扩展1：放大模式＋自执行函数"><span class="nav-number">3.3.1.</span> <span class="nav-text">自执行函数模块化扩展1：放大模式＋自执行函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自执行函数模块化扩展2："><span class="nav-number">3.3.2.</span> <span class="nav-text">自执行函数模块化扩展2：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三阶段：模块化规范"><span class="nav-number">4.</span> <span class="nav-text">第三阶段：模块化规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD"><span class="nav-number">4.1.</span> <span class="nav-text">CMD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AMD"><span class="nav-number">4.2.</span> <span class="nav-text">AMD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么引入amd"><span class="nav-number">4.2.1.</span> <span class="nav-text">为什么引入amd?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四阶段：前端mvc架构"><span class="nav-number">5.</span> <span class="nav-text">第四阶段：前端mvc架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构架模式"><span class="nav-number">5.1.</span> <span class="nav-text">构架模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mvc构架模式"><span class="nav-number">5.2.</span> <span class="nav-text">mvc构架模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实际的业务构架"><span class="nav-number">5.3.</span> <span class="nav-text">实际的业务构架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mvp-mvvm构架模式-model-view-Presenter-model-view-viewModel"><span class="nav-number">5.4.</span> <span class="nav-text">mvp/mvvm构架模式(model view Presenter)/(model view viewModel)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#观察者模式和发布订阅模式的有什么区别？"><span class="nav-number">6.</span> <span class="nav-text">观察者模式和发布订阅模式的有什么区别？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据劫持和观察者模式"><span class="nav-number">6.1.</span> <span class="nav-text">数据劫持和观察者模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第五阶段：前后端分离＋Ajax-restful"><span class="nav-number">7.</span> <span class="nav-text">第五阶段：前后端分离＋Ajax+restful</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标量－序列－映射"><span class="nav-number">7.1.</span> <span class="nav-text">标量－序列－映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON"><span class="nav-number">7.2.</span> <span class="nav-text">JSON</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">unclepis</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共50.4k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      本站总访问人数 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+  
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      本站总访问量 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'DBnzsB5Bwg1DG3BqNP8vSwH2-gzGzoHsz',
+        appKey: 'G3DDmOX3BPYmH9km2wXYdsX5',
+        placeholder: 'talk is cheap, say something useful...',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input&&input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input&&input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

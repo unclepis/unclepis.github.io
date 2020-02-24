@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="Je7AOEjKqN2ygLA5weMsdXFgWp2T5fb26na9fxZyq9o">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="kRmNQSgNqg">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ioc?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="docker,image,container,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在docker中安装ubuntu，并通过ssh链接docker容器中的ubuntu… 另外说一下，docker search ubuntu可以搜索所有关于ubuntu的镜像，有的环境不需要这样从头开始搭建… 不熟悉liux基础的可以看一下linux 基础及其服务器nginx静态资源部署 的前半部分介绍…不熟悉docker的可以看一下容器技术【docker入门基础】  准备工作 查看版本信息cat">
+<meta name="keywords" content="docker,image,container">
+<meta property="og:type" content="article">
+<meta property="og:title" content="水牛下水系列（2）-  window 10下docker安装ubuntu并且通过ssh访问">
+<meta property="og:url" content="http://unclepis.coding.me/2019/12/19/docker-ubuntu/index.html">
+<meta property="og:site_name" content="屁事蜀黍">
+<meta property="og:description" content="在docker中安装ubuntu，并通过ssh链接docker容器中的ubuntu… 另外说一下，docker search ubuntu可以搜索所有关于ubuntu的镜像，有的环境不需要这样从头开始搭建… 不熟悉liux基础的可以看一下linux 基础及其服务器nginx静态资源部署 的前半部分介绍…不熟悉docker的可以看一下容器技术【docker入门基础】  准备工作 查看版本信息cat">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://unclepis.coding.me/2019/12/19/docker-ubuntu/docker_daemon.png">
+<meta property="og:updated_time" content="2019-12-26T05:56:23.827Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="水牛下水系列（2）-  window 10下docker安装ubuntu并且通过ssh访问">
+<meta name="twitter:description" content="在docker中安装ubuntu，并通过ssh链接docker容器中的ubuntu… 另外说一下，docker search ubuntu可以搜索所有关于ubuntu的镜像，有的环境不需要这样从头开始搭建… 不熟悉liux基础的可以看一下linux 基础及其服务器nginx静态资源部署 的前半部分介绍…不熟悉docker的可以看一下容器技术【docker入门基础】  准备工作 查看版本信息cat">
+<meta name="twitter:image" content="http://unclepis.coding.me/2019/12/19/docker-ubuntu/docker_daemon.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://unclepis.coding.me/2019/12/19/docker-ubuntu/">
+
+
+
+
+
+  <title>水牛下水系列（2）-  window 10下docker安装ubuntu并且通过ssh访问 | 屁事蜀黍</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">屁事蜀黍</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Stay Hungry, Stay Foolish(求知若饥，虚心若愚)</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://unclepis.coding.me/2019/12/19/docker-ubuntu/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="unclepis">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="屁事蜀黍">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">水牛下水系列（2）-  window 10下docker安装ubuntu并且通过ssh访问</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-19T16:54:44+08:00">
+                2019-12-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/水牛下水系列/" itemprop="url" rel="index">
+                    <span itemprop="name">水牛下水系列</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/水牛下水系列/水牛下水系列（2）-window-10下docker安装ubuntu并且通过ssh访问/" itemprop="url" rel="index">
+                    <span itemprop="name">水牛下水系列（2）-  window 10下docker安装ubuntu并且通过ssh访问</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/19/docker-ubuntu/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/12/19/docker-ubuntu/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/12/19/docker-ubuntu/" class="leancloud_visitors" data-flag-title="水牛下水系列（2）-  window 10下docker安装ubuntu并且通过ssh访问">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+             <span>℃</span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="在docker中安装ubuntu，并通过ssh链接docker容器中的ubuntu…"><a href="#在docker中安装ubuntu，并通过ssh链接docker容器中的ubuntu…" class="headerlink" title="在docker中安装ubuntu，并通过ssh链接docker容器中的ubuntu…"></a>在docker中安装ubuntu，并通过ssh链接docker容器中的ubuntu…</h1><ul>
+<li>另外说一下，<code>docker search ubuntu</code>可以搜索所有关于ubuntu的镜像，有的环境不需要这样从头开始搭建… 不熟悉liux基础的可以看一下<code><a href="/2019/11/18/linuxDeploy/" title="linux 基础及其服务器nginx静态资源部署">linux 基础及其服务器nginx静态资源部署</a></code> 的前半部分介绍…不熟悉docker的可以看一下<code><a href="/2019/12/12/docker/" title="容器技术【docker入门基础】">容器技术【docker入门基础】</a></code></li>
+</ul>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ul>
+<li><p>查看版本信息<br><code>cat /proc/version //Linux version 4.4.0-18362-Microsoft (Microsoft@Microsoft.com) (gcc version 5.4.0 (GCC) ) #476-Microsoft Fri Nov 01 16:53:00 PST 2019</code></p>
+</li>
+<li><p>查看操作系统的版本号<br><code>cat /etc/issue // Ubuntu 16.04.6 LTS \n \l</code></p>
+</li>
+<li><p>查看ubuntu操作系统版本</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">uname --a  <span class="comment">//Linux DESKTOP-PIJLFO2 4.4.0-18362-Microsoft #476-Microsoft Fri Nov 01 16:53:00 PST 2019 x86_64 x86_64 x86_64 GNU/Linux</span></span><br><span class="line">uname --s  显示内核名字</span><br><span class="line">uname --r 显示内核版本</span><br><span class="line">uname --n 显示网络主机名</span><br><span class="line">uname --p 显示cpu </span><br><span class="line">uname --m 显示操作系统位数</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li><p>更新apt-get源</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get update -y</span><br><span class="line">apt-get upgrade -y</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>拷贝文件<br><code>cp sourcefile distfile</code></p>
+</li>
+<li><p>编辑文件<br><code>cat &gt; sourcesfile &lt;&lt; EOF</code><br><code>编辑的内容</code><br><code>EOF</code></p>
+</li>
+<li><p>打开文件并编辑<br><code>vim sourcefile</code><br>按<code>i</code> 进入insert模式<br>按esc退出编辑模式<br><code>:wq</code>退出</p>
+<ul>
+<li><p>启动ssh服务(需要apt-get安装openssh-server)<br><code>/etc/init.d/ssh start</code></p>
+</li>
+<li><p>重启ssh服务<br><code>service ssh restart</code></p>
+</li>
+<li><p>查看ssh服务运行状态<br><code>/etc/init.d/ssh status</code></p>
+</li>
+<li><p>查看ssh服务端口<br><code>ps -e | grep ssh</code></p>
+</li>
+</ul>
+</li>
+<li><p>修改root密码<br><code>passwd root</code></p>
+</li>
+<li><p>查看服务器ip(需要apt-get安装net-tools)<br><code>ifconfig</code></p>
+</li>
+</ul>
+<h1 id="第一步-从docker的镜像仓库获取ubuntu并安装"><a href="#第一步-从docker的镜像仓库获取ubuntu并安装" class="headerlink" title="第一步 从docker的镜像仓库获取ubuntu并安装"></a>第一步 从docker的镜像仓库获取ubuntu并安装</h1><blockquote>
+<p><code>docker pull ubuntu</code> //  默认安装latest版本</p>
+</blockquote>
+<blockquote>
+<p>如果提示错误 no matching manifest for windows/amd64 10.0.18362 in the manifest list entries<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker pull ubuntu</span><br><span class="line">Using default tag: latest</span><br><span class="line">latest: Pulling from library/ubuntu</span><br><span class="line">no matching manifest for windows/amd64 10.0.18362 in the manifest list entries</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>修改docker配置<br><img src="/2019/12/19/docker-ubuntu/docker_daemon.png" alt="setting"></p>
+</blockquote>
+<blockquote>
+<p>再次从镜像仓库获取ubuntu镜像<br><code>docker pull ubuntu</code></p>
+</blockquote>
+<h1 id="第二步-运行docker容器"><a href="#第二步-运行docker容器" class="headerlink" title="第二步 运行docker容器"></a>第二步 运行docker容器</h1><blockquote>
+<p>查看下载下来的ubuntu镜像id<br><code>docker images</code> </p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">ubuntu              latest              549b9b86cb8d        21 hours ago        73.9MB</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>docker run -d -it --name ubuntu-ssh 549b9b86cb8d -p 3316:22 bash</code> 在后台运行ubuntu的容器，并且把宿主机的3316端口和容器的22端口建立映射关系</p>
+</blockquote>
+<blockquote>
+<p>查看容器是否运行成功<br><code>docker ps</code></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                  NAMES</span><br><span class="line">c8601064dab8        <span class="number">549</span>b9b86cb8d        <span class="string">"bash"</span>              <span class="number">8</span> seconds ago       Up <span class="number">6</span> seconds        <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">3316</span>-&gt;<span class="number">22</span>/tcp   fervent_wilbur</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到端口映射已经建立完成</p>
+</blockquote>
+<h1 id="第三步-进入容器内部安装ssh"><a href="#第三步-进入容器内部安装ssh" class="headerlink" title="第三步 进入容器内部安装ssh"></a>第三步 进入容器内部安装ssh</h1><blockquote>
+<p><code>docker exec -it c8601064dab8 bash</code> 进入容器内部</p>
+</blockquote>
+<h1 id="第四步-修改ubuntu默认的apt-get镜像源"><a href="#第四步-修改ubuntu默认的apt-get镜像源" class="headerlink" title="第四步 修改ubuntu默认的apt-get镜像源"></a>第四步 修改ubuntu默认的apt-get镜像源</h1><h2 id="更换ubuntu-apt-get-源"><a href="#更换ubuntu-apt-get-源" class="headerlink" title="更换ubuntu apt-get 源"></a>更换ubuntu apt-get 源</h2><ul>
+<li>为了优化ubuntu软件安装/更新速度，我测试了国内几家apt源的速度，发现北京交大的apt源速度相对最快，然后可以通过以下步骤更新ubuntu源</li>
+</ul>
+<blockquote>
+<p>备份默认的apt源<br><code>cd /etc/apt</code><br><code>cp sources.list sources.list.bak</code></p>
+</blockquote>
+<blockquote>
+<p>编辑sources.list<br><code>cat &gt; sources.list &lt;&lt; EOF</code></p>
+</blockquote>
+<blockquote>
+<p>粘贴镜像源地址<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">deb http:<span class="comment">//mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe</span></span><br><span class="line">deb http:<span class="comment">//mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe</span></span><br><span class="line">deb http:<span class="comment">//mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe</span></span><br><span class="line">deb http:<span class="comment">//mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe</span></span><br><span class="line">deb http:<span class="comment">//mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe</span></span><br><span class="line">deb-src http:<span class="comment">//mirrors.aliyun.com/ubuntu/ trusty main multiverse restricted universe</span></span><br><span class="line">deb-src http:<span class="comment">//mirrors.aliyun.com/ubuntu/ trusty-backports main multiverse restricted universe</span></span><br><span class="line">deb-src http:<span class="comment">//mirrors.aliyun.com/ubuntu/ trusty-proposed main multiverse restricted universe</span></span><br><span class="line">deb-src http:<span class="comment">//mirrors.aliyun.com/ubuntu/ trusty-security main multiverse restricted universe</span></span><br><span class="line">deb-src http:<span class="comment">//mirrors.aliyun.com/ubuntu/ trusty-updates main multiverse restricted universe</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>执行end of file 推出编辑<br><code>EOF</code><br>查看文件是否编辑成功<br><code>cat sources.list</code></p>
+</blockquote>
+<blockquote>
+<p>更新apt<br><code>apt-get update -y</code></p>
+</blockquote>
+<h1 id="apt-get安装ssh和net-tools软件"><a href="#apt-get安装ssh和net-tools软件" class="headerlink" title="apt-get安装ssh和net-tools软件"></a>apt-get安装ssh和net-tools软件</h1><ul>
+<li><p>①ssh-client命令安装ssh客户端</p>
+<blockquote>
+<p><code>apt-get install openssh-client</code></p>
+</blockquote>
+</li>
+<li><p>②ssh-server命令安装ssh的服务器端</p>
+<blockquote>
+<p><code>apt-get install openssh-server</code></p>
+</blockquote>
+</li>
+<li><p>③安装完成后启动服务</p>
+<blockquote>
+<p><code>/etc/init.d/ssh status</code> 可以查看ssh的运行状态<br><code>/etc/init.d/ssh start</code>然后运行 <code>ps -e|grep ssh</code> 查看ssh的运行进程是否正常运行</p>
+</blockquote>
+</li>
+<li><p>④vim编辑器</p>
+<blockquote>
+<p><code>apt-get install vim</code><br><code>vim /etc/ssh/sshd_config</code> 进入到ssh的配置文件修改<code>PermitRootLogin yes</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//vim的基本操作</span></span><br><span class="line"><span class="number">1</span>) 点击i进入到insert的编辑模式，开始修改文件</span><br><span class="line"><span class="number">2</span>) 编辑完成，点击esc推出到insert的标记模式</span><br><span class="line"><span class="number">3</span>) :wq退出vim</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>⑤重启ssh服务</p>
+<blockquote>
+<p><code>service ssh restart</code></p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* Restarting OpenBSD Secure Shell server sshd                                                                                                     [ OK ]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>⑥设置ubuntu登陆的root密码<blockquote>
+<p><code>passwd root</code></p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">passwd root</span><br><span class="line">Enter new UNIX password: root!@#$</span><br><span class="line">Retype new UNIX password:root!@#$</span><br><span class="line">passwd: password updated successfully</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>⑦安装net-tools工具包</p>
+<blockquote>
+<p><code>apt-get install net-tools</code></p>
+</blockquote>
+</li>
+<li><p>⑧查看docker运行的ubuntu系统的ip地址</p>
+<blockquote>
+<p><code>ifconfig</code></p>
+</blockquote>
+</li>
+<li><p>⑨退出容器</p>
+<blockquote>
+<p><code>ctrl + D</code></p>
+</blockquote>
+</li>
+<li><p>保存一下安装好ssh/vim/net-tools的这个镜像（注意这是将容器container转化成镜像image，下次就可以使用这个镜像构建容器了）</p>
+<blockquote>
+<p><code>docker commit -m&quot;ubuntu with ssh and tools&quot; -a &quot;pis&quot; ubuntu-ssh/</code></p>
+</blockquote>
+</li>
+</ul>
+<h1 id="通过xshell工具连接"><a href="#通过xshell工具连接" class="headerlink" title="通过xshell工具连接"></a>通过xshell工具连接</h1><blockquote>
+<p>查看镜像的22端口对应的宿主机映射 <code>docker port ubuntu-ssh 22</code> // 22端口是默认的ssh链接的port</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">3316</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>在xshell配置</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">主机：localhost</span><br><span class="line">端口：<span class="number">3316</span></span><br><span class="line">用户名：root</span><br><span class="line">密码：root!@#$</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果一切ok的话就会登陆成功</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">连接成功</span><br><span class="line">Last login: Fri Dec 20 05:40:55 2019</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>但是有时候docker里面ssh的版本和本地的版本不一样 会提示一些错误信息，下面就是我遇见的一种错误信息：<br><code>Session.connect: java.io.IOException: End of IO Stream Read</code></p>
+</blockquote>
+<p>大概搜了一下就是因为ssh版本不一样导致无法建立连接</p>
+<blockquote>
+<p><code>vim /etc/ssh/sshd.conf</code> 文件最后面添加算法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">KexAlgorithms diffie-hellman-group1-sha1,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1</span><br><span class="line"></span><br><span class="line">Ciphers 3des-cbc,blowfish-cbc,aes128-cbc,aes128-ctr,aes256-ctr</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>重新启动ssh <code>service ssh restart</code><br>再次xshell连接即可<br>如果还是不行。推荐使用docker hub上已经有人安装好的ubuntu-ssh镜像<br><code>docker pull rastasheep/ubuntu-sshd</code>  // 默认下载latest版本<br><a href="https://github.com/rastasheep/ubuntu-sshd" target="_blank" rel="noopener">someone push的docker中已经安装好ssh的镜像github地址</a></p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker port test_sshd <span class="number">22</span></span><br><span class="line"><span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span>:<span class="number">49154</span></span><br></pre></td></tr></table></figure>
+<p>默认暴漏的49154端口，root密码也是root，在xshell中配置配置一下就可以访问了。。。<code>别问了为啥最后才告诉你有这个东西</code>…</p>
+<h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p><a href="https://blog.csdn.net/u010502101/article/details/89067757" target="_blank" rel="noopener">更新ubuntu的镜像源</a><br><a href="https://www.cnblogs.com/mengw/p/11413461.html" target="_blank" rel="noopener">window 10下docker安装ubuntu并且通过ssh访问</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>初到贵宝地，有钱的给个钱场,没钱的挤一挤给个钱场</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://raw.githubusercontent.com/unclepis/git_introduction/master/wechat.jpg" alt="unclepis 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://raw.githubusercontent.com/unclepis/git_introduction/master/alipay.jpg" alt="unclepis 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" <i="" class="fa fa-tag"> docker</a>
+          
+            <a href="/tags/image/" <i="" class="fa fa-tag"> image</a>
+          
+            <a href="/tags/container/" <i="" class="fa fa-tag"> container</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/12/docker/" rel="next" title="水牛下水系列（1）- 容器技术【docker入门基础】">
+                <i class="fa fa-chevron-left"></i> 水牛下水系列（1）- 容器技术【docker入门基础】
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/20/devOps/" rel="prev" title="devOps">
+                devOps <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">unclepis</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">58</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/unclepis" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:59869158@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          <div>
+            
+              <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="320" height="430" src="https://music.163.com/outchain/player?type=0&id=2394580803&auto=1&height=430"></iframe>
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#在docker中安装ubuntu，并通过ssh链接docker容器中的ubuntu…"><span class="nav-number">1.</span> <span class="nav-text">在docker中安装ubuntu，并通过ssh链接docker容器中的ubuntu…</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">1.1.</span> <span class="nav-text">准备工作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一步-从docker的镜像仓库获取ubuntu并安装"><span class="nav-number">2.</span> <span class="nav-text">第一步 从docker的镜像仓库获取ubuntu并安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二步-运行docker容器"><span class="nav-number">3.</span> <span class="nav-text">第二步 运行docker容器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三步-进入容器内部安装ssh"><span class="nav-number">4.</span> <span class="nav-text">第三步 进入容器内部安装ssh</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四步-修改ubuntu默认的apt-get镜像源"><span class="nav-number">5.</span> <span class="nav-text">第四步 修改ubuntu默认的apt-get镜像源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#更换ubuntu-apt-get-源"><span class="nav-number">5.1.</span> <span class="nav-text">更换ubuntu apt-get 源</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#apt-get安装ssh和net-tools软件"><span class="nav-number">6.</span> <span class="nav-text">apt-get安装ssh和net-tools软件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通过xshell工具连接"><span class="nav-number">7.</span> <span class="nav-text">通过xshell工具连接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文献"><span class="nav-number">8.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">unclepis</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共50.4k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      本站总访问人数 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+  
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      本站总访问量 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'DBnzsB5Bwg1DG3BqNP8vSwH2-gzGzoHsz',
+        appKey: 'G3DDmOX3BPYmH9km2wXYdsX5',
+        placeholder: 'talk is cheap, say something useful...',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input&&input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input&&input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
