@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://unclepis.coding.me/2020/02/24/vue-10/</loc>
+    <lastmod>2020-02-24</lastmod>
+  </url>  <url>
+    <loc>http://unclepis.coding.me/2019/10/08/vue_1/</loc>
+    <lastmod>2020-02-24</lastmod>
+  </url>  <url>
     <loc>http://unclepis.coding.me/2019/12/30/winBat/</loc>
     <lastmod>2019-12-30</lastmod>
   </url>  <url>
@@ -19,13 +25,10 @@
     <loc>http://unclepis.coding.me/2019/10/19/vue-9/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2019/10/08/vue_1/</loc>
+    <loc>http://unclepis.coding.me/2019/10/19/vue-5/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
     <loc>http://unclepis.coding.me/2019/10/19/vue-6/</loc>
-    <lastmod>2019-12-26</lastmod>
-  </url>  <url>
-    <loc>http://unclepis.coding.me/2019/10/19/vue-5/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
     <loc>http://unclepis.coding.me/2019/10/19/vue-3/</loc>
@@ -40,10 +43,10 @@
     <loc>http://unclepis.coding.me/2018/12/14/regex/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2018/11/21/this/</loc>
+    <loc>http://unclepis.coding.me/2018/10/17/spreadString/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2018/10/17/spreadString/</loc>
+    <loc>http://unclepis.coding.me/2018/11/21/this/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
     <loc>http://unclepis.coding.me/2018/10/18/type/</loc>
@@ -94,10 +97,10 @@
     <loc>http://unclepis.coding.me/2019/11/08/nodejs-2/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2019/11/07/nodejs-1/</loc>
+    <loc>http://unclepis.coding.me/2018/10/17/map/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2018/10/17/map/</loc>
+    <loc>http://unclepis.coding.me/2019/11/07/nodejs-1/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
     <loc>http://unclepis.coding.me/2019/11/18/linuxDeploy/</loc>
