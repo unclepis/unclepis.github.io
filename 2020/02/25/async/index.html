@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="Je7AOEjKqN2ygLA5weMsdXFgWp2T5fb26na9fxZyq9o">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="kRmNQSgNqg">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ioc?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="callback hell,回调地狱,promise,async await,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="javascript是一个单线程执行的语言，所以在处理阻塞io是通过异步回调的方式进行，常用的处理异步的方式有以下几种： [✔] callback hell回调地狱[✔] promise[✔] generator[✔] async await 本章先介绍一下 promise的基本语法和使用细节…  链式调用 异常捕获 then方法第二个参数获取的错误信息和catch不会异常的区别 finally方">
+<meta name="keywords" content="callback hell,回调地狱,promise,async await">
+<meta property="og:type" content="article">
+<meta property="og:title" content="js异步操作">
+<meta property="og:url" content="http://unclepis.coding.me/2020/02/25/async/index.html">
+<meta property="og:site_name" content="屁事蜀黍">
+<meta property="og:description" content="javascript是一个单线程执行的语言，所以在处理阻塞io是通过异步回调的方式进行，常用的处理异步的方式有以下几种： [✔] callback hell回调地狱[✔] promise[✔] generator[✔] async await 本章先介绍一下 promise的基本语法和使用细节…  链式调用 异常捕获 then方法第二个参数获取的错误信息和catch不会异常的区别 finally方">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-25T02:44:32.339Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="js异步操作">
+<meta name="twitter:description" content="javascript是一个单线程执行的语言，所以在处理阻塞io是通过异步回调的方式进行，常用的处理异步的方式有以下几种： [✔] callback hell回调地狱[✔] promise[✔] generator[✔] async await 本章先介绍一下 promise的基本语法和使用细节…  链式调用 异常捕获 then方法第二个参数获取的错误信息和catch不会异常的区别 finally方">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://unclepis.coding.me/2020/02/25/async/">
+
+
+
+
+
+  <title>js异步操作 | 屁事蜀黍</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">屁事蜀黍</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Stay Hungry, Stay Foolish(求知若饥，虚心若愚)</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://unclepis.coding.me/2020/02/25/async/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="unclepis">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="屁事蜀黍">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">js异步操作</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-25T09:01:55+08:00">
+                2020-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/js异步操作/" itemprop="url" rel="index">
+                    <span itemprop="name">js异步操作</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/02/25/async/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/02/25/async/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/02/25/async/" class="leancloud_visitors" data-flag-title="js异步操作">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+             <span>℃</span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.8k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>javascript是一个单线程执行的语言，所以在处理阻塞io是通过异步回调的方式进行，常用的处理异步的方式有以下几种：</p>
+<p>[✔] callback hell回调地狱<br>[✔] promise<br>[✔] generator<br>[✔] async await</p>
+<p>本章先介绍一下 <code>promise</code>的基本语法和使用细节…</p>
+<ol>
+<li>链式调用</li>
+<li>异常捕获</li>
+<li>then方法第二个参数获取的错误信息和catch不会异常的区别</li>
+<li>finally方法的使用</li>
+<li>Promise.all方法的使用</li>
+<li>promise.race方法的使用</li>
+<li>ES2020关于promise的新特性 - <code>Promise.allSettled</code>方法</li>
+</ol>
+<a id="more"></a>
+<h2 id="示例说明"><a href="#示例说明" class="headerlink" title="示例说明"></a>示例说明</h2><ul>
+<li>假设有以下三个文件</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//  1.json</span><br><span class="line"> &#123; </span><br><span class="line">   <span class="attr">"next"</span>: <span class="string">"2.json"</span>,</span><br><span class="line">   <span class="attr">"message"</span>:<span class="string">"this is first File, hello"</span></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">//  2.json</span><br><span class="line"> &#123; </span><br><span class="line">   <span class="attr">"next"</span>: <span class="string">"3.json"</span>,</span><br><span class="line">   <span class="attr">"message"</span>:<span class="string">"this is second File"</span></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">//  3.json</span><br><span class="line"> &#123; </span><br><span class="line">   <span class="attr">"next"</span>: <span class="literal">null</span>,</span><br><span class="line">   <span class="attr">"message"</span>:<span class="string">"this is third File, good bye"</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用nodejs的fs模块读取一下文件<code>模拟异步</code></li>
+</ul>
+<h3 id="（1）不使用promise-callbackHell回调地狱的方式"><a href="#（1）不使用promise-callbackHell回调地狱的方式" class="headerlink" title="（1）不使用promise,callbackHell回调地狱的方式"></a>（1）不使用promise,callbackHell回调地狱的方式</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 不使用promise,callback hell</span></span><br><span class="line"><span class="comment"> * @param &#123;*&#125; fileName </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line">fs.readFile(path.resolve(__dirname, <span class="string">'1.json'</span>), (error, file1) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span>(error) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(error)</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.parse(file1.toString()).message)</span><br><span class="line">  <span class="comment">// 成功读取第一个文件后，读取下一个文件</span></span><br><span class="line">  fs.readFile(path.resolve(__dirname, <span class="built_in">JSON</span>.parse(file1.toString()).next), (error, file2) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span>(error) &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(error)</span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.parse(file2.toString()).message)</span><br><span class="line">    <span class="comment">// 成功读取第二个文件后，读取下一个文件</span></span><br><span class="line">    fs.readFile(path.resolve(__dirname, <span class="built_in">JSON</span>.parse(file2.toString()).next), (error, file3) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span>(error) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(error)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="built_in">JSON</span>.parse(file3.toString()).message)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以看到，我们在读取第一个文件1.json的回调函数里面，根据file1的读取结果中的next，获取需要读取的下一个文件。如果继续有多个文件需要读取，代码可读性非常差。层级结构特别复杂。</li>
+</ul>
+<h3 id="（2）promise的方式"><a href="#（2）promise的方式" class="headerlink" title="（2）promise的方式"></a>（2）promise的方式</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 使用promise封装fs读取文件的异步操作</span></span><br><span class="line"><span class="comment"> * @param &#123;*&#125; fileName - 文件名</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> readFile = <span class="function">(<span class="params">fileName</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    fs.readFile(path.resolve(__dirname, fileName), (error, result) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span>(error) &#123;</span><br><span class="line">        reject(error)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">      &#125;</span><br><span class="line">      resolve(<span class="built_in">JSON</span>.parse(result.toString()))</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>链式调用（<code>错误的写法</code>，不推荐这样写，跟回调地狱一样不太友好）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">* promise链式调用</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"> readFile(<span class="string">'1.json'</span>).then(<span class="function"><span class="params">file1</span> =&gt;</span> &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'file1'</span>, file1)</span><br><span class="line">   readFile(file1.next).then(<span class="function"><span class="params">file2</span> =&gt;</span> &#123;</span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">'file2'</span>, file2)</span><br><span class="line">     readFile(file2.next).then(<span class="function"><span class="params">file3</span> =&gt;</span> &#123;</span><br><span class="line">       <span class="built_in">console</span>.log(<span class="string">'file3'</span>, file3)</span><br><span class="line">     &#125;)</span><br><span class="line">   &#125;)</span><br><span class="line"> &#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这样通过promise的then方法进行链式调用，但是还是存在层级嵌套，代码可读性还是不够友好。</p>
+</blockquote>
+<ul>
+<li>链式调用（<code>正确的写法</code>）</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">* promise链式调用</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"> readFile(<span class="string">'1.json'</span>).then(<span class="function"><span class="params">file1</span> =&gt;</span> &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'file1'</span>, file1)</span><br><span class="line">   <span class="keyword">return</span> readFile(file1.next)</span><br><span class="line"> &#125;).then(<span class="function"><span class="params">file2</span> =&gt;</span> &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'file2'</span>, file2)</span><br><span class="line">   <span class="keyword">return</span> readFile(file2.next)</span><br><span class="line"> &#125;).then(<span class="function"><span class="params">file3</span> =&gt;</span> &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'file3'</span>, file3)</span><br><span class="line"> &#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上面这样通过将promise进行return的方式，就可以在then里面获取到promise的结果，进行链式调用，而且代码看起来像是同步执行的代码，可读性好，没有了多层嵌套的回调地狱.</p>
+</blockquote>
+<h2 id="异常捕获"><a href="#异常捕获" class="headerlink" title="异常捕获"></a>异常捕获</h2><ul>
+<li>可以看到上面的Promise已经通过链式调用的方式，一次读取了三个文件，但是在这其中发生异常的时候，我们常做的处理有以下两种：</li>
+</ul>
+<ol>
+<li>通过Promise的catch方法进行捕获(Promise抛错具有冒泡机制，能够不断传递，可以使用catch统一处理，后续代码不会执行)</li>
+<li>Promise.then第二个参数捕获错误，回调参数捕获错误具有就近的原则，不会影响后续then的进行</li>
+</ol>
+<blockquote>
+<p>需要注意的地方就是：</p>
+<ul>
+<li>catch会阻塞后面的代码执行，但是会一次性捕获所有then里面发生的异常。</li>
+<li>then的第二个参数error，会单独捕获then里面的异常（<code>捕获错误具有就近的原则</code>），并且不会阻塞代码继续执行下面的then</li>
+<li>如果在then中定义了错误回调则不会进入到的catch中。</li>
+</ul>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">readFile(<span class="string">'1.json'</span>).then(<span class="function"><span class="params">file1</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file1'</span>, file1)</span><br><span class="line">  <span class="keyword">return</span> readFile(file1.next)</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file1Error'</span>, error) <span class="comment">// 当执行第一个then报错了，会在这里打印，但是下面的then会继续执行</span></span><br><span class="line">&#125;).then(<span class="function"><span class="params">file2</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file2'</span>, file2)</span><br><span class="line">  <span class="keyword">return</span> readFile(file2.next)</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file2Error'</span>, error) <span class="comment">// 当执行第二个then报错了，会在这里打印，但是下面的then会继续执行</span></span><br><span class="line">&#125;).then(<span class="function"><span class="params">file3</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file3'</span>, file3)</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file3Error'</span>, error) <span class="comment">// 当执行第一个then报错了，会在这里打印，但是下面的catch方法不会执行</span></span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'promise catch error'</span>, err)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="finally"><a href="#finally" class="headerlink" title="finally"></a>finally</h2><blockquote>
+<p>finally() 方法返回一个Promise，在promise执行结束时，无论结果是fulfilled或者是rejected，在执行then()和catch()后，都会执行finally指定的回调函数。这为指定执行完promise后，无论结果是fulfilled还是rejected都需要执行的代码提供了一种方式，避免同样的语句需要在then()和catch()中各写一次的情况。</p>
+</blockquote>
+<ul>
+<li>常用的方式就是<code>then-catch-finally</code></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">readFile(<span class="string">'1.json'</span>).then(<span class="function"><span class="params">file1</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file1'</span>, file1)</span><br><span class="line">  <span class="keyword">return</span> readFile(file1.next)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">file2</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file2'</span>, file2)</span><br><span class="line">  <span class="keyword">return</span> readFile(file2.next)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">file3</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file3'</span>, file3)</span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'promise catch error'</span>, err)</span><br><span class="line">&#125;).finally(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'all files has been read'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果需要分开捕获异常就单独使用then的第二个error参数，不影响finally</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> readFile(<span class="string">'1.json'</span>).then(<span class="function"><span class="params">file1</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file1'</span>, file1)</span><br><span class="line">  <span class="keyword">return</span> readFile(file1.next)</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file1Error'</span>, error) <span class="comment">// 当执行第一个then报错了，会在这里打印，但是下面的then会继续执行</span></span><br><span class="line">&#125;).then(<span class="function"><span class="params">file2</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file2'</span>, file2)</span><br><span class="line">  <span class="keyword">return</span> readFile(file2.next)</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file2Error'</span>, error) <span class="comment">// 当执行第二个then报错了，会在这里打印，但是下面的then会继续执行</span></span><br><span class="line">&#125;).then(<span class="function"><span class="params">file3</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file3'</span>, file3)</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file3Error'</span>, error) <span class="comment">// 当执行第一个then报错了，会在这里打印</span></span><br><span class="line">&#125;).finally(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'all files has been read'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="Promise-all静态方法-promise并行执行"><a href="#Promise-all静态方法-promise并行执行" class="headerlink" title="Promise.all静态方法 - promise并行执行"></a>Promise.all静态方法 - <code>promise并行执行</code></h2><ul>
+<li>Promise.all的成功结果是返回一个数组，且数组中数据的结果顺序与Promise.all数组的传参顺序是一样的。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.all(</span><br><span class="line">  [</span><br><span class="line">    readFile(<span class="string">'1.json'</span>),</span><br><span class="line">    readFile(<span class="string">'2.json'</span>),</span><br><span class="line">    readFile(<span class="string">'3.json'</span>)]</span><br><span class="line">).then(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(result) <span class="comment">// 当三个文件都读取完成进入then的回调中</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="Promise-race静态方法-promise率先执行"><a href="#Promise-race静态方法-promise率先执行" class="headerlink" title="Promise.race静态方法 - promise率先执行"></a>Promise.race静态方法 - <code>promise率先执行</code></h2><ul>
+<li>Promise.race只要其中一个实例率先发生改变，Promise.race实例也将发生改变，其他的将不在响应.</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.race(</span><br><span class="line">  [</span><br><span class="line">    readFile(<span class="string">'1.json'</span>),</span><br><span class="line">    readFile(<span class="string">'2.json'</span>),</span><br><span class="line">    readFile(<span class="string">'3.json'</span>)]</span><br><span class="line">).then(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(result) <span class="comment">// 当一个文件先读取完成，其他的不响应</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="Promise-allSettled-Promise执行多个请求有异常的时候不阻塞其他执行"><a href="#Promise-allSettled-Promise执行多个请求有异常的时候不阻塞其他执行" class="headerlink" title="Promise.allSettled - Promise执行多个请求有异常的时候不阻塞其他执行"></a>Promise.allSettled - <code>Promise执行多个请求有异常的时候不阻塞其他执行</code></h2><blockquote>
+<p>Promise.all如果参数中的任何一个promise为reject的话，则整个Promise.all 调用会立即终止，并返回一个reject的新的 Promise 对象。</p>
+<ul>
+<li>Promise.allSettled它不会进行短路，也就是说当Promise全部处理完成后，我们可以拿到每个Promise的状态，而不管是否处理成功</li>
+</ul>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Promise</span>.allSettled(</span><br><span class="line">  [</span><br><span class="line">    <span class="built_in">Promise</span>.reject(&#123; <span class="attr">code</span>: <span class="number">500</span>, <span class="attr">msg</span>: <span class="string">'服务异常'</span> &#125;),</span><br><span class="line">    readFile(<span class="string">'2.json'</span>),</span><br><span class="line">    readFile(<span class="string">'3.json'</span>)]</span><br><span class="line">).then(<span class="function"><span class="params">result</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(result) <span class="comment">// 当一个文件先读取完成，其他的不响应</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>结果</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123; <span class="attr">status</span>: <span class="string">'rejected'</span>, <span class="attr">reason</span>: &#123; <span class="attr">code</span>: <span class="number">500</span>, <span class="attr">msg</span>: <span class="string">'服务异常'</span> &#125; &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    status: <span class="string">'fulfilled'</span>,</span><br><span class="line">    value: &#123; <span class="attr">next</span>: <span class="string">'3.json'</span>, <span class="attr">message</span>: <span class="string">'this is second File'</span> &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    status: <span class="string">'fulfilled'</span>,</span><br><span class="line">    value: &#123; <span class="attr">next</span>: <span class="literal">null</span>, <span class="attr">message</span>: <span class="string">'this is third File, good bye'</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>初到贵宝地，有钱的给个钱场,没钱的挤一挤给个钱场</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://raw.githubusercontent.com/unclepis/git_introduction/master/wechat.jpg" alt="unclepis 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://raw.githubusercontent.com/unclepis/git_introduction/master/alipay.jpg" alt="unclepis 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/callback-hell/" <i="" class="fa fa-tag"> callback hell</a>
+          
+            <a href="/tags/回调地狱/" <i="" class="fa fa-tag"> 回调地狱</a>
+          
+            <a href="/tags/promise/" <i="" class="fa fa-tag"> promise</a>
+          
+            <a href="/tags/async-await/" <i="" class="fa fa-tag"> async await</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/24/vue-10/" rel="next" title="vue 朝花夕拾系列（10）- vue面试指南">
+                <i class="fa fa-chevron-left"></i> vue 朝花夕拾系列（10）- vue面试指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/25/hexo/" rel="prev" title="hexo+gitlab/coding 搭建个人blog">
+                hexo+gitlab/coding 搭建个人blog <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">unclepis</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/unclepis" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:59869158@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          <div>
+            
+              <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="320" height="430" src="https://music.163.com/outchain/player?type=0&id=2394580803&auto=1&height=430"></iframe>
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#示例说明"><span class="nav-number">1.</span> <span class="nav-text">示例说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）不使用promise-callbackHell回调地狱的方式"><span class="nav-number">1.1.</span> <span class="nav-text">（1）不使用promise,callbackHell回调地狱的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）promise的方式"><span class="nav-number">1.2.</span> <span class="nav-text">（2）promise的方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常捕获"><span class="nav-number">2.</span> <span class="nav-text">异常捕获</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#finally"><span class="nav-number">3.</span> <span class="nav-text">finally</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-all静态方法-promise并行执行"><span class="nav-number">4.</span> <span class="nav-text">Promise.all静态方法 - promise并行执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-race静态方法-promise率先执行"><span class="nav-number">5.</span> <span class="nav-text">Promise.race静态方法 - promise率先执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-allSettled-Promise执行多个请求有异常的时候不阻塞其他执行"><span class="nav-number">6.</span> <span class="nav-text">Promise.allSettled - Promise执行多个请求有异常的时候不阻塞其他执行</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">unclepis</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共56.5k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      本站总访问人数 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+  
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      本站总访问量 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'DBnzsB5Bwg1DG3BqNP8vSwH2-gzGzoHsz',
+        appKey: 'G3DDmOX3BPYmH9km2wXYdsX5',
+        placeholder: 'talk is cheap, say something useful...',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input&&input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input&&input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

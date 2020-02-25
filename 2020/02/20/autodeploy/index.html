@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="Je7AOEjKqN2ygLA5weMsdXFgWp2T5fb26na9fxZyq9o">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="kRmNQSgNqg">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ioc?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="linux,shell,nodejs,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="之前在水牛下水系列（0）- linuxDeploy 基础及其服务器nginx静态资源部署写过在项目上部署一个前端工程的基本流程[🦶] npm run build通过打包工具将前端工程打包成静态资源到置顶的目录[🦶] 手动对静态资源目录dist和nginx等项目部署的配置文件进行压缩[🦶] 通过ssh工具上传静态资源到服务器的指定目录下[🦶] 备份上一个版本的静态资源目录[🦶] 将新的静态">
+<meta name="keywords" content="linux,shell,nodejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nodejs自动打包构建工具替代Jekins(1) - linux命令基础">
+<meta property="og:url" content="http://unclepis.coding.me/2020/02/20/autodeploy/index.html">
+<meta property="og:site_name" content="屁事蜀黍">
+<meta property="og:description" content="之前在水牛下水系列（0）- linuxDeploy 基础及其服务器nginx静态资源部署写过在项目上部署一个前端工程的基本流程[🦶] npm run build通过打包工具将前端工程打包成静态资源到置顶的目录[🦶] 手动对静态资源目录dist和nginx等项目部署的配置文件进行压缩[🦶] 通过ssh工具上传静态资源到服务器的指定目录下[🦶] 备份上一个版本的静态资源目录[🦶] 将新的静态">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-02-25T01:08:43.179Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="nodejs自动打包构建工具替代Jekins(1) - linux命令基础">
+<meta name="twitter:description" content="之前在水牛下水系列（0）- linuxDeploy 基础及其服务器nginx静态资源部署写过在项目上部署一个前端工程的基本流程[🦶] npm run build通过打包工具将前端工程打包成静态资源到置顶的目录[🦶] 手动对静态资源目录dist和nginx等项目部署的配置文件进行压缩[🦶] 通过ssh工具上传静态资源到服务器的指定目录下[🦶] 备份上一个版本的静态资源目录[🦶] 将新的静态">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://unclepis.coding.me/2020/02/20/autodeploy/">
+
+
+
+
+
+  <title>nodejs自动打包构建工具替代Jekins(1) - linux命令基础 | 屁事蜀黍</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">屁事蜀黍</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Stay Hungry, Stay Foolish(求知若饥，虚心若愚)</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://unclepis.coding.me/2020/02/20/autodeploy/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="unclepis">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="屁事蜀黍">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">nodejs自动打包构建工具替代Jekins(1) - linux命令基础</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-20T22:24:09+08:00">
+                2020-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/nodejs/" itemprop="url" rel="index">
+                    <span itemprop="name">nodejs</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/nodejs/工具🔧/" itemprop="url" rel="index">
+                    <span itemprop="name">工具🔧</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/02/20/autodeploy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/02/20/autodeploy/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/02/20/autodeploy/" class="leancloud_visitors" data-flag-title="nodejs自动打包构建工具替代Jekins(1) - linux命令基础">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+             <span>℃</span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>之前在<code><a href="/2019/11/18/linuxDeploy/" title="水牛下水系列（0）- linuxDeploy 基础及其服务器nginx静态资源部署">水牛下水系列（0）- linuxDeploy 基础及其服务器nginx静态资源部署</a></code>写过在项目上部署一个前端工程的基本流程<br>[🦶] <code>npm run build</code>通过打包工具将前端工程打包成静态资源到置顶的目录<br>[🦶] 手动对静态资源目录dist和nginx等项目部署的配置文件进行压缩<br>[🦶] 通过ssh工具上传静态资源到服务器的指定目录下<br>[🦶] 备份上一个版本的静态资源目录<br>[🦶] 将新的静态资源目录放到nginx服务目录下，并修改nginx配置文件<br>[🦶] 重启nginx服务</p>
+<p>这么一个手动部署应用的过程，在项目中已经使用jekins在代码仓库gitlab中配置了git hook，当master分钟有代码的push，就会触发Jekins执行上面一系列的操作将项目代码部署到服务器上…前阵子无意间刚好看到一个哥们用nodejs实现了这一些列的功能，改吧改吧准备在项目上试试，也顺便看看如何通过nodejs实现这一些列的操作。<br><a id="more"></a></p>
+<h1 id="linux基础"><a href="#linux基础" class="headerlink" title="linux基础"></a>linux基础</h1><p>因为上述devOps的流程中牵扯了一系列命令行操作</p>
+<ul>
+<li>执行<code>npm run build</code> 打包的npm脚本</li>
+<li>使用tar命令压缩dist目录</li>
+<li>node-ssh连接ssh服务器上传dist已经nginx配置文件</li>
+<li>复制文件到指定目录/备份文件</li>
+<li>重启nginx<br>所以打算先看看一些linux下常用的命令，后面有的会用到，其他的也就复习一下…</li>
+</ul>
+<h2 id="cat命令"><a href="#cat命令" class="headerlink" title="cat命令"></a>cat命令</h2><p>[格式] cat &lt;文件名&gt;[&gt;或者&gt;&gt;]&lt;文件名&gt;<br>[1] cat existFilename - 查看已经存在的文件内容<br>[2] cat existFile1 existFile2 &gt; targetFile - 把已经存在的文件复制到目标文件中<br>[3] cat existFile &gt;&gt; targetFile - 把已经存在的文件追加到目标文件中<br>[4] cat &gt;&gt; targetFile &lt;<signature signature="" -="" 将两个signature之间的内容追加到目标文件="" [5]="" cat=""> targetFile &lt;&lt;Signature  Signature  - 将两个Signature之间的内容写入到目标文件</signature></p>
+<h2 id="echo命令"><a href="#echo命令" class="headerlink" title="echo命令"></a>echo命令</h2><p>[格式] echo &lt;内容&gt; [&gt;或者&gt;&gt;] &lt;文件名&gt;<br>[1] echo outputContent - 在控制台中输出<br>[2] echo content &gt; targetFile - 把内容写入到目标文件中 </p>
+<h2 id="touch命令"><a href="#touch命令" class="headerlink" title="touch命令"></a>touch命令</h2><p>[1] touch fileName - 创建不包括内容的文件 </p>
+<h2 id="mv命令"><a href="#mv命令" class="headerlink" title="mv命令"></a>mv命令</h2><p>[格式] mv &lt;源文件/目录&gt; &lt;新文件名/目录&gt;<br>[1] mv existFilename targetFolder - 把文件移动到目标目录下<br>[2] mv existFile newFileName - 修改文件名字</p>
+<h2 id="cp命令-将源文件复制到目标文件，或者将多个源文件复制到目标文件"><a href="#cp命令-将源文件复制到目标文件，或者将多个源文件复制到目标文件" class="headerlink" title="cp命令 - 将源文件复制到目标文件，或者将多个源文件复制到目标文件"></a>cp命令 - 将源文件复制到目标文件，或者将多个源文件复制到目标文件</h2><p>[格式] cp [选项] &lt;源文件&gt; &lt;目录&gt;<br>[1] cp existFilename targetFolder - 复制文件到指定目录<br>[2] 配置参数</p>
+<ul>
+<li>-n/–no-clobber: 不要覆盖已存在文件，与下面的-i互斥使用。（经测试，cp的默认行为是覆盖，至少 mac 是这样的 😳）。</li>
+<li>-i/–interactive: 覆盖前询问</li>
+<li>-r: 递归复制，用于复制目录</li>
+<li>-f/–force: 强行复制文件或内容，不论目的文件或目录是否已存在</li>
+<li>-u/–update：只有在源文件比目标文件新时才复制</li>
+</ul>
+<p>一般我们会有两种操作：</p>
+<ul>
+<li>一种是复制目录下的所有内容，<code>cp -r www/* output/www/</code></li>
+<li>一种是复制单个文件。<code>cp nginx.conf output/</code></li>
+</ul>
+<h2 id="tar命令-可以用来压缩和解压文件"><a href="#tar命令-可以用来压缩和解压文件" class="headerlink" title="tar命令 - 可以用来压缩和解压文件"></a>tar命令 - 可以用来压缩和解压文件</h2><p>[格式] tar [选项] &lt;打包文件名&gt; &lt;文件&gt; </p>
+<p>其中压缩和解压只有一个参数之差，下面我们来看一下这几个参数吧。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-z: 支持 gzip 解压文件</span><br><span class="line">-c: 建立新的压缩文件 // </span><br><span class="line">-v: 显示操作过程</span><br><span class="line">-f: 指定压缩文件</span><br><span class="line">-x: 从压缩的文件中提取文件</span><br></pre></td></tr></table></figure></p>
+<p>[1] 压缩 - <code>压缩的时候是c</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd output</span><br><span class="line">tar -zcvf ../output.tar.gz *;  - 将output目录中的所有文件压缩成上一级目录中的output.tar.gz文件</span><br></pre></td></tr></table></figure></p>
+<p>[2] 解压 - <code>解压的时候是x</code><br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf ../output.tar.gz;</span><br></pre></td></tr></table></figure></p>
+<h2 id="rm命令"><a href="#rm命令" class="headerlink" title="rm命令"></a>rm命令</h2><p>[1] 删除文件 - rm filename<br>[2] 删除文件夹 - rm -rf folder</p>
+<h2 id="mkdir命令-可以用来创建目录，要求命令执行用户有当前目录的写权限，且创建的目录不能已存在。如果创建的目录已存在会给予提示，但不会报错"><a href="#mkdir命令-可以用来创建目录，要求命令执行用户有当前目录的写权限，且创建的目录不能已存在。如果创建的目录已存在会给予提示，但不会报错" class="headerlink" title="mkdir命令 - 可以用来创建目录，要求命令执行用户有当前目录的写权限，且创建的目录不能已存在。如果创建的目录已存在会给予提示，但不会报错"></a>mkdir命令 - 可以用来创建目录，要求命令执行用户有当前目录的写权限，且创建的目录不能已存在。如果创建的目录已存在会给予提示，但不会报错</h2><p>[格式] mkdir [选项] &lt;目录名&gt;<br>[1] 创建文件夹 mkdir src<br>[2] 创建多层文件夹 mkdir -p src/views/component - <code>看出带有参数 p 的命令会自动创建不存在的目录</code></p>
+<h2 id="复制和移动命令的总结"><a href="#复制和移动命令的总结" class="headerlink" title="复制和移动命令的总结"></a>复制和移动命令的总结</h2><h3 id="注意移动和复制的区别-移动后源文件不在了，复制只是对源文件复制一份"><a href="#注意移动和复制的区别-移动后源文件不在了，复制只是对源文件复制一份" class="headerlink" title="注意移动和复制的区别 - 移动后源文件不在了，复制只是对源文件复制一份"></a>注意移动和复制的区别 - 移动后源文件不在了，复制只是对源文件复制一份</h3><ol>
+<li>复制<code>多个文件</code>到<code>&lt;指定目录&gt;</code></li>
+</ol>
+<ul>
+<li>cp -r www/* dist/www/</li>
+</ul>
+<ol start="2">
+<li>复制<code>单个文件</code>到<code>&lt;指定目录&gt;</code></li>
+</ol>
+<ul>
+<li>cp nginx.conf dist/www/</li>
+</ul>
+<ol start="3">
+<li>复制<code>单个文件</code>到指定<code>&lt;目录下的文件&gt;</code></li>
+</ol>
+<ul>
+<li>cat nginx.conf &gt; ../nginx.conf.bak</li>
+</ul>
+<ol start="4">
+<li>移动<code>单个文件/多个文件</code>到<code>指定目录</code></li>
+</ol>
+<ul>
+<li>mv nginx.conf ./bak/</li>
+<li>mv ./src/* ./bak/src  - 注意这种src里面的内容被移动到./bak.src目录下，但是src目录还在</li>
+<li>mv ./src ./bak/src  - src被整个移动到./bak/src目录下</li>
+</ul>
+<h1 id="参考连接"><a href="#参考连接" class="headerlink" title="参考连接"></a>参考连接</h1><p><a href="https://juejin.im/post/5e4a6df7f265da57602c47a5?utm_source=gold_browser_extension#heading-5" target="_blank" rel="noopener">让你牛B加身的前端必会Linux命令</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>初到贵宝地，有钱的给个钱场,没钱的挤一挤给个钱场</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://raw.githubusercontent.com/unclepis/git_introduction/master/wechat.jpg" alt="unclepis 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://raw.githubusercontent.com/unclepis/git_introduction/master/alipay.jpg" alt="unclepis 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/linux/" <i="" class="fa fa-tag"> linux</a>
+          
+            <a href="/tags/shell/" <i="" class="fa fa-tag"> shell</a>
+          
+            <a href="/tags/nodejs/" <i="" class="fa fa-tag"> nodejs</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/20/todolist/" rel="next" title="2020年学习计划安排">
+                <i class="fa fa-chevron-left"></i> 2020年学习计划安排
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/24/vue-10/" rel="prev" title="vue 朝花夕拾系列（10）- vue面试指南">
+                vue 朝花夕拾系列（10）- vue面试指南 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">unclepis</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/unclepis" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:59869158@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          <div>
+            
+              <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="320" height="430" src="https://music.163.com/outchain/player?type=0&id=2394580803&auto=1&height=430"></iframe>
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux基础"><span class="nav-number">1.</span> <span class="nav-text">linux基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cat命令"><span class="nav-number">1.1.</span> <span class="nav-text">cat命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#echo命令"><span class="nav-number">1.2.</span> <span class="nav-text">echo命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#touch命令"><span class="nav-number">1.3.</span> <span class="nav-text">touch命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mv命令"><span class="nav-number">1.4.</span> <span class="nav-text">mv命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp命令-将源文件复制到目标文件，或者将多个源文件复制到目标文件"><span class="nav-number">1.5.</span> <span class="nav-text">cp命令 - 将源文件复制到目标文件，或者将多个源文件复制到目标文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tar命令-可以用来压缩和解压文件"><span class="nav-number">1.6.</span> <span class="nav-text">tar命令 - 可以用来压缩和解压文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rm命令"><span class="nav-number">1.7.</span> <span class="nav-text">rm命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mkdir命令-可以用来创建目录，要求命令执行用户有当前目录的写权限，且创建的目录不能已存在。如果创建的目录已存在会给予提示，但不会报错"><span class="nav-number">1.8.</span> <span class="nav-text">mkdir命令 - 可以用来创建目录，要求命令执行用户有当前目录的写权限，且创建的目录不能已存在。如果创建的目录已存在会给予提示，但不会报错</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#复制和移动命令的总结"><span class="nav-number">1.9.</span> <span class="nav-text">复制和移动命令的总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意移动和复制的区别-移动后源文件不在了，复制只是对源文件复制一份"><span class="nav-number">1.9.1.</span> <span class="nav-text">注意移动和复制的区别 - 移动后源文件不在了，复制只是对源文件复制一份</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考连接"><span class="nav-number">2.</span> <span class="nav-text">参考连接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">unclepis</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共56.5k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      本站总访问人数 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+  
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      本站总访问量 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'DBnzsB5Bwg1DG3BqNP8vSwH2-gzGzoHsz',
+        appKey: 'G3DDmOX3BPYmH9km2wXYdsX5',
+        placeholder: 'talk is cheap, say something useful...',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input&&input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input&&input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://unclepis.coding.me/2019/11/18/linuxDeploy/wget.png">
 <meta property="og:image" content="http://unclepis.coding.me/2019/11/18/linuxDeploy/pid.png">
 <meta property="og:image" content="http://unclepis.coding.me/2019/11/18/linuxDeploy/clound.png">
-<meta property="og:updated_time" content="2019-12-26T05:56:23.857Z">
+<meta property="og:updated_time" content="2020-02-25T01:08:43.180Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="水牛下水系列（0）-  linux 基础及其服务器nginx静态资源部署">
 <meta name="twitter:description" content="最近在公司本地的服务器用nginx部署了一个单页面的应用程序，做之前想想感觉过程挺简单的，无非就是打包静态资源，修改server的nginx配置然后就可以访问了，后来发现需要安装node环境，一方面需要安装前端工程的依赖包，另一方面需要使用nodejs起一个express的server…一般三折之后还是打算记录一下….">
@@ -516,7 +516,7 @@
 <p>linux中&gt;表示覆盖原文件内容，&gt;&gt;表示追加内容</p>
 </blockquote>
 </li>
-<li><p>2)cat</p>
+<li><p>2)<code>cat</code></p>
 </li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-n 或 --number：由 <span class="number">1</span> 开始对所有输出的行数编号。</span><br><span class="line"><span class="comment">// cat -n linuxfile1 &gt; linuxfile2 把 linuxfile1 的档案内容加上行号后输入 linuxfile2 这个档案里</span></span><br><span class="line">-b 或 --number-nonblank：和 -n 相似，只不过对于空白行不编号。</span><br><span class="line"><span class="comment">//cat -b linuxfile1 linuxfile2 &gt;&gt; linuxfile3 把 linuxfile1 和 linuxfile2 的档案内容加上行号(空白行不加)之后将内容附加到linuxfile3 里。</span></span><br><span class="line">-s 或 --squeeze-blank：当遇到有连续两行以上的空白行，就代换为一行的空白行。</span><br></pre></td></tr></table></figure>
@@ -572,7 +572,7 @@
 <h2 id="安装nodejs"><a href="#安装nodejs" class="headerlink" title="安装nodejs"></a>安装nodejs</h2><p>要安装nodejs，最通俗的做法无非是查看远程服务器的操作系统和版本，然后从nodejs官网下载,然后通过解压工具解压文件</p>
 <h3 id="使用上面说的wget-curl-手动官方下载"><a href="#使用上面说的wget-curl-手动官方下载" class="headerlink" title="使用上面说的wget/curl/手动官方下载"></a>使用上面说的wget/curl/手动官方下载</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 使用curl下载</span><br><span class="line">curl -O http://cdn.npm.taobao.org/dist/node/v8.12.2/node-v8.12.2-linux-x64.tar.gz</span><br><span class="line">// 使用wget下载</span><br><span class="line"> wget http://cdn.npm.taobao.org/dist/node/v8.12.2/node-v8.12.2-linux-x64.tar.gz</span><br></pre></td></tr></table></figure>
 <p><img src="/2019/11/18/linuxDeploy/wget.png" alt="wget下载"></p>
-<h3 id="解压gz文件-tar命令是类Linux中比价常用的解压与压缩命令。"><a href="#解压gz文件-tar命令是类Linux中比价常用的解压与压缩命令。" class="headerlink" title="解压gz文件- tar命令是类Linux中比价常用的解压与压缩命令。"></a>解压gz文件- tar命令是类Linux中比价常用的解压与压缩命令。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 基本用法</span><br><span class="line">tar -xzvf filename.tar.gz </span><br><span class="line">// 解压文件并拷贝到指定目录</span><br><span class="line">tar -xzvf filename.tar.gz -C destPath</span><br><span class="line">// --strip-components 1 去掉第一层文件夹</span><br><span class="line">tar --strip-components 1 -xzvf file.tar.gz -C /opt/webs/folder/</span><br></pre></td></tr></table></figure>
+<h3 id="解压gz文件-tar命令是类Linux中比较-常用的解压与压缩命令。"><a href="#解压gz文件-tar命令是类Linux中比较-常用的解压与压缩命令。" class="headerlink" title="解压gz文件- tar命令是类Linux中比较  常用的解压与压缩命令。"></a>解压gz文件- tar命令是类Linux中比较  常用的解压与压缩命令。</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 基本用法</span><br><span class="line">tar -xzvf filename.tar.gz </span><br><span class="line">// 解压文件并拷贝到指定目录</span><br><span class="line">tar -xzvf filename.tar.gz -C destPath</span><br><span class="line">// --strip-components 1 去掉第一层文件夹</span><br><span class="line">tar --strip-components 1 -xzvf file.tar.gz -C /opt/webs/folder/</span><br></pre></td></tr></table></figure>
 <p>当然也有uzip等方式可以解压zip后缀的压缩文件…以上就是将file.tar.gz文件解压到/opt/webs/folder/文件夹下</p>
 <p>另外补充一句如果下载的文件需要–重命名/移动/复制的话可以使用</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">移动文件：mv 文件名 移动目的地文件名 </span><br><span class="line">重命名文件：mv 文件名 修改后的文件名</span><br><span class="line">复制文件：cp 文件名路径 目标路径</span><br></pre></td></tr></table></figure>
@@ -631,7 +631,7 @@
 </ul>
 <p>我个人的理解就是需要开放云服务器各个端口的使用权限。配置一下哪些ip地址来请求可以访问我的云服务器，然后对它开发那些端口…类似这样的规则<br><img src="/2019/11/18/linuxDeploy/clound.png" alt="clound"></p>
 <p>如上图所示就是就是协议/应用选择TCP，输入你开放的端口号82，源地址选择IP地址，四个零，点击确定；为什么源地址选择IP地址，四个零，因为开放全部用户访问，然后就可以通过外网ip进行访问了…..</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.cnblogs.com/qy1234/p/10574837.html" target="_blank" rel="noopener">在华为云服务器部署程序不能被外网访问的问题</a></p>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><p><a href="https://www.cnblogs.com/qy1234/p/10574837.html" target="_blank" rel="noopener">在华为云服务器部署程序不能被外网访问的问题</a></p>
 
       
     </div>
@@ -787,7 +787,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">52</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -798,7 +798,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">59</span>
+                  <span class="site-state-item-count">61</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -809,7 +809,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">75</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -863,7 +863,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#链接远程服务器"><span class="nav-number">1.</span> <span class="nav-text">链接远程服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux基础"><span class="nav-number">2.</span> <span class="nav-text">linux基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yum-是redhat-centos-系统下的软件安装方式，基于Linux，"><span class="nav-number">2.1.</span> <span class="nav-text">yum: 是redhat, centos 系统下的软件安装方式，基于Linux，</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ap-get是ubuntu下的一个软件安装方式，它是基于debain。"><span class="nav-number">2.2.</span> <span class="nav-text">ap-get是ubuntu下的一个软件安装方式，它是基于debain。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-命令行下载文件，马上就能想到两个工具：wget-和-cURL"><span class="nav-number">3.</span> <span class="nav-text">Linux 命令行下载文件，马上就能想到两个工具：wget 和 cURL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#curl和wget的区别和使用"><span class="nav-number">3.1.</span> <span class="nav-text">curl和wget的区别和使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wget"><span class="nav-number">3.2.</span> <span class="nav-text">wget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#curl"><span class="nav-number">3.3.</span> <span class="nav-text">curl</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux常用shell操作"><span class="nav-number">4.</span> <span class="nav-text">linux常用shell操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看操作系统（uname-a）"><span class="nav-number">5.</span> <span class="nav-text">查看操作系统（uname -a）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看版本（cat-etc-redhat-release）"><span class="nav-number">6.</span> <span class="nav-text">查看版本（cat /etc/redhat-release）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装nodejs"><span class="nav-number">7.</span> <span class="nav-text">安装nodejs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用上面说的wget-curl-手动官方下载"><span class="nav-number">7.1.</span> <span class="nav-text">使用上面说的wget/curl/手动官方下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解压gz文件-tar命令是类Linux中比价常用的解压与压缩命令。"><span class="nav-number">7.2.</span> <span class="nav-text">解压gz文件- tar命令是类Linux中比价常用的解压与压缩命令。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx基本操作"><span class="nav-number">7.3.</span> <span class="nav-text">nginx基本操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后台进程相关"><span class="nav-number">7.4.</span> <span class="nav-text">后台进程相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nohup做后台进程"><span class="nav-number">7.5.</span> <span class="nav-text">nohup做后台进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过公网IP访问"><span class="nav-number">7.6.</span> <span class="nav-text">通过公网IP访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原来云服务器需要添加一些配置，才可以通过公网ip访问部署的应用"><span class="nav-number">7.7.</span> <span class="nav-text">原来云服务器需要添加一些配置，才可以通过公网ip访问部署的应用:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">8.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#链接远程服务器"><span class="nav-number">1.</span> <span class="nav-text">链接远程服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux基础"><span class="nav-number">2.</span> <span class="nav-text">linux基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#yum-是redhat-centos-系统下的软件安装方式，基于Linux，"><span class="nav-number">2.1.</span> <span class="nav-text">yum: 是redhat, centos 系统下的软件安装方式，基于Linux，</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ap-get是ubuntu下的一个软件安装方式，它是基于debain。"><span class="nav-number">2.2.</span> <span class="nav-text">ap-get是ubuntu下的一个软件安装方式，它是基于debain。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-命令行下载文件，马上就能想到两个工具：wget-和-cURL"><span class="nav-number">3.</span> <span class="nav-text">Linux 命令行下载文件，马上就能想到两个工具：wget 和 cURL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#curl和wget的区别和使用"><span class="nav-number">3.1.</span> <span class="nav-text">curl和wget的区别和使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wget"><span class="nav-number">3.2.</span> <span class="nav-text">wget</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#curl"><span class="nav-number">3.3.</span> <span class="nav-text">curl</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux常用shell操作"><span class="nav-number">4.</span> <span class="nav-text">linux常用shell操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看操作系统（uname-a）"><span class="nav-number">5.</span> <span class="nav-text">查看操作系统（uname -a）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看版本（cat-etc-redhat-release）"><span class="nav-number">6.</span> <span class="nav-text">查看版本（cat /etc/redhat-release）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装nodejs"><span class="nav-number">7.</span> <span class="nav-text">安装nodejs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用上面说的wget-curl-手动官方下载"><span class="nav-number">7.1.</span> <span class="nav-text">使用上面说的wget/curl/手动官方下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解压gz文件-tar命令是类Linux中比较-常用的解压与压缩命令。"><span class="nav-number">7.2.</span> <span class="nav-text">解压gz文件- tar命令是类Linux中比较  常用的解压与压缩命令。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nginx基本操作"><span class="nav-number">7.3.</span> <span class="nav-text">nginx基本操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后台进程相关"><span class="nav-number">7.4.</span> <span class="nav-text">后台进程相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nohup做后台进程"><span class="nav-number">7.5.</span> <span class="nav-text">nohup做后台进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过公网IP访问"><span class="nav-number">7.6.</span> <span class="nav-text">通过公网IP访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原来云服务器需要添加一些配置，才可以通过公网ip访问部署的应用"><span class="nav-number">7.7.</span> <span class="nav-text">原来云服务器需要添加一些配置，才可以通过公网ip访问部署的应用:</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#参考链接"><span class="nav-number"></span> <span class="nav-text">参考链接</span></a></li></div>
             
 
           </div>
@@ -909,7 +909,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共53.1k字</span>
+  <span class="post-count">博客全站共56.5k字</span>
 </div>
         
 <div class="busuanzi-count">
