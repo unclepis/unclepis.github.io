@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="屁事蜀黍">
 <meta property="og:description" content="javascript是一个单线程执行的语言，所以在处理阻塞io是通过异步回调的方式进行，常用的处理异步的方式有以下几种： [✔] callback hell回调地狱[✔] promise[✔] generator[✔] async await 本章先介绍一下 promise的基本语法和使用细节…  链式调用 异常捕获 then方法第二个参数获取的错误信息和catch不会异常的区别 finally方">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-25T02:44:32.339Z">
+<meta property="og:updated_time" content="2020-02-25T03:45:59.953Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js异步操作">
 <meta name="twitter:description" content="javascript是一个单线程执行的语言，所以在处理阻塞io是通过异步回调的方式进行，常用的处理异步的方式有以下几种： [✔] callback hell回调地狱[✔] promise[✔] generator[✔] async await 本章先介绍一下 promise的基本语法和使用细节…  链式调用 异常捕获 then方法第二个参数获取的错误信息和catch不会异常的区别 finally方">
@@ -426,7 +426,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.8k
+                  2.2k
                 </span>
               
 
@@ -442,7 +442,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  7
+                  9
                 </span>
               
             </div>
@@ -476,6 +476,13 @@
 <li>ES2020关于promise的新特性 - <code>Promise.allSettled</code>方法</li>
 </ol>
 <a id="more"></a>
+<h2 id="Promise基本概念"><a href="#Promise基本概念" class="headerlink" title="Promise基本概念"></a>Promise基本概念</h2><blockquote>
+<p>Promise有两个参数，resolve和reject</p>
+<ul>
+<li>resolve：将异步的执行从pending(请求)变成了resolve(成功返回)，是个函数执行返回</li>
+<li>reject：顾名思义“拒绝”，就是从请求变成了”失败”，是个函数可以执行返回一个结果</li>
+</ul>
+</blockquote>
 <h2 id="示例说明"><a href="#示例说明" class="headerlink" title="示例说明"></a>示例说明</h2><ul>
 <li>假设有以下三个文件</li>
 </ul>
@@ -496,7 +503,10 @@
 <p>这样通过promise的then方法进行链式调用，但是还是存在层级嵌套，代码可读性还是不够友好。</p>
 </blockquote>
 <ul>
-<li>链式调用（<code>正确的写法</code>）</li>
+<li>链式调用（<code>正确的写法</code>）<blockquote>
+<p>then式链式写法的本质其实是一直往下传递返回一个新的Promise，也就是说then在下一步接收的是上一步返回的Promise</p>
+</blockquote>
+</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment">* promise链式调用</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"> readFile(<span class="string">'1.json'</span>).then(<span class="function"><span class="params">file1</span> =&gt;</span> &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'file1'</span>, file1)</span><br><span class="line">   <span class="keyword">return</span> readFile(file1.next)</span><br><span class="line"> &#125;).then(<span class="function"><span class="params">file2</span> =&gt;</span> &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'file2'</span>, file2)</span><br><span class="line">   <span class="keyword">return</span> readFile(file2.next)</span><br><span class="line"> &#125;).then(<span class="function"><span class="params">file3</span> =&gt;</span> &#123;</span><br><span class="line">   <span class="built_in">console</span>.log(<span class="string">'file3'</span>, file3)</span><br><span class="line"> &#125;)</span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -506,18 +516,26 @@
 <li>可以看到上面的Promise已经通过链式调用的方式，一次读取了三个文件，但是在这其中发生异常的时候，我们常做的处理有以下两种：</li>
 </ul>
 <ol>
-<li>通过Promise的catch方法进行捕获(Promise抛错具有冒泡机制，能够不断传递，可以使用catch统一处理，后续代码不会执行)</li>
-<li>Promise.then第二个参数捕获错误，回调参数捕获错误具有就近的原则，不会影响后续then的进行</li>
+<li>通过Promise的catch方法进行捕获(Promise抛错具有冒泡机制，能够不断传递，可以使用catch统一处理)</li>
+<li>Promise.then第二个参数捕获错误，回调参数捕获错误具有就近的原则，<code>不会影响后续then的进行</code></li>
 </ol>
+<h3 id="区别就是：-catch写法是针对于整个链式写法的错误捕获的，而then第二个参数是针对于上一个返回Promise的"><a href="#区别就是：-catch写法是针对于整个链式写法的错误捕获的，而then第二个参数是针对于上一个返回Promise的" class="headerlink" title="区别就是： catch写法是针对于整个链式写法的错误捕获的，而then第二个参数是针对于上一个返回Promise的"></a>区别就是： catch写法是针对于整个链式写法的错误捕获的，而then第二个参数是针对于上一个返回Promise的</h3><h3 id="两者的优先级：-catch的位置很有讲究-就是看谁在链式写法的前面，在前面的先捕获到错误，后面就没有错误可以捕获了，链式前面的优先级大，而且两者都不是break，-可以继续执行后续操作不受影响"><a href="#两者的优先级：-catch的位置很有讲究-就是看谁在链式写法的前面，在前面的先捕获到错误，后面就没有错误可以捕获了，链式前面的优先级大，而且两者都不是break，-可以继续执行后续操作不受影响" class="headerlink" title="两者的优先级： catch的位置很有讲究,就是看谁在链式写法的前面，在前面的先捕获到错误，后面就没有错误可以捕获了，链式前面的优先级大，而且两者都不是break， 可以继续执行后续操作不受影响"></a>两者的优先级： catch的位置很有讲究,就是看谁在链式写法的前面，在前面的先捕获到错误，后面就没有错误可以捕获了，链式前面的优先级大，而且两者都不是break， 可以继续执行后续操作不受影响</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">readFile(<span class="string">'1.json'</span>).then(<span class="function"><span class="params">file1</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(file1)</span><br><span class="line">  <span class="keyword">return</span> readFile(<span class="string">'2.json'</span>)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">file2</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(file2)</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'模拟错误'</span>))</span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123; <span class="comment">// 把catch写在两个then之间，当catch住前面then的异常，下面的then可以继续执行</span></span><br><span class="line">  <span class="built_in">console</span>.log(err)</span><br><span class="line">&#125;).then(<span class="function"><span class="params">info</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'上面catch报错了，下面的then也执行'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>需要注意的地方就是：</p>
 <ul>
-<li>catch会阻塞后面的代码执行，但是会一次性捕获所有then里面发生的异常。</li>
-<li>then的第二个参数error，会单独捕获then里面的异常（<code>捕获错误具有就近的原则</code>），并且不会阻塞代码继续执行下面的then</li>
-<li>如果在then中定义了错误回调则不会进入到的catch中。</li>
+<li>catch会一次性捕获所有then里面发生的异常,<code>当catch前面的then发生异常，其他then就不执行了，直接进catch;但是catch后面的then可以继续执行</code>。</li>
 </ul>
 </blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">readFile(<span class="string">'1.json'</span>).then(<span class="function"><span class="params">file1</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file1'</span>, file1)</span><br><span class="line">  <span class="keyword">return</span> readFile(file1.next)</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file1Error'</span>, error) <span class="comment">// 当执行第一个then报错了，会在这里打印，但是下面的then会继续执行</span></span><br><span class="line">&#125;).then(<span class="function"><span class="params">file2</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file2'</span>, file2)</span><br><span class="line">  <span class="keyword">return</span> readFile(file2.next)</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file2Error'</span>, error) <span class="comment">// 当执行第二个then报错了，会在这里打印，但是下面的then会继续执行</span></span><br><span class="line">&#125;).then(<span class="function"><span class="params">file3</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file3'</span>, file3)</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file3Error'</span>, error) <span class="comment">// 当执行第一个then报错了，会在这里打印，但是下面的catch方法不会执行</span></span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'promise catch error'</span>, err)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>then的第二个参数error，会单独捕获then里面的异常（<code>捕获错误具有就近的原则</code>），并且不会阻塞代码继续执行下面的then</p>
+</li>
+<li><p>通常的做法就是：</p>
+<blockquote>
+<p>只需要在末尾catch一下就可以了，因为链式写法的错误处理具有“冒泡”特性，链式中任何一个环节出问题，都会被catch到，同时在某个环节后面的代码就不会执行了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">readFile(<span class="string">'1.json'</span>).then(<span class="function"><span class="params">file1</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file1'</span>, file1)</span><br><span class="line">  <span class="keyword">return</span> readFile(file1.next)</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file1Error'</span>, error) <span class="comment">// 当执行第一个then报错了，会在这里打印，但是下面的then会继续执行</span></span><br><span class="line">&#125;).then(<span class="function"><span class="params">file2</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file2'</span>, file2)</span><br><span class="line">  <span class="keyword">return</span> readFile(file2.next)</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file2Error'</span>, error) <span class="comment">// 当执行第二个then报错了，会在这里打印，但是下面的then会继续执行</span></span><br><span class="line">&#125;).then(<span class="function"><span class="params">file3</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file3'</span>, file3)</span><br><span class="line">&#125;, error =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'file3Error'</span>, error) <span class="comment">// 当执行第一个then报错了，会在这里打印，但是下面的catch方法不会执行</span></span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'promise catch error'</span>, err) <span class="comment">// </span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
 <h2 id="finally"><a href="#finally" class="headerlink" title="finally"></a>finally</h2><blockquote>
 <p>finally() 方法返回一个Promise，在promise执行结束时，无论结果是fulfilled或者是rejected，在执行then()和catch()后，都会执行finally指定的回调函数。这为指定执行完promise后，无论结果是fulfilled还是rejected都需要执行的代码提供了一种方式，避免同样的语句需要在then()和catch()中各写一次的情况。</p>
 </blockquote>
@@ -548,6 +566,8 @@
 <p>结果</p>
 </blockquote>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &#123; <span class="attr">status</span>: <span class="string">'rejected'</span>, <span class="attr">reason</span>: &#123; <span class="attr">code</span>: <span class="number">500</span>, <span class="attr">msg</span>: <span class="string">'服务异常'</span> &#125; &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    status: <span class="string">'fulfilled'</span>,</span><br><span class="line">    value: &#123; <span class="attr">next</span>: <span class="string">'3.json'</span>, <span class="attr">message</span>: <span class="string">'this is second File'</span> &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    status: <span class="string">'fulfilled'</span>,</span><br><span class="line">    value: &#123; <span class="attr">next</span>: <span class="literal">null</span>, <span class="attr">message</span>: <span class="string">'this is third File, good bye'</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="https://www.jianshu.com/p/c2ff916fadc5" target="_blank" rel="noopener">nodejs中的promise基本操作</a><br><a href="https://www.nodejs.red/#/es6/promise?id=%e9%94%99%e8%af%af%e6%8d%95%e8%8e%b7" target="_blank" rel="noopener">Promise</a><br><a href="https://segmentfault.com/a/1190000016788484#item-2-6" target="_blank" rel="noopener">异步Promise及Async/Await可能最完整入门攻略</a></p>
+
       
     </div>
     
@@ -780,7 +800,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#示例说明"><span class="nav-number">1.</span> <span class="nav-text">示例说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）不使用promise-callbackHell回调地狱的方式"><span class="nav-number">1.1.</span> <span class="nav-text">（1）不使用promise,callbackHell回调地狱的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）promise的方式"><span class="nav-number">1.2.</span> <span class="nav-text">（2）promise的方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常捕获"><span class="nav-number">2.</span> <span class="nav-text">异常捕获</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#finally"><span class="nav-number">3.</span> <span class="nav-text">finally</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-all静态方法-promise并行执行"><span class="nav-number">4.</span> <span class="nav-text">Promise.all静态方法 - promise并行执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-race静态方法-promise率先执行"><span class="nav-number">5.</span> <span class="nav-text">Promise.race静态方法 - promise率先执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-allSettled-Promise执行多个请求有异常的时候不阻塞其他执行"><span class="nav-number">6.</span> <span class="nav-text">Promise.allSettled - Promise执行多个请求有异常的时候不阻塞其他执行</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise基本概念"><span class="nav-number">1.</span> <span class="nav-text">Promise基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例说明"><span class="nav-number">2.</span> <span class="nav-text">示例说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#（1）不使用promise-callbackHell回调地狱的方式"><span class="nav-number">2.1.</span> <span class="nav-text">（1）不使用promise,callbackHell回调地狱的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（2）promise的方式"><span class="nav-number">2.2.</span> <span class="nav-text">（2）promise的方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常捕获"><span class="nav-number">3.</span> <span class="nav-text">异常捕获</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#区别就是：-catch写法是针对于整个链式写法的错误捕获的，而then第二个参数是针对于上一个返回Promise的"><span class="nav-number">3.1.</span> <span class="nav-text">区别就是： catch写法是针对于整个链式写法的错误捕获的，而then第二个参数是针对于上一个返回Promise的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#两者的优先级：-catch的位置很有讲究-就是看谁在链式写法的前面，在前面的先捕获到错误，后面就没有错误可以捕获了，链式前面的优先级大，而且两者都不是break，-可以继续执行后续操作不受影响"><span class="nav-number">3.2.</span> <span class="nav-text">两者的优先级： catch的位置很有讲究,就是看谁在链式写法的前面，在前面的先捕获到错误，后面就没有错误可以捕获了，链式前面的优先级大，而且两者都不是break， 可以继续执行后续操作不受影响</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#finally"><span class="nav-number">4.</span> <span class="nav-text">finally</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-all静态方法-promise并行执行"><span class="nav-number">5.</span> <span class="nav-text">Promise.all静态方法 - promise并行执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-race静态方法-promise率先执行"><span class="nav-number">6.</span> <span class="nav-text">Promise.race静态方法 - promise率先执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise-allSettled-Promise执行多个请求有异常的时候不阻塞其他执行"><span class="nav-number">7.</span> <span class="nav-text">Promise.allSettled - Promise执行多个请求有异常的时候不阻塞其他执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考链接"><span class="nav-number">8.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
             
 
           </div>
@@ -826,7 +846,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共56.5k字</span>
+  <span class="post-count">博客全站共56.9k字</span>
 </div>
         
 <div class="busuanzi-count">
