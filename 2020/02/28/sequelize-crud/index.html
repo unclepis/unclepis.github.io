@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="介绍sequelize常用的crud方法:新增   create({创建的属性:属性的值})  更新   update({需要更新的属性名称:需要更新的值},{where:{查询条件:值})  删除   destroy({where:{查询条件:值}})  查询   findOne({配置参数}) findAll({配置参数}) findAndCountAll({配置参数})  123456789">
+<meta name="description" content="介绍sequelize常用的crud方法:新增   create({创建的属性:属性的值})  更新   update({需要更新的属性名称:需要更新的值},{where:{查询条件:值})  删除   destroy({where:{查询条件:值}})  查询   findOne({配置参数}) findAll({配置参数}) findAndCountAll({配置参数})">
 <meta name="keywords" content="sequelize - CRUD增删改查">
 <meta property="og:type" content="article">
 <meta property="og:title" content="sequelize - CRUD增删改查">
 <meta property="og:url" content="http://unclepis.coding.me/2020/02/28/sequelize-crud/index.html">
 <meta property="og:site_name" content="屁事蜀黍">
-<meta property="og:description" content="介绍sequelize常用的crud方法:新增   create({创建的属性:属性的值})  更新   update({需要更新的属性名称:需要更新的值},{where:{查询条件:值})  删除   destroy({where:{查询条件:值}})  查询   findOne({配置参数}) findAll({配置参数}) findAndCountAll({配置参数})  123456789">
+<meta property="og:description" content="介绍sequelize常用的crud方法:新增   create({创建的属性:属性的值})  更新   update({需要更新的属性名称:需要更新的值},{where:{查询条件:值})  删除   destroy({where:{查询条件:值}})  查询   findOne({配置参数}) findAll({配置参数}) findAndCountAll({配置参数})">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-02T02:01:06.878Z">
+<meta property="og:updated_time" content="2020-03-02T06:11:35.875Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sequelize - CRUD增删改查">
-<meta name="twitter:description" content="介绍sequelize常用的crud方法:新增   create({创建的属性:属性的值})  更新   update({需要更新的属性名称:需要更新的值},{where:{查询条件:值})  删除   destroy({where:{查询条件:值}})  查询   findOne({配置参数}) findAll({配置参数}) findAndCountAll({配置参数})  123456789">
+<meta name="twitter:description" content="介绍sequelize常用的crud方法:新增   create({创建的属性:属性的值})  更新   update({需要更新的属性名称:需要更新的值},{where:{查询条件:值})  删除   destroy({where:{查询条件:值}})  查询   findOne({配置参数}) findAll({配置参数}) findAndCountAll({配置参数})">
 
 
 
@@ -481,6 +481,7 @@
 <li>findAll({配置参数})</li>
 <li>findAndCountAll({配置参数})</li>
 </ul>
+<a id="more"></a>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &#123;配置参数&#125;</span></span><br><span class="line">&#123;</span><br><span class="line">  attributes:[<span class="string">'field'</span>], <span class="comment">// 自定义返回的列</span></span><br><span class="line">  where:&#123;</span><br><span class="line">    id:<span class="number">1</span> <span class="comment">// 指定查询条件</span></span><br><span class="line">  &#125;,</span><br><span class="line">  where:&#123;</span><br><span class="line">    username:&#123;</span><br><span class="line">      [Op.like]:<span class="string">"%zhang%"</span> <span class="comment">// 模糊查询</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  limit:<span class="number">10</span>, <span class="comment">// 查询多少条</span></span><br><span class="line">  offset:<span class="number">10</span>, <span class="comment">// 跳过多少开始</span></span><br><span class="line">  order:[</span><br><span class="line">    [<span class="string">"id"</span>,<span class="string">"desc"</span>] <span class="comment">// 排序规则</span></span><br><span class="line">  ],</span><br><span class="line">  include:[ <span class="comment">// 联表查询</span></span><br><span class="line">    &#123;</span><br><span class="line">      model:Blog,</span><br><span class="line">      attributes:[<span class="string">'filed1'</span>],</span><br><span class="line">      where:&#123;</span><br><span class="line">        id:<span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  raw:<span class="literal">true</span> <span class="comment">// 对sequelize数据格式处理，一般用于数据只显示的情况</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="新增"><a href="#新增" class="headerlink" title="新增"></a><span id="#create">新增</span></h2><ul>
 <li>对创建的模型调用create方法</li>
