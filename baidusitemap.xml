@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://unclepis.coding.me/2020/03/02/koa2-redis/</loc>
+    <lastmod>2020-03-02</lastmod>
+  </url>  <url>
+    <loc>http://unclepis.coding.me/2020/02/27/koa2/</loc>
+    <lastmod>2020-03-02</lastmod>
+  </url>  <url>
     <loc>http://unclepis.coding.me/2020/02/28/sequelize-crud/</loc>
     <lastmod>2020-03-02</lastmod>
   </url>  <url>
@@ -11,9 +17,6 @@
     <lastmod>2020-03-02</lastmod>
   </url>  <url>
     <loc>http://unclepis.coding.me/2019/11/25/nodejs-3/</loc>
-    <lastmod>2020-02-28</lastmod>
-  </url>  <url>
-    <loc>http://unclepis.coding.me/2020/02/27/koa2/</loc>
     <lastmod>2020-02-28</lastmod>
   </url>  <url>
     <loc>http://unclepis.coding.me/2020/02/27/koa2-ejs/</loc>
@@ -43,10 +46,10 @@
     <loc>http://unclepis.coding.me/2019/12/30/winBat/</loc>
     <lastmod>2019-12-30</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2019/10/19/vue-8/</loc>
+    <loc>http://unclepis.coding.me/2019/10/19/vue-7/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2019/10/19/vue-7/</loc>
+    <loc>http://unclepis.coding.me/2019/10/19/vue-8/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
     <loc>http://unclepis.coding.me/2019/10/19/vue-9/</loc>
@@ -136,10 +139,10 @@
     <loc>http://unclepis.coding.me/2018/10/30/element/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2019/12/09/express/</loc>
+    <loc>http://unclepis.coding.me/2018/10/31/evenLoop/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2018/10/31/evenLoop/</loc>
+    <loc>http://unclepis.coding.me/2019/12/09/express/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
     <loc>http://unclepis.coding.me/2018/10/17/git/</loc>
@@ -166,10 +169,10 @@
     <loc>http://unclepis.coding.me/2018/11/19/currentFrontEnd/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2019/12/20/app/</loc>
+    <loc>http://unclepis.coding.me/2018/10/17/Set/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2018/10/17/Set/</loc>
+    <loc>http://unclepis.coding.me/2019/12/20/app/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>
 </urlset>

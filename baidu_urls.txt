@@ -1,3 +1,4 @@
+http://unclepis.coding.me/2020/03/02/koa2-redis/
 http://unclepis.coding.me/2020/02/28/sequelize-crud/
 http://unclepis.coding.me/2020/02/28/sequelize/
 http://unclepis.coding.me/2020/02/27/koa2-ejs/
