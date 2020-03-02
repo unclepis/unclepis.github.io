@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://unclepis.coding.me/2020/02/27/nodejs-8/</loc>
+    
+    <lastmod>2020-03-02T02:18:10.707Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://unclepis.coding.me/2020/02/28/sequelize/</loc>
     
     <lastmod>2020-03-02T02:08:07.551Z</lastmod>
@@ -33,13 +40,6 @@
     <loc>http://unclepis.coding.me/2020/02/27/koa2-ejs/</loc>
     
     <lastmod>2020-02-28T00:02:00.586Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://unclepis.coding.me/2020/02/27/nodejs-8/</loc>
-    
-    <lastmod>2020-02-27T03:34:12.797Z</lastmod>
     
   </url>
   
