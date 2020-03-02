@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://unclepis.coding.me/2020/03/02/jest/</loc>
+    <lastmod>2020-03-02</lastmod>
+  </url>  <url>
     <loc>http://unclepis.coding.me/2020/03/02/koa2-redis/</loc>
     <lastmod>2020-03-02</lastmod>
   </url>  <url>
@@ -79,10 +82,10 @@
     <loc>http://unclepis.coding.me/2018/11/21/this/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2018/10/18/type/</loc>
+    <loc>http://unclepis.coding.me/2018/10/18/verdaccio/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2018/10/18/verdaccio/</loc>
+    <loc>http://unclepis.coding.me/2018/10/18/type/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
     <loc>http://unclepis.coding.me/2018/10/30/react/</loc>
@@ -163,10 +166,10 @@
     <loc>http://unclepis.coding.me/2019/12/20/devOps/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2018/11/01/canvas/</loc>
+    <loc>http://unclepis.coding.me/2018/11/19/currentFrontEnd/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2018/11/19/currentFrontEnd/</loc>
+    <loc>http://unclepis.coding.me/2018/11/01/canvas/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
     <loc>http://unclepis.coding.me/2018/10/17/Set/</loc>
