@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+  <meta name="google-site-verification" content="Je7AOEjKqN2ygLA5weMsdXFgWp2T5fb26na9fxZyq9o">
+
+
+
+
+
+
+
+
+  <meta name="baidu-site-verification" content="kRmNQSgNqg">
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.ioc?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.ico?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="sequelize - 数据同步,sequelize - 数据建模,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在nodejs操作mySql数据库 中已经介绍了怎么使用nodejs链接mysql数据库，以及t通过Promise的方式封装了mysql执行sql获取数据，以及防止sql注入的escape方法。本章介绍orm数据关系映射 - Sequelize.">
+<meta name="keywords" content="sequelize - 数据同步,sequelize - 数据建模">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sequelize - 数据建模以及数据同步">
+<meta property="og:url" content="http://unclepis.coding.me/2020/02/28/sequelize/index.html">
+<meta property="og:site_name" content="屁事蜀黍">
+<meta property="og:description" content="在nodejs操作mySql数据库 中已经介绍了怎么使用nodejs链接mysql数据库，以及t通过Promise的方式封装了mysql执行sql获取数据，以及防止sql注入的escape方法。本章介绍orm数据关系映射 - Sequelize.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://unclepis.coding.me/2020/02/28/sequelize/sync.png">
+<meta property="og:image" content="http://unclepis.coding.me/2020/02/28/sequelize/er.png">
+<meta property="og:updated_time" content="2020-03-02T02:08:07.551Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sequelize - 数据建模以及数据同步">
+<meta name="twitter:description" content="在nodejs操作mySql数据库 中已经介绍了怎么使用nodejs链接mysql数据库，以及t通过Promise的方式封装了mysql执行sql获取数据，以及防止sql注入的escape方法。本章介绍orm数据关系映射 - Sequelize.">
+<meta name="twitter:image" content="http://unclepis.coding.me/2020/02/28/sequelize/sync.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://unclepis.coding.me/2020/02/28/sequelize/">
+
+
+
+
+
+  <title>sequelize - 数据建模以及数据同步 | 屁事蜀黍</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">屁事蜀黍</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Stay Hungry, Stay Foolish(求知若饥，虚心若愚)</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-guestbook">
+          <a href="/guestbook" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            留言
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://unclepis.coding.me/2020/02/28/sequelize/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="unclepis">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="屁事蜀黍">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">sequelize - 数据建模以及数据同步</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-28T08:05:01+08:00">
+                2020-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/sequelize/" itemprop="url" rel="index">
+                    <span itemprop="name">sequelize</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/02/28/sequelize/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2020/02/28/sequelize/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2020/02/28/sequelize/" class="leancloud_visitors" data-flag-title="sequelize - 数据建模以及数据同步">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+             <span>℃</span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在<code><a href="/2019/11/25/nodejs-3/" title="nodejs操作mySql数据库">nodejs操作mySql数据库</a></code> 中已经介绍了怎么使用nodejs链接mysql数据库，以及t通过Promise的方式封装了mysql执行sql获取数据，以及防止sql注入的escape方法。本章介绍orm数据关系映射 - Sequelize.</p>
+<a id="more"></a>
+<h1 id="ORM"><a href="#ORM" class="headerlink" title="ORM"></a>ORM</h1><ul>
+<li>Object Relation Mapping </li>
+</ul>
+<blockquote>
+<p><code>数据表</code>，用js中的模型（class或者对象）代替</p>
+</blockquote>
+<blockquote>
+<p><code>一条或多条记录</code>，用对象或者数组代替</p>
+</blockquote>
+<blockquote>
+<p><code>sql语句</code>，使用对象的方法代替</p>
+</blockquote>
+<h2 id="1-安装mysql和sequelize"><a href="#1-安装mysql和sequelize" class="headerlink" title="(1) 安装mysql和sequelize"></a>(1) 安装mysql和sequelize</h2><blockquote>
+<p>npm i mysql2 sequelize –save </p>
+</blockquote>
+<h2 id="2-配置sequelize建立数据库连接"><a href="#2-配置sequelize建立数据库连接" class="headerlink" title="(2) 配置sequelize建立数据库连接"></a>(2) 配置sequelize建立数据库连接</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Sequelize = <span class="built_in">require</span>(<span class="string">'sequelize'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 引入mysql配置</span></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="attr">mysqlConfig</span>: &#123; database, username, password, host，dialect，pool &#125; &#125; = <span class="built_in">require</span>(<span class="string">'../conf/db'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* @params &#123;string&#125; - database 数据库名称</span></span><br><span class="line"><span class="comment">* @params &#123;string&#125; - username 用户名</span></span><br><span class="line"><span class="comment">* @params &#123;string&#125; - password 密码</span></span><br><span class="line"><span class="comment">* @params &#123;Object&#125; - host主机地址，dialect数据库类型，pool连接池</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> seq = <span class="keyword">new</span> Sequelize(database, username, password, &#123;</span><br><span class="line">  host,</span><br><span class="line">  dialect,</span><br><span class="line">  pool <span class="comment">// 线上环境需要使用连接池</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = seq <span class="comment">// 导出sequelize连接实例</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-sequelize建模-amp-同步到数据库"><a href="#3-sequelize建模-amp-同步到数据库" class="headerlink" title="(3)sequelize建模&amp;同步到数据库"></a>(3)sequelize建模&amp;同步到数据库</h2><ul>
+<li><p>之前nodejs直接连接mysql，需要在mysql中先建表，然后再nodejs中通过mysql的connect实例进行sql的查询。</p>
+</li>
+<li><p>sequelize通过数据建模，然后就会同步到数据库中生成响应的表，然后通过api的方式进行增删改查，以及多表查询等操作。</p>
+</li>
+</ul>
+<blockquote>
+<p>sequelize是通过define方法建立模型的，Model相当于数据库中的表，该对象不能通过构造函数实例化，而只能通过<code>sequelize.define()</code>或<code>sequelize.import()</code>方法创建</p>
+</blockquote>
+<h3 id="3-1-创建数据模型"><a href="#3-1-创建数据模型" class="headerlink" title="(3-1)创建数据模型"></a>(3-1)创建数据模型</h3><blockquote>
+<p><code>sequelize.define():define方法接收三个参数，第一个参数为表名称，第二个为所需要创建的数据库字段，第三个参数是相关表配置</code>，具体配置参考文章结尾的连接 <a href="#more">详细配置<a></a></a></p>
+</blockquote>
+<blockquote>
+<p>更多阅读<a href="#configURL">配置参数<a></a></a></p>
+</blockquote>
+<blockquote>
+<p>Sequelize常用的数据类型，<code>文章结尾有详细的列表</code></p>
+</blockquote>
+<ul>
+<li>Sequelize.NOW - 获取当前时间</li>
+<li>Sequelize.STRING</li>
+<li>Sequelize.INTEGER</li>
+<li>Sequelize.TEXT</li>
+<li>Sequelize.DATE</li>
+<li>Sequelize.DECIMAL</li>
+</ul>
+<blockquote>
+<p>数据模型中的参数</p>
+</blockquote>
+<ul>
+<li>type  - Sequelize提供的类型</li>
+<li>allowNull - true/false 是否为空</li>
+<li>comment 备注信息</li>
+<li>pattern 按照正则匹配</li>
+<li>defaultValue 默认值</li>
+<li>unique - true/false是否唯一</li>
+<li>primaryKey - true/false 定义主键</li>
+<li>autoIncrement - true/false 可用于创建自增的整数列</li>
+<li>field - 属性指定自定义字段名称</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">const</span> Sequelize = <span class="built_in">require</span>(<span class="string">'sequelize'</span>)</span><br><span class="line">   <span class="keyword">const</span> seq = <span class="built_in">require</span>(<span class="string">'../seq'</span>) <span class="comment">// 上面导出的sequelize连接实例</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 跟建立User表一样，define的第一个参数就是表名，后面是表的列和属性</span></span><br><span class="line">   <span class="keyword">const</span> User = req.define(<span class="string">'user'</span>,&#123;</span><br><span class="line">     <span class="comment">// id 会自动创建，并设置为主键，自增</span></span><br><span class="line">     username:&#123;</span><br><span class="line">       type:Sequelize.STRING,</span><br><span class="line">       allowNull:<span class="literal">false</span></span><br><span class="line">     &#125;,</span><br><span class="line">     password:&#123;</span><br><span class="line">       type:Sequelize.STRING,</span><br><span class="line">       allowNull:<span class="literal">false</span></span><br><span class="line">     &#125;,</span><br><span class="line">     nickname:&#123;</span><br><span class="line">       type:Sequelize.STRING</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;)</span><br><span class="line"></span><br><span class="line">   <span class="built_in">module</span>.exports = &#123;</span><br><span class="line">     User</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-创建数据表的外键"><a href="#3-2-创建数据表的外键" class="headerlink" title="(3-2)创建数据表的外键"></a>(3-2)创建数据表的外键</h3><blockquote>
+<p>ModalA 多对一 ModalB<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ModalA.belongsTo(ModalB,&#123;</span><br><span class="line">  foreignKey:<span class="string">'ModalAForeignKeyName'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<blockquote>
+<p>ModalB 一对多 ModalA<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ModalB.hasMany(ModalA,&#123;</span><br><span class="line">  foreignKey:<span class="string">'ModalAForeignKeyName'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<ul>
+<li>上面两种api二选一就行了，但是为了连表查询，所以都写比较好，查询ModalA带出来ModalB。必须写第一种写法。反之亦然。</li>
+</ul>
+<h3 id="3-3-测试sequelize是否连接成功-authenticate-方法"><a href="#3-3-测试sequelize是否连接成功-authenticate-方法" class="headerlink" title="(3-3)测试sequelize是否连接成功 - authenticate()方法"></a>(3-3)测试sequelize是否连接成功 - authenticate()方法</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> seq = <span class="built_in">require</span>(<span class="string">'./seq'</span>) <span class="comment">// 先导入sequelize连接实例</span></span><br><span class="line"><span class="comment">// 测试sequelize链接是否成功</span></span><br><span class="line">seq.authenticate().then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'sequelize connect successfully'</span>)</span><br><span class="line">&#125;).catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(err)</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'sequelize connect failed'</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="3-4-同步模型到数据库-sync-方法"><a href="#3-4-同步模型到数据库-sync-方法" class="headerlink" title="(3-4)同步模型到数据库 - sync()方法"></a>(3-4)同步模型到数据库 - sync()方法</h3><blockquote>
+<p>force: true 如果表已经存在，将会丢弃表 ;</p>
+</blockquote>
+<blockquote>
+<p>alter: true 如果表已存在，不丢弃，如果不存在会直接创建表</p>
+</blockquote>
+<blockquote>
+<p>需要注意通过这种方式同步的表会在表名称后面<code>添加一个s</code>作为复数</p>
+</blockquote>
+<blockquote>
+<p>会自动生成<code>createdAt</code>的创建时间，和修改时间<code>updateAt</code>,如果不需要这两个参数的话在define的第三个参数中修改表配置<code>timestamps为false,默认为true</code></p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> AaronTest = sequelize.define(<span class="string">'project'</span>, &#123;</span><br><span class="line">  title: Sequelize.STRING,</span><br><span class="line">  description: &#123;</span><br><span class="line">    type:Sequelize.txt,</span><br><span class="line">    allowNull:<span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;,&#123;</span><br><span class="line">  timestamps: <span class="literal">false</span> <span class="comment">// 不要添加时间戳属性 (updatedAt, createdAt)</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>force的意思是同步中存在的表会删掉，重新创建一个新的</p>
+</blockquote>
+<blockquote>
+<p><code>同步成功</code>需要手动退出进程<code>process.exit()</code></p>
+</blockquote>
+<blockquote>
+<p>会自动生成id，并且设置成主键，自动增加</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> seq = <span class="built_in">require</span>(<span class="string">'./seq'</span>) <span class="comment">// 先导入sequelize连接实例</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">require</span>(<span class="string">'/modal); // 导入创建的模型</span></span><br><span class="line"><span class="string">// 执行同步 </span></span><br><span class="line"><span class="string">seq.sync(&#123;force:true&#125;).then(() =&gt; &#123;</span></span><br><span class="line"><span class="string">  process.exit(); // 同步成功需要手动退出进程</span></span><br><span class="line"><span class="string">  console.log('</span>sequelize sync successfully<span class="string">')</span></span><br><span class="line"><span class="string">&#125;).catch(err =&gt; &#123;</span></span><br><span class="line"><span class="string">  console.log(err)</span></span><br><span class="line"><span class="string">  console.log('</span>sequelize sync failed<span class="string">')</span></span><br><span class="line"><span class="string">&#125;)</span></span><br></pre></td></tr></table></figure>
+<p><img src="/2020/02/28/sequelize/sync.png" alt="同步数据"></p>
+<blockquote>
+<p>在workbench中就可以看到数据表已经同步过来了。在<code>Database=&gt;Reverse Engineer</code> 就可以生成<code>E-R实体关系图</code><br><img src="/2020/02/28/sequelize/er.png" alt="实体关系图"></p>
+</blockquote>
+<p></p><h1 id="more">补充文档 - 详细的模型参数和类型参数</h1><p></p>
+<h2 id="Model-definition-模型定义如下"><a href="#Model-definition-模型定义如下" class="headerlink" title="Model definition - 模型定义如下"></a>Model definition - 模型定义如下</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Foo = sequelize.define(<span class="string">'foo'</span>, &#123;</span><br><span class="line"> <span class="comment">// 如果未赋值,则自动设置值为 TRUE</span></span><br><span class="line"> flag: &#123; <span class="attr">type</span>: Sequelize.BOOLEAN, <span class="attr">allowNull</span>: <span class="literal">false</span>, <span class="attr">defaultValue</span>: <span class="literal">true</span>&#125;,</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 设置默认时间为当前时间</span></span><br><span class="line"> myDate: &#123; <span class="attr">type</span>: Sequelize.DATE, <span class="attr">defaultValue</span>: Sequelize.NOW &#125;,</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 将allowNull设置为false会将NOT NULL添加到列中，</span></span><br><span class="line"> <span class="comment">// 这意味着当列为空时执行查询时将从DB抛出错误。 </span></span><br><span class="line"> <span class="comment">// 如果要在查询DB之前检查值不为空，请查看下面的验证部分。</span></span><br><span class="line"> title: &#123; <span class="attr">type</span>: Sequelize.STRING, <span class="attr">allowNull</span>: <span class="literal">false</span>&#125;,</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 创建具有相同值的两个对象将抛出一个错误。 唯一属性可以是布尔值或字符串。</span></span><br><span class="line"> <span class="comment">// 如果为多个列提供相同的字符串，则它们将形成复合唯一键。</span></span><br><span class="line"> uniqueOne: &#123; <span class="attr">type</span>: Sequelize.STRING,  <span class="attr">unique</span>: <span class="string">'compositeIndex'</span>&#125;,</span><br><span class="line"> uniqueTwo: &#123; <span class="attr">type</span>: Sequelize.INTEGER, <span class="attr">unique</span>: <span class="string">'compositeIndex'</span>&#125;,</span><br><span class="line"></span><br><span class="line"> <span class="comment">// unique属性用来创建一个唯一约束。</span></span><br><span class="line"> someUnique: &#123;<span class="attr">type</span>: Sequelize.STRING, <span class="attr">unique</span>: <span class="literal">true</span>&#125;,</span><br><span class="line"> <span class="comment">// 这与在模型选项中创建索引完全相同。</span></span><br><span class="line"> &#123;<span class="attr">someUnique</span>: &#123;<span class="attr">type</span>: Sequelize.STRING&#125;&#125;,</span><br><span class="line"> &#123;<span class="attr">indexes</span>: [&#123;<span class="attr">unique</span>: <span class="literal">true</span>, <span class="attr">fields</span>: [<span class="string">'someUnique'</span>]&#125;]&#125;,</span><br><span class="line"></span><br><span class="line"> <span class="comment">// primaryKey用于定义主键。</span></span><br><span class="line"> identifier: &#123; <span class="attr">type</span>: Sequelize.STRING, <span class="attr">primaryKey</span>: <span class="literal">true</span>&#125;,</span><br><span class="line"></span><br><span class="line"> <span class="comment">// autoIncrement可用于创建自增的整数列</span></span><br><span class="line"> incrementMe: &#123; <span class="attr">type</span>: Sequelize.INTEGER, <span class="attr">autoIncrement</span>: <span class="literal">true</span> &#125;,</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 你可以通过'field'属性指定自定义字段名称：</span></span><br><span class="line"> fieldWithUnderscores: &#123; <span class="attr">type</span>: Sequelize.STRING, <span class="attr">field</span>: <span class="string">'field_with_underscores'</span> &#125;,</span><br><span class="line"></span><br><span class="line"> <span class="comment">// 这可以创建一个外键:</span></span><br><span class="line"> bar_id: &#123;</span><br><span class="line">   type: Sequelize.INTEGER,</span><br><span class="line"></span><br><span class="line">   references: &#123;</span><br><span class="line">     <span class="comment">// 这是引用另一个模型</span></span><br><span class="line">     model: Bar,</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 这是引用模型的列名称</span></span><br><span class="line">     key: <span class="string">'id'</span>,</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 这声明什么时候检查外键约束。 仅限PostgreSQL。</span></span><br><span class="line">     deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="sequelize提供的几种数据类型，用于数据建模"><a href="#sequelize提供的几种数据类型，用于数据建模" class="headerlink" title="sequelize提供的几种数据类型，用于数据建模"></a>sequelize提供的几种数据类型，用于数据建模</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Sequelize.STRING                      <span class="comment">// VARCHAR(255)                  类型：字符串 最大值： 65535个字符</span></span><br><span class="line">Sequelize.STRING(<span class="number">1234</span>)                <span class="comment">// VARCHAR(1234)                 类型：变长 最大值： 65535个字符</span></span><br><span class="line">Sequelize.TEXT                        <span class="comment">// TEXT                          类型：字符串 最大值：65535个字符</span></span><br><span class="line">Sequelize.TEXT(<span class="string">'tiny'</span>)                <span class="comment">// TINYTEXT                      类型：字符串 最大值：255个字符</span></span><br><span class="line"></span><br><span class="line">Sequelize.INTEGER                     <span class="comment">// INTEGER                       类型：整型 最大值：范围(-2147483648~2147483647)</span></span><br><span class="line">Sequelize.BIGINT                      <span class="comment">// BIGINT                        类型：整型 最大值：范围(+-9.22*10的18次方)</span></span><br><span class="line">Sequelize.BIGINT(<span class="number">11</span>)                  <span class="comment">// BIGINT(11)                    类型：整型 最大值：范围(+-9.22*10的18次方)</span></span><br><span class="line"></span><br><span class="line">Sequelize.FLOAT                       <span class="comment">// FLOAT                         类型：单精度浮点型  8位精度(4字节)</span></span><br><span class="line">Sequelize.FLOAT(<span class="number">11</span>)                   <span class="comment">// FLOAT(11)                     类型：单精度浮点型 8位精度(4字节)</span></span><br><span class="line">Sequelize.FLOAT(<span class="number">11</span>, <span class="number">12</span>)               <span class="comment">// FLOAT(11,12)                  类型：精度浮点型 8位精度(4字节) m总个数，d小数位</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Sequelize.DOUBLE                      <span class="comment">// DOUBLE                        类型：双精度浮点型 16位精度(8字节) </span></span><br><span class="line">Sequelize.DOUBLE(<span class="number">11</span>)                  <span class="comment">// DOUBLE(11)                    类型：双精度浮点型 16位精度(8字节) </span></span><br><span class="line">Sequelize.DOUBLE(<span class="number">11</span>, <span class="number">12</span>)              <span class="comment">// DOUBLE(11,12)                 类型：双精度浮点型 16位精度(8字节) m总个数，d小数位</span></span><br><span class="line"></span><br><span class="line">Sequelize.DECIMAL                     <span class="comment">// DECIMAL                       类型：定点数型</span></span><br><span class="line">Sequelize.DECIMAL(<span class="number">10</span>, <span class="number">2</span>)              <span class="comment">// DECIMAL(10,2)                 类型：定点数型 参数m&lt;65 是总个数，d&lt;30且 d&lt;m 是小数位</span></span><br><span class="line"></span><br><span class="line">Sequelize.DATE                        <span class="comment">// DATETIME                      类型：日期时间类型 范例：'2009-05-12 02:31:44'</span></span><br><span class="line">Sequelize.DATE(<span class="number">6</span>)                     <span class="comment">// DATETIME(6)    </span></span><br><span class="line">Sequelize.DATEONLY                    <span class="comment">// DATE without time.</span></span><br><span class="line">Sequelize.BOOLEAN                     <span class="comment">// TINYINT(1)                    类型：整型 范围(-128~127)</span></span><br><span class="line"></span><br><span class="line">Sequelize.ENUM(<span class="string">'value 1'</span>, <span class="string">'value 2'</span>)  <span class="comment">// ENUM                          类型：枚举</span></span><br><span class="line"></span><br><span class="line">Sequelize.BLOB                        <span class="comment">// BLOB                          类型：二进制数据</span></span><br><span class="line">Sequelize.BLOB(<span class="string">'tiny'</span>)                <span class="comment">// TINYBLOB                      类型：二进制数据</span></span><br></pre></td></tr></table></figure>
+<h2 id="参考连接"><a href="#参考连接" class="headerlink" title="参考连接"></a>参考连接</h2><p><a href="https://segmentfault.com/a/1190000011583660" target="_blank" rel="noopener">Sequelize 中文文档 v4 - Model definition - 模型定义</a></p>
+<p><a href="https://www.jianshu.com/p/c831f98e5172" target="_blank" rel="noopener">Sequelize 中 Model 的数据类型对应MySQL中的数据类型</a></p>
+<p><span id="configURL"><a href="https://segmentfault.com/a/1190000019760817" target="_blank" rel="noopener">Sequelize手记 - (一)</a></span></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>初到贵宝地，有钱的给个钱场,没钱的挤一挤给个钱场</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="https://raw.githubusercontent.com/unclepis/git_introduction/master/wechat.jpg" alt="unclepis 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="https://raw.githubusercontent.com/unclepis/git_introduction/master/alipay.jpg" alt="unclepis 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sequelize-数据同步/" <i="" class="fa fa-tag"> sequelize - 数据同步</a>
+          
+            <a href="/tags/sequelize-数据建模/" <i="" class="fa fa-tag"> sequelize - 数据建模</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/02/27/koa2-ejs/" rel="next" title="koa2开发后台服务 - (2) 服务端ssh之ejs模版">
+                <i class="fa fa-chevron-left"></i> koa2开发后台服务 - (2) 服务端ssh之ejs模版
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/02/28/sequelize-crud/" rel="prev" title="sequelize - CRUD增删改查">
+                sequelize - CRUD增删改查 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">unclepis</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">65</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">93</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/unclepis" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:59869158@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          <div>
+            
+              <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="320" height="430" src="https://music.163.com/outchain/player?type=0&id=2394580803&auto=1&height=430"></iframe>
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ORM"><span class="nav-number">1.</span> <span class="nav-text">ORM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-安装mysql和sequelize"><span class="nav-number">1.1.</span> <span class="nav-text">(1) 安装mysql和sequelize</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-配置sequelize建立数据库连接"><span class="nav-number">1.2.</span> <span class="nav-text">(2) 配置sequelize建立数据库连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-sequelize建模-amp-同步到数据库"><span class="nav-number">1.3.</span> <span class="nav-text">(3)sequelize建模&amp;同步到数据库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-创建数据模型"><span class="nav-number">1.3.1.</span> <span class="nav-text">(3-1)创建数据模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-创建数据表的外键"><span class="nav-number">1.3.2.</span> <span class="nav-text">(3-2)创建数据表的外键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-测试sequelize是否连接成功-authenticate-方法"><span class="nav-number">1.3.3.</span> <span class="nav-text">(3-3)测试sequelize是否连接成功 - authenticate()方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-同步模型到数据库-sync-方法"><span class="nav-number">1.3.4.</span> <span class="nav-text">(3-4)同步模型到数据库 - sync()方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#more"><span class="nav-number">2.</span> <span class="nav-text">补充文档 - 详细的模型参数和类型参数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Model-definition-模型定义如下"><span class="nav-number">2.1.</span> <span class="nav-text">Model definition - 模型定义如下</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sequelize提供的几种数据类型，用于数据建模"><span class="nav-number">2.2.</span> <span class="nav-text">sequelize提供的几种数据类型，用于数据建模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考连接"><span class="nav-number">2.3.</span> <span class="nav-text">参考连接</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">unclepis</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共62.8k字</span>
+</div>
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      本站总访问人数 <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+  
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      本站总访问量 <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: 'DBnzsB5Bwg1DG3BqNP8vSwH2-gzGzoHsz',
+        appKey: 'G3DDmOX3BPYmH9km2wXYdsX5',
+        placeholder: 'talk is cheap, say something useful...',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input&&input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input&&input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -99,7 +99,7 @@
 <meta property="og:description" content="在上一章节处理http请求我们已经完成了基本的http参数处理，并且抽离了模块，现在我们要使用nodejs链接mysql数据库，完成api接口中的业务处理…">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://unclepis.coding.me/2019/11/25/nodejs-3/api.png">
-<meta property="og:updated_time" content="2019-12-26T05:56:23.864Z">
+<meta property="og:updated_time" content="2020-02-28T00:03:39.880Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nodejs 山羊上山系列（3）- nodejs操作mySql数据库">
 <meta name="twitter:description" content="在上一章节处理http请求我们已经完成了基本的http参数处理，并且抽离了模块，现在我们要使用nodejs链接mysql数据库，完成api接口中的业务处理…">
@@ -498,7 +498,7 @@
 <ul>
 <li>5)如果顺利的话，root的密码应该已经被修改为“123456”，那可以不必往下看了。然而我的mysql版本是5.7.21，所以第一次尝试的时候这里又报错了：</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1054 (42S22): Unknown column &apos;password&apos; in &apos;field list&apos;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR <span class="number">1054</span> (<span class="number">42</span>S22): Unknown column <span class="string">'password'</span> <span class="keyword">in</span> <span class="string">'field list'</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>6）表中没有password字段，可以用desc user;指令看一下果然没有。查资料发得知5.7版本密码保存字段已经改成上图中的“authentication_string”了，于是重新输入update指令重置密码：</li>
 </ul>
@@ -672,7 +672,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -683,7 +683,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">61</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -694,7 +694,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">81</span>
+                  <span class="site-state-item-count">93</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -794,7 +794,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共56.9k字</span>
+  <span class="post-count">博客全站共62.8k字</span>
 </div>
         
 <div class="busuanzi-count">

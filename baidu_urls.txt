@@ -1,3 +1,8 @@
+http://unclepis.coding.me/2020/02/28/sequelize-crud/
+http://unclepis.coding.me/2020/02/28/sequelize/
+http://unclepis.coding.me/2020/02/27/koa2-ejs/
+http://unclepis.coding.me/2020/02/27/koa2/
+http://unclepis.coding.me/2020/02/27/nodejs-8/
 http://unclepis.coding.me/2020/02/25/hexo/
 http://unclepis.coding.me/2020/02/25/async/
 http://unclepis.coding.me/2020/02/24/vue-10/

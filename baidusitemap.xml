@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://unclepis.coding.me/2020/02/28/sequelize/</loc>
+    <lastmod>2020-03-02</lastmod>
+  </url>  <url>
+    <loc>http://unclepis.coding.me/2020/02/28/sequelize-crud/</loc>
+    <lastmod>2020-03-02</lastmod>
+  </url>  <url>
+    <loc>http://unclepis.coding.me/2019/11/25/nodejs-3/</loc>
+    <lastmod>2020-02-28</lastmod>
+  </url>  <url>
+    <loc>http://unclepis.coding.me/2020/02/27/koa2/</loc>
+    <lastmod>2020-02-28</lastmod>
+  </url>  <url>
+    <loc>http://unclepis.coding.me/2020/02/27/koa2-ejs/</loc>
+    <lastmod>2020-02-28</lastmod>
+  </url>  <url>
+    <loc>http://unclepis.coding.me/2020/02/27/nodejs-8/</loc>
+    <lastmod>2020-02-27</lastmod>
+  </url>  <url>
     <loc>http://unclepis.coding.me/2020/02/25/async/</loc>
     <lastmod>2020-02-25</lastmod>
   </url>  <url>
@@ -25,10 +43,10 @@
     <loc>http://unclepis.coding.me/2019/12/30/winBat/</loc>
     <lastmod>2019-12-30</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2019/10/19/vue-7/</loc>
+    <loc>http://unclepis.coding.me/2019/10/19/vue-8/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2019/10/19/vue-8/</loc>
+    <loc>http://unclepis.coding.me/2019/10/19/vue-7/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
     <loc>http://unclepis.coding.me/2019/10/19/vue-9/</loc>
@@ -100,9 +118,6 @@
     <loc>http://unclepis.coding.me/2019/11/26/nodejs-5/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2019/11/25/nodejs-3/</loc>
-    <lastmod>2019-12-26</lastmod>
-  </url>  <url>
     <loc>http://unclepis.coding.me/2019/11/08/nodejs-2/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
@@ -121,10 +136,10 @@
     <loc>http://unclepis.coding.me/2018/10/30/element/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2018/10/31/evenLoop/</loc>
+    <loc>http://unclepis.coding.me/2019/12/09/express/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2019/12/09/express/</loc>
+    <loc>http://unclepis.coding.me/2018/10/31/evenLoop/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
     <loc>http://unclepis.coding.me/2018/10/17/git/</loc>
@@ -145,16 +160,16 @@
     <loc>http://unclepis.coding.me/2019/12/20/devOps/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2018/11/19/currentFrontEnd/</loc>
-    <lastmod>2019-12-26</lastmod>
-  </url>  <url>
     <loc>http://unclepis.coding.me/2018/11/01/canvas/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2018/10/17/Set/</loc>
+    <loc>http://unclepis.coding.me/2018/11/19/currentFrontEnd/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
     <loc>http://unclepis.coding.me/2019/12/20/app/</loc>
+    <lastmod>2019-12-26</lastmod>
+  </url>  <url>
+    <loc>http://unclepis.coding.me/2018/10/17/Set/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>
 </urlset>
