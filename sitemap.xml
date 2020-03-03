@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://unclepis.coding.me/2020/03/03/koa2-jwt/</loc>
+    
+    <lastmod>2020-03-03T07:51:01.473Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://unclepis.coding.me/2020/03/02/koa2-redis/</loc>
     
-    <lastmod>2020-03-03T03:15:40.564Z</lastmod>
+    <lastmod>2020-03-03T07:37:13.940Z</lastmod>
     
   </url>
   
@@ -226,14 +233,14 @@
   </url>
   
   <url>
-    <loc>http://unclepis.coding.me/2018/10/18/verdaccio/</loc>
+    <loc>http://unclepis.coding.me/2018/10/18/type/</loc>
     
     <lastmod>2019-12-26T05:56:23.883Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://unclepis.coding.me/2018/10/18/type/</loc>
+    <loc>http://unclepis.coding.me/2018/10/18/verdaccio/</loc>
     
     <lastmod>2019-12-26T05:56:23.883Z</lastmod>
     
@@ -422,14 +429,14 @@
   </url>
   
   <url>
-    <loc>http://unclepis.coding.me/2018/11/19/currentFrontEnd/</loc>
+    <loc>http://unclepis.coding.me/2018/11/01/canvas/</loc>
     
     <lastmod>2019-12-26T05:56:23.819Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://unclepis.coding.me/2018/11/01/canvas/</loc>
+    <loc>http://unclepis.coding.me/2018/11/19/currentFrontEnd/</loc>
     
     <lastmod>2019-12-26T05:56:23.819Z</lastmod>
     
