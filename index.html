@@ -358,6 +358,39 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/koa2开发后台服务/" itemprop="url" rel="index">
+                    <span itemprop="name">koa2开发后台服务</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/koa2开发后台服务/koa2开发后台服务-6-jwt及其在koa2中的具体应用/" itemprop="url" rel="index">
+                    <span itemprop="name">koa2开发后台服务 - (6) jwt及其在koa2中的具体应用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -401,7 +434,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  672
+                  647
                 </span>
               
 
@@ -439,12 +472,7 @@
 
       
         
-          
-            <ul>
-<li>koa2开发后台服务</li>
-<li>koa2开发后台服务 - (6) jwt及其在koa2中的具体应用</li>
-</ul>
-<ul>
+          <ul>
 <li>JSON Web Token（缩写 JWT）</li>
 </ul>
 <blockquote>
@@ -459,62 +487,13 @@
 <blockquote>
 <p>用户与服务端通信的时候，客户端都要发回这个 JSON 对象</p>
 </blockquote>
-<h2 id="jwt数据结构"><a href="#jwt数据结构" class="headerlink" title="jwt数据结构"></a>jwt数据结构</h2><ul>
-<li><p>它是一个很长的字符串</p>
-</li>
-<li><p>中间用点（.）分隔成三个部分</p>
-</li>
-<li><p>JWT 的三个部分依次如下 : Header(头部).Payload(负载).Signature(签名)</p>
-</li>
-</ul>
-<h2 id="jwt的使用"><a href="#jwt的使用" class="headerlink" title="jwt的使用"></a>jwt的使用</h2><ul>
-<li><p>客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。</p>
-</li>
-<li><p>为了不受cookie和localStorage的跨域限制，所以更好的做法是放在 HTTP 请求的头信息Authorization字段里面 - “Authorization: Bearer <token>“</token></p>
-</li>
-</ul>
-<h3 id="在koa2中的使用"><a href="#在koa2中的使用" class="headerlink" title="在koa2中的使用"></a>在koa2中的使用</h3><ul>
-<li><p>使用koa-jwt </p>
-<blockquote>
-<p>npm install koa-jwt –save</p>
-</blockquote>
-</li>
-<li><p>安装加密插件 jsonwebtoken</p>
-<blockquote>
-<p>npm i jsonwebtoke –save</p>
-</blockquote>
-</li>
-<li><p>引用</p>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="keyword">const</span> koaJwt = <span class="built_in">require</span>(<span class="string">'koa-jwt'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用中间件</span></span><br><span class="line">app.use(koaJwt(&#123;</span><br><span class="line">  secret:<span class="string">'12eae#sa_32as!@'</span>, <span class="comment">// 一个密钥</span></span><br><span class="line">&#125;)).unless(&#123;</span><br><span class="line">  path:<span class="string">'/^\/users\/login/'</span> <span class="comment">// 指定哪些目录忽略jwt认证</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>加密用户信息<br>const jwt = require(‘jsonwebtoken’)</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(userInfo)&#123;</span><br><span class="line">  token = jwt.sign(userInfo,SECRET,&#123; <span class="comment">// 对userInfo进行密钥加密</span></span><br><span class="line">    expiresIn：<span class="string">"1h"</span> <span class="comment">// 设置过期时间</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ctx.body = &#123;</span><br><span class="line">  code:<span class="number">1</span>,</span><br><span class="line">  data:token</span><br><span class="line">&#125;</span><br><span class="line"> <span class="comment">// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmlja25hbWUiOiJ6aGFuZ3NhbiIsImdlbmRlciI6MSwiaWF0IjoxNTgzMjE1NzEwLCJleHAiOjE1ODMyMTkzMTB9.CBENO3SdCb48Hm5cEnys9hksgNSRbwCtZvwS86-mwUk</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>访问在unless外面定义的路由就会返回401 没有权限</p>
-<blockquote>
-<p>需要在request的header中设置,才能有权限通过jwt的校验</p>
-</blockquote>
-</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization:<span class="string">"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmlja25hbWUiOiJ6aGFuZ3NhbiIsImdlbmRlciI6MSwiaWF0IjoxNTgzMjE1NzEwLCJleHAiOjE1ODMyMTkzMTB9.CBENO3SdCb48Hm5cEnys9hksgNSRbwCtZvwS86-mwUk"</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>在接口中获取token中加密的数据</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="built_in">require</span>(<span class="string">'koa-router'</span>)()</span><br><span class="line"><span class="keyword">const</span> jwt = <span class="built_in">require</span>(<span class="string">'jsonwebtoken'</span>)</span><br><span class="line"><span class="keyword">const</span> util = <span class="built_in">require</span>(<span class="string">'util'</span>)</span><br><span class="line"><span class="keyword">const</span> verify = util.promisify(jwt.verify)</span><br><span class="line"><span class="keyword">const</span> &#123; SECRET &#125; = <span class="built_in">require</span>(<span class="string">'../conf/secret'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取用户信息</span></span><br><span class="line">router.get(<span class="string">'/getUserInfo'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> token = ctx.header.authorization <span class="comment">// 从请求头中获取token</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> payload = <span class="keyword">await</span> verify(token.split(<span class="string">' '</span>)[<span class="number">1</span>], SECRET)</span><br><span class="line">        ctx.body = &#123;</span><br><span class="line">            code: <span class="number">1</span>,</span><br><span class="line">            data: payload</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span>(error) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(error)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"code"</span>: <span class="number">1</span>,</span><br><span class="line">  <span class="string">"data"</span>: &#123;</span><br><span class="line">    <span class="string">"id"</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">"nickname"</span>: <span class="string">"zhangsan"</span>,</span><br><span class="line">    <span class="string">"gender"</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">"iat"</span>: <span class="number">1583217468</span>,</span><br><span class="line">    <span class="string">"exp"</span>: <span class="number">1583221068</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="jwt和session的对比"><a href="#jwt和session的对比" class="headerlink" title="jwt和session的对比"></a>jwt和session的对比</h2><ul>
-<li><p>都是为了解决： 登陆 和 存储用户信息</p>
-</li>
-<li><p>jwt用户信息加密存储在客户端，不依赖cookie，可跨域。适合于服务节点多，跨域比较多的系统。</p>
-</li>
-<li><p>session用户信息加密存储在服务端，例如redis中，依赖cookie，受跨域限制。适合server端要严格管理用户信息的系统。</p>
-</li>
-</ul>
-<h2 id="参考连接"><a href="#参考连接" class="headerlink" title="参考连接"></a>参考连接</h2><p><a href="http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html" target="_blank" rel="noopener">JSON Web Token 入门教程</a></p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/03/03/koa2-jwt/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2549,7 +2528,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">70</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>

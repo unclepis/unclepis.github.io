@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="koa2开发后台服务 koa2开发后台服务 - (6) jwt及其在koa2中的具体应用   JSON Web Token（缩写 JWT）   最流行的跨域认证解决方案,   在cookie-session认证机制中已经介绍了，session如何通过浏览器的session_id获取存储在后台的session数据，而另一种解决方案就是服务器索性不保存 session 数据了，所有数据都保存在客户端">
+<meta name="description" content="JSON Web Token（缩写 JWT）   最流行的跨域认证解决方案,   在cookie-session认证机制中已经介绍了，session如何通过浏览器的session_id获取存储在后台的session数据，而另一种解决方案就是服务器索性不保存 session 数据了，所有数据都保存在客户端，每次请求都发回服务器。  jwt认证的流程： 用户向服务器发送用户名和密码,服务器认证以后，">
 <meta name="keywords" content="jwt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="koa2开发后台服务 - (6) jwt及其在koa2中的具体应用">
 <meta property="og:url" content="http://unclepis.coding.me/2020/03/03/koa2-jwt/index.html">
 <meta property="og:site_name" content="屁事蜀黍">
-<meta property="og:description" content="koa2开发后台服务 koa2开发后台服务 - (6) jwt及其在koa2中的具体应用   JSON Web Token（缩写 JWT）   最流行的跨域认证解决方案,   在cookie-session认证机制中已经介绍了，session如何通过浏览器的session_id获取存储在后台的session数据，而另一种解决方案就是服务器索性不保存 session 数据了，所有数据都保存在客户端">
+<meta property="og:description" content="JSON Web Token（缩写 JWT）   最流行的跨域认证解决方案,   在cookie-session认证机制中已经介绍了，session如何通过浏览器的session_id获取存储在后台的session数据，而另一种解决方案就是服务器索性不保存 session 数据了，所有数据都保存在客户端，每次请求都发回服务器。  jwt认证的流程： 用户向服务器发送用户名和密码,服务器认证以后，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-03T07:51:01.473Z">
+<meta property="og:updated_time" content="2020-03-03T08:30:30.640Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="koa2开发后台服务 - (6) jwt及其在koa2中的具体应用">
-<meta name="twitter:description" content="koa2开发后台服务 koa2开发后台服务 - (6) jwt及其在koa2中的具体应用   JSON Web Token（缩写 JWT）   最流行的跨域认证解决方案,   在cookie-session认证机制中已经介绍了，session如何通过浏览器的session_id获取存储在后台的session数据，而另一种解决方案就是服务器索性不保存 session 数据了，所有数据都保存在客户端">
+<meta name="twitter:description" content="JSON Web Token（缩写 JWT）   最流行的跨域认证解决方案,   在cookie-session认证机制中已经介绍了，session如何通过浏览器的session_id获取存储在后台的session数据，而另一种解决方案就是服务器索性不保存 session 数据了，所有数据都保存在客户端，每次请求都发回服务器。  jwt认证的流程： 用户向服务器发送用户名和密码,服务器认证以后，">
 
 
 
@@ -356,6 +356,39 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/koa2开发后台服务/" itemprop="url" rel="index">
+                    <span itemprop="name">koa2开发后台服务</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/koa2开发后台服务/koa2开发后台服务-6-jwt及其在koa2中的具体应用/" itemprop="url" rel="index">
+                    <span itemprop="name">koa2开发后台服务 - (6) jwt及其在koa2中的具体应用</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -404,7 +437,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  672
+                  647
                 </span>
               
 
@@ -442,10 +475,6 @@
 
       
         <ul>
-<li>koa2开发后台服务</li>
-<li>koa2开发后台服务 - (6) jwt及其在koa2中的具体应用</li>
-</ul>
-<ul>
 <li>JSON Web Token（缩写 JWT）</li>
 </ul>
 <blockquote>
@@ -460,6 +489,7 @@
 <blockquote>
 <p>用户与服务端通信的时候，客户端都要发回这个 JSON 对象</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="jwt数据结构"><a href="#jwt数据结构" class="headerlink" title="jwt数据结构"></a>jwt数据结构</h2><ul>
 <li><p>它是一个很长的字符串</p>
 </li>
@@ -672,7 +702,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">70</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
