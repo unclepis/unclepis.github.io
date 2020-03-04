@@ -906,8 +906,7 @@
 
       
         
-          
-            <h1 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h1><ul>
+          <h1 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h1><ul>
 <li><p>单个功能或接口，给定输入，得到输出。看输出是否符合预期</p>
 </li>
 <li><p>需要手动编写用例代码，然后统一执行</p>
@@ -923,25 +922,14 @@
 <li><p>修改npm脚本</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"test"</span>: <span class="string">"cross-env NODE_ENV=test jest --runInBand --forceExit --colors"</span></span><br><span class="line"><span class="comment">// 依次执行 --runInBand</span></span><br><span class="line"><span class="comment">// 执行完成后退出 --forceExit</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>常用断言</p>
-</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">"测试用户的描述"</span>,()=&gt;&#123;</span><br><span class="line">  expect(result).toBe(predict)</span><br><span class="line">  expect(result).not.toBe(predict)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>测试http请求接口</li>
-</ul>
-<blockquote>
-<p>安装supertest插件 <code>npm i supertest --save-dev</code></p>
-</blockquote>
-<blockquote>
-<p>引入app.js构建的server</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'supertest'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> server = <span class="built_in">require</span>(<span class="string">'../src/app'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = request(server.listen(<span class="number">3000</span>))</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>引入server写测试用例<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> server = <span class="built_in">require</span>(<span class="string">'./server'</span>)</span><br><span class="line"></span><br><span class="line">test(<span class="string">'http test'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> response = <span class="keyword">await</span> server.get(<span class="string">'/json'</span>)</span><br><span class="line"></span><br><span class="line">  expect(response.body).toEqual(&#123;</span><br><span class="line">    title: <span class="string">'koa2 json'</span></span><br><span class="line">  &#125;)</span><br><span class="line">  expect(response.body.title).tobe(<span class="string">'koa2 json'</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">test(<span class="string">'http test'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> response = <span class="keyword">await</span> server.post(<span class="string">'/json'</span>).send(&#123;</span><br><span class="line">    username:<span class="string">'pis'</span>,</span><br><span class="line">    password:<span class="number">321</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/03/02/koa2-jest/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

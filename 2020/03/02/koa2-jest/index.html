@@ -98,7 +98,7 @@
 <meta property="og:site_name" content="屁事蜀黍">
 <meta property="og:description" content="单元测试 单个功能或接口，给定输入，得到输出。看输出是否符合预期  需要手动编写用例代码，然后统一执行  意义 ：能一次性执行所有单元测试，短时间内验证所有功能是否正常   使用jest 安装 jest(npm i jest –save-dev)  创建.test.js的文件后缀  修改npm脚本 123&quot;test&quot;: &quot;cross-env NODE_ENV=test jest --runInBa">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-03T03:14:52.722Z">
+<meta property="og:updated_time" content="2020-03-04T05:30:02.140Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="koa2开发后台服务 - (4) jest单元测试">
 <meta name="twitter:description" content="单元测试 单个功能或接口，给定输入，得到输出。看输出是否符合预期  需要手动编写用例代码，然后统一执行  意义 ：能一次性执行所有单元测试，短时间内验证所有功能是否正常   使用jest 安装 jest(npm i jest –save-dev)  创建.test.js的文件后缀  修改npm脚本 123&quot;test&quot;: &quot;cross-env NODE_ENV=test jest --runInBa">
@@ -490,8 +490,10 @@
 <li><p>修改npm脚本</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"test"</span>: <span class="string">"cross-env NODE_ENV=test jest --runInBand --forceExit --colors"</span></span><br><span class="line"><span class="comment">// 依次执行 --runInBand</span></span><br><span class="line"><span class="comment">// 执行完成后退出 --forceExit</span></span><br></pre></td></tr></table></figure>
 </li>
-<li><p>常用断言</p>
-</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li>常用断言</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test(<span class="string">"测试用户的描述"</span>,()=&gt;&#123;</span><br><span class="line">  expect(result).toBe(predict)</span><br><span class="line">  expect(result).not.toBe(predict)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <ul>
