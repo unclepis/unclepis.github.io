@@ -79,7 +79,7 @@
 
 
 
-  <meta name="keywords" content="unclepis - a handsome personal in local...">
+  <meta name="keywords" content="ts,typeScript,">
 
 
 
@@ -90,18 +90,18 @@
 
 
 
-<meta name="description" content="TypeScript简介 TypeScript 是 JavaScript 的一个超集 它可以编译成纯 JavaScript。 编译出来的 JavaScript 可以运行在任何浏览器上。 TypeScript 编译工具可以运行在任何服务器和任何系统上。 TypeScript 是开源的 TypeScript 中，使用 : 指定变量的类型， : 的前后有没有空格都可以。  优点 增加了代码的可读性和可维">
-<meta name="keywords" content="uncle pis">
+<meta name="description" content="ts其实也看了好久了，一直打算把ts在项目中用起来，无奈这段时间一直在看node，docker也忘的差不多了，索性在复习一下ts，顺便输出一些笔记记录一下，毕竟自己吃过的东西在看起来也会快一些……. TypeScript简介 TypeScript 是 JavaScript 的一个超集 它可以编译成纯 JavaScript。 编译出来的 JavaScript 可以运行在任何浏览器上。 TypeScr">
+<meta name="keywords" content="ts,typeScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ts">
+<meta property="og:title" content="typeScript - 基本概念">
 <meta property="og:url" content="http://unclepis.coding.me/2020/03/09/ts/index.html">
 <meta property="og:site_name" content="屁事蜀黍">
-<meta property="og:description" content="TypeScript简介 TypeScript 是 JavaScript 的一个超集 它可以编译成纯 JavaScript。 编译出来的 JavaScript 可以运行在任何浏览器上。 TypeScript 编译工具可以运行在任何服务器和任何系统上。 TypeScript 是开源的 TypeScript 中，使用 : 指定变量的类型， : 的前后有没有空格都可以。  优点 增加了代码的可读性和可维">
+<meta property="og:description" content="ts其实也看了好久了，一直打算把ts在项目中用起来，无奈这段时间一直在看node，docker也忘的差不多了，索性在复习一下ts，顺便输出一些笔记记录一下，毕竟自己吃过的东西在看起来也会快一些……. TypeScript简介 TypeScript 是 JavaScript 的一个超集 它可以编译成纯 JavaScript。 编译出来的 JavaScript 可以运行在任何浏览器上。 TypeScr">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-03-09T08:53:20.672Z">
+<meta property="og:updated_time" content="2020-03-10T00:49:00.851Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ts">
-<meta name="twitter:description" content="TypeScript简介 TypeScript 是 JavaScript 的一个超集 它可以编译成纯 JavaScript。 编译出来的 JavaScript 可以运行在任何浏览器上。 TypeScript 编译工具可以运行在任何服务器和任何系统上。 TypeScript 是开源的 TypeScript 中，使用 : 指定变量的类型， : 的前后有没有空格都可以。  优点 增加了代码的可读性和可维">
+<meta name="twitter:title" content="typeScript - 基本概念">
+<meta name="twitter:description" content="ts其实也看了好久了，一直打算把ts在项目中用起来，无奈这段时间一直在看node，docker也忘的差不多了，索性在复习一下ts，顺便输出一些笔记记录一下，毕竟自己吃过的东西在看起来也会快一些……. TypeScript简介 TypeScript 是 JavaScript 的一个超集 它可以编译成纯 JavaScript。 编译出来的 JavaScript 可以运行在任何浏览器上。 TypeScr">
 
 
 
@@ -137,7 +137,7 @@
 
 
 
-  <title>ts | 屁事蜀黍</title>
+  <title>typeScript - 基本概念 | 屁事蜀黍</title>
   
 
 
@@ -333,7 +333,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">ts</h2>
+          <h2 class="post-title" itemprop="name headline">typeScript - 基本概念</h2>
         
 
         <div class="post-meta">
@@ -356,6 +356,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/typeScript/" itemprop="url" rel="index">
+                    <span itemprop="name">typeScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -373,7 +395,7 @@
 
           
           
-             <span id="/2020/03/09/ts/" class="leancloud_visitors" data-flag-title="ts">
+             <span id="/2020/03/09/ts/" class="leancloud_visitors" data-flag-title="typeScript - 基本概念">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -404,7 +426,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.1k
+                  3.2k
                 </span>
               
 
@@ -441,7 +463,8 @@
       
 
       
-        <h1 id="TypeScript简介"><a href="#TypeScript简介" class="headerlink" title="TypeScript简介"></a>TypeScript简介</h1><ul>
+        <p>ts其实也看了好久了，一直打算把ts在项目中用起来，无奈这段时间一直在看node，docker也忘的差不多了，索性在复习一下ts，顺便输出一些笔记记录一下，毕竟自己吃过的东西在看起来也会快一些…….</p>
+<h1 id="TypeScript简介"><a href="#TypeScript简介" class="headerlink" title="TypeScript简介"></a>TypeScript简介</h1><ul>
 <li>TypeScript 是 JavaScript 的一个超集</li>
 <li>它可以编译成纯 JavaScript。</li>
 <li>编译出来的 JavaScript 可以运行在任何浏览器上。</li>
@@ -449,6 +472,7 @@
 <li>TypeScript 是开源的</li>
 <li>TypeScript 中，使用 : 指定变量的类型， : 的前后有没有空格都可以。</li>
 </ul>
+<a id="more"></a>
 <h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ul>
 <li>增加了代码的可读性和可维护性</li>
 </ul>
@@ -498,7 +522,6 @@
 </ul>
 </blockquote>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    files:&#123;&#125;, <span class="comment">//</span></span><br><span class="line">    include:[], <span class="comment">// </span></span><br><span class="line">    exclude:[], <span class="comment">// </span></span><br><span class="line">    noEmitOnError:<span class="literal">true</span> <span class="comment">// 在报错的时候终止 js 文件的生成</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
 <h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><h3 id="1-原始数据类型"><a href="#1-原始数据类型" class="headerlink" title="1.原始数据类型"></a>1.原始数据类型</h3><ul>
 <li>js的数据类型分为两类：原始数据类型 - Primitive data types（布尔值，数值，字符串，null，undefined，以及symbol）和对象类型- Object types</li>
 </ul>
@@ -770,6 +793,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/ts/" <i="" class="fa fa-tag"> ts</a>
+          
+            <a href="/tags/typeScript/" <i="" class="fa fa-tag"> typeScript</a>
+          
+        </div>
+      
 
       
       
@@ -788,6 +819,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/10/ts2/" rel="prev" title="ts2">
+                ts2 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -867,7 +902,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-count">64</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -878,7 +913,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">73</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -889,7 +924,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">104</span>
+                  <span class="site-state-item-count">106</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -989,7 +1024,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共70.4k字</span>
+  <span class="post-count">博客全站共73.2k字</span>
 </div>
         
 <div class="busuanzi-count">
