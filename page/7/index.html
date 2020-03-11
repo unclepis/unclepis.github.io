@@ -316,6 +316,222 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://unclepis.coding.me/2018/10/18/type/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="unclepis">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="屁事蜀黍">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/18/type/" itemprop="url">javascript - 判断变量类型type</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-18T00:09:17+08:00">
+                2018-10-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/javascript-判断变量类型type/" itemprop="url" rel="index">
+                    <span itemprop="name">javascript - 判断变量类型type</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/18/type/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/18/type/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/10/18/type/" class="leancloud_visitors" data-flag-title="javascript - 判断变量类型type">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+             <span>℃</span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  215
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>#数据类型</p>
+<h3 id="最常见的判断方法：typeof"><a href="#最常见的判断方法：typeof" class="headerlink" title="最常见的判断方法：typeof"></a>最常见的判断方法：typeof</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 可以区分基本类型和undefined</span><br><span class="line">typeof <span class="string">'123'</span> // <span class="string">'string'</span></span><br><span class="line">typeof 123 // <span class="string">'number'</span></span><br><span class="line">typeof <span class="literal">true</span> // <span class="string">'boolean'</span></span><br><span class="line">typeof <span class="keyword">function</span> <span class="function"><span class="title">test</span></span>()&#123;&#125; // <span class="string">'function'</span></span><br><span class="line">typeof undefined // <span class="string">'undefined'</span></span><br><span class="line"></span><br><span class="line">// 对象类型无法区分</span><br><span class="line">typeof &#123;&#125; // <span class="string">'object'</span></span><br><span class="line">typeof [] // <span class="string">'object'</span></span><br><span class="line">typeof null // <span class="string">'object'</span></span><br></pre></td></tr></table></figure>
+<h3 id="判断已知对象类型的方法：-instanceof"><a href="#判断已知对象类型的方法：-instanceof" class="headerlink" title="判断已知对象类型的方法： instanceof"></a>判断已知对象类型的方法： instanceof</h3><ul>
+<li>null的typeof为object，function和undefined可以使用typeof</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 可以区分object和array分别是哪个构造函数的实例</span></span><br><span class="line">&#123;&#125; instanceof  Object // <span class="literal">true</span></span><br><span class="line">[] instanceof  Array// <span class="literal">true</span></span><br><span class="line"><span class="built_in">test</span> instanceof  Function// <span class="literal">true</span></span><br><span class="line">new Date() instanceof  Date// <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">alert(Object.prototype.toString.call(‘123’) === ‘[object String]’) -------&gt; <span class="literal">true</span>;</span><br><span class="line">alert(Object.prototype.toString.call(123) === ‘[object Number]’) -------&gt; <span class="literal">true</span>;</span><br><span class="line">alert(Object.prototype.toString.call([]) === ‘[object Array]’) -------&gt; <span class="literal">true</span>;</span><br><span class="line">alert(Object.prototype.toString.call(new Date()) === ‘[object Date]’) -------&gt; <span class="literal">true</span>;</span><br><span class="line">alert(Object.prototype.toString.call(<span class="built_in">test</span>) === ‘[object Function]’) -------&gt; <span class="literal">true</span>;</span><br><span class="line">alert(Object.prototype.toString.call(null) === ‘[object Null]’) -------&gt; <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/10/18/type/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://unclepis.coding.me/2018/10/17/map/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1209,7 +1425,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">65</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1231,7 +1447,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">106</span>
+                  <span class="site-state-item-count">107</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1315,7 +1531,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共73.2k字</span>
+  <span class="post-count">博客全站共79.4k字</span>
 </div>
         
 <div class="busuanzi-count">

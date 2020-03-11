@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://unclepis.coding.me/2020/03/11/ts-react/</loc>
+    
+    <lastmod>2020-03-11T08:57:14.261Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://unclepis.coding.me/2020/03/10/ts2/</loc>
     
-    <lastmod>2020-03-10T07:20:37.557Z</lastmod>
+    <lastmod>2020-03-10T07:35:38.413Z</lastmod>
     
   </url>
   
@@ -149,14 +156,14 @@
   </url>
   
   <url>
-    <loc>http://unclepis.coding.me/categories/index.html</loc>
+    <loc>http://unclepis.coding.me/about/index.html</loc>
     
     <lastmod>2019-12-26T05:56:23.890Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://unclepis.coding.me/guestbook/index.html</loc>
+    <loc>http://unclepis.coding.me/categories/index.html</loc>
     
     <lastmod>2019-12-26T05:56:23.890Z</lastmod>
     
@@ -170,21 +177,21 @@
   </url>
   
   <url>
-    <loc>http://unclepis.coding.me/about/index.html</loc>
+    <loc>http://unclepis.coding.me/guestbook/index.html</loc>
     
     <lastmod>2019-12-26T05:56:23.890Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://unclepis.coding.me/2019/10/19/vue-7/</loc>
+    <loc>http://unclepis.coding.me/2019/10/19/vue-8/</loc>
     
     <lastmod>2019-12-26T05:56:23.889Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://unclepis.coding.me/2019/10/19/vue-8/</loc>
+    <loc>http://unclepis.coding.me/2019/10/19/vue-7/</loc>
     
     <lastmod>2019-12-26T05:56:23.889Z</lastmod>
     

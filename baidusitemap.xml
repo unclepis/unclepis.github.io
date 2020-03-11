@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://unclepis.coding.me/2020/03/11/ts-react/</loc>
+    <lastmod>2020-03-11</lastmod>
+  </url>  <url>
     <loc>http://unclepis.coding.me/2020/03/10/ts2/</loc>
     <lastmod>2020-03-10</lastmod>
   </url>  <url>
@@ -64,10 +67,10 @@
     <loc>http://unclepis.coding.me/2019/12/30/winBat/</loc>
     <lastmod>2019-12-30</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2019/10/19/vue-7/</loc>
+    <loc>http://unclepis.coding.me/2019/10/19/vue-8/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
-    <loc>http://unclepis.coding.me/2019/10/19/vue-8/</loc>
+    <loc>http://unclepis.coding.me/2019/10/19/vue-7/</loc>
     <lastmod>2019-12-26</lastmod>
   </url>  <url>
     <loc>http://unclepis.coding.me/2019/10/19/vue-9/</loc>
